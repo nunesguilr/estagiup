@@ -1,12 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao EstagiUP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bem vindo Estagiup</title>
+
+    <!-- Bootstrap CSS local -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
+
 <body>
-    <h1>Bem-vindo ao EstagiUP!</h1>
-    <p>Sua plataforma para estágios e desenvolvimento de carreira.</p>
+    <h1>Olá, Bem vindo ao Estagiup!</h1>
+
+    <div class="container">
+        <button class="btn btn-success">Outro Botão de Exemplo</button>
+    </div>
+
+    <!-- Bootstrap JS local -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
+
 </html>
