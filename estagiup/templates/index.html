@@ -1,25 +1,412 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bem vindo Estagiup</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstagiUP - Conectando talentos a oportunidades de estágio</title>
     <!-- Bootstrap CSS local -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- ScrollReveal CDN para animações ao rolar -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1024; /* Fundo principal roxo escuro */
+            color: #e0cffc; /* Cor do texto padrão (lilás claro) */
+            line-height: 1.6; /* Melhorar legibilidade */
+        }
+        .navbar {
+            background-color: #2c1c40 !important; /* Roxo escuro para a barra de navegação */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil para profundidade */
+        }
+        .navbar-brand, .nav-link {
+            color: #e0cffc !important; /* Texto da navbar lilás claro */
+            font-weight: 500;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #8a2be2 !important; /* Roxo vibrante no hover */
+        }
+        .hero-section {
+            background-color: #2c1c40; /* Seção principal */
+            border-radius: 15px; /* Bordas arredondadas */
+            overflow: hidden; /* Garante que a imagem respeite as bordas */
+            position: relative;
+            margin-top: 2rem;
+            padding: 3rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra mais pronunciada */
+        }
+        .hero-text h1 {
+            color: #ffffff; /* Título principal branco */
+            font-weight: 700;
+            line-height: 1.2; /* Melhorar espaçamento do título */
+        }
+        .hero-text p {
+            color: #e0cffc; /* Parágrafo secundário lilás claro */
+            font-size: 1.15rem; /* Levemente maior */
+        }
+        .hero-image {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%; /* Ajuste o tamanho da imagem */
+            max-width: 450px; /* Limite o tamanho máximo ligeiramente maior */
+            pointer-events: none; /* Garante que não interfere com cliques no texto */
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .btn-primary-custom {
+            background-color: #8a2be2; /* Botão roxo vibrante */
+            border-color: #8a2be2;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 8px; /* Bordas arredondadas para botões */
+            padding: 0.8rem 1.8rem; /* Levemente maior */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Adiciona transição de transformação */
+        }
+        .btn-primary-custom:hover {
+            background-color: #7b24cc; /* Tom mais escuro no hover */
+            border-color: #7b24cc;
+            transform: translateY(-2px); /* Efeito de elevação no hover */
+        }
+        .section-title {
+            color: #ffffff;
+            font-weight: 700; /* Mais negrito */
+            margin-top: 4rem; /* Mais espaçamento superior */
+            margin-bottom: 2.5rem; /* Mais espaçamento inferior */
+            font-size: 2.5rem; /* Título maior */
+        }
+        .section-subtitle {
+            color: #b0a0c4;
+            font-size: 1.1rem;
+            margin-bottom: 3.5rem;
+        }
+        .card-custom {
+            background-color: #2c1c40; /* Cartões roxo escuro */
+            border: none;
+            border-radius: 12px; /* Bordas mais arredondadas */
+            color: #e0cffc;
+            padding: 2rem; /* Mais padding */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para os cards */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-custom:hover {
+            transform: translateY(-5px); /* Efeito de elevação no hover */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        .card-custom h5 {
+            color: #ffffff;
+            font-weight: 700; /* Mais negrito */
+            margin-bottom: 1rem;
+        }
+        .team-member {
+            background-color: #2c1c40;
+            border-radius: 15px;
+            padding: 2rem; /* Mais padding */
+            text-align: center;
+            height: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        .team-member img {
+            width: 130px; /* Levemente maior */
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.2rem; /* Mais espaçamento */
+            border: 4px solid #8a2be2; /* Borda roxa vibrante mais grossa */
+            box-shadow: 0 0 0 5px rgba(138, 43, 226, 0.3); /* Efeito de brilho */
+        }
+        .team-member h5 {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .team-member p {
+            color: #e0cffc;
+            font-size: 0.95rem;
+        }
+        .testimonial-card {
+            background-color: #2c1c40;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            color: #e0cffc;
+        }
+        .testimonial-card .author {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .footer {
+            background-color: #1a1024;
+            padding: 3rem 0 2rem; /* Ajuste padding */
+            margin-top: 5rem; /* Mais espaçamento superior */
+            border-top: 1px solid #3a2e4c;
+            color: #b0a0c4;
+            font-size: 0.9rem;
+        }
+        .footer a {
+            color: #b0a0c4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #8a2be2;
+        }
+        .social-icons a {
+            color: #e0cffc;
+            font-size: 1.6rem; /* Ícones ligeiramente maiores */
+            margin: 0 0.6rem; /* Mais espaçamento */
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .social-icons a:hover {
+            color: #8a2be2;
+            transform: translateY(-2px);
+        }
+
+        /* Ajustes responsivos para a imagem do herói */
+        @media (min-width: 769px) and (max-width: 991px) {
+            .hero-image {
+                width: 40%;
+                max-width: 300px;
+                right: 5%;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-image {
+                position: static;
+                width: 70%;
+                margin: 2rem auto 0;
+            }
+            .hero-section {
+                text-align: center;
+                padding: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .btn-primary-custom {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <h1>Olá, Bem vindo ao Estagiup!</h1>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">EstagiUP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'vaga_list' %}">Vagas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre nós</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary-custom ms-2" href="#">Cadastrar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container">
-        <button class="btn btn-success">Outro Botão de Exemplo</button>
+    <!-- Hero Section -->
+    <div class="container my-5 pt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="hero-section text-center text-md-start position-relative p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 hero-text">
+                            <h1 class="display-4 fw-bold mb-3">Conectando talentos a oportunidades de estágio</h1>
+                            <p class="lead mb-4">EstagiUP é a plataforma ideal para estudantes encontrando estágios que impulsionam suas carreiras e para empresas que conectam os melhores talentos. Nossa missão é simplificar o processo de recrutamento e proporcionar experiências de aprendizado enriquecedoras.</p>
+                            <a href="#" class="btn btn-primary-custom btn-lg">Comece agora</a>
+                        </div>
+                        <div class="col-md-5 d-none d-md-block">
+                             <img src="{% static 'img/hero_image_placeholder.png' %}" onerror="this.onerror=null;this.src='https://placehold.co/400x300/2c1c40/e0cffc?text=EstagiUP+Hero';" alt="Pessoas trabalhando juntas em um projeto" class="hero-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Bootstrap JS local -->
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-</body>
+    <!-- Como o EstagiUP pode te ajudar -->
+    <div class="container my-5">
+        <h2 class="text-center section-title">Como o EstagiUP pode te ajudar</h2>
+        <p class="text-center section-subtitle">Descubra como nossa plataforma facilita a busca por estágios e a contratação de estagiários.</p>
 
+        <div class="row g-4 reveal-cards">
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Para estudantes</h5>
+                        <p class="card-text">Encontre estágios que se encaixam no seu perfil e desenvolvam suas habilidades. Explore vagas em diversas áreas, desde tecnologia a finanças, e acompanhe o status das suas aplicações em tempo real.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Para empresas</h5>
+                        <p class="card-text">Publique vagas de estágio e encontre talentos de forma rápida e eficiente. Utilize nossos filtros avançados para selecionar os melhores perfis e gerencie todo o processo seletivo, desde a triagem até a contratação, diretamente pela plataforma.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Recursos</h5>
+                        <p class="card-text">Acesso a artigos, guias e dicas exclusivas para se destacar no estágio, navegar no mercado de trabalho e impulsionar o desenvolvimento de carreira. Mantenha-se sempre atualizado com as últimas tendências do mercado e melhores práticas profissionais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Depoimentos -->
+    <div class="container my-5">
+        <h2 class="text-center section-title">O que dizem sobre nós</h2>
+        <p class="text-center section-subtitle">Veja o impacto positivo do EstagiUP na vida de estudantes e empresas.</p>
+
+        <div class="row g-4 reveal-testimonials">
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"Graças ao EstagiUP, consegui meu primeiro estágio na área de tecnologia em uma empresa incrível. O processo foi simples e as oportunidades eram exatamente o que eu procurava!"</p>
+                    <div class="author">- Ana Clara, Estudante de Engenharia de Software</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"Encontrar talentos para nossa equipe de estágio sempre foi um desafio. Com o EstagiUP, agilizamos nosso processo e encontramos candidatos altamente qualificados. Recomendo!"</p>
+                    <div class="author">- Dr. Lucas Mendes, Gerente de RH, Tech Solutions</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"A plataforma é muito intuitiva e a variedade de vagas é impressionante. Pude aplicar para várias oportunidades em diferentes cidades sem complicação."</p>
+                    <div class="author">- Carlos Eduardo, Estudante de Marketing</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"A função de acompanhamento de relatórios de estágio otimizou muito nossa supervisão. É uma ferramenta indispensável para instituições de ensino e empresas."</p>
+                    <div class="author">- Profa. Silvia Lima, Coordenadora de Estágios, Universidade XYZ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Conheça a equipe -->
+    <div class="container my-5">
+        <h2 class="text-center section-title">Conheça a equipe</h2>
+        <div class="row justify-content-center g-4 reveal-team">
+            <div class="col-md-3 col-sm-6">
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Guilherme" alt="Guilherme Nunes">
+                    <h5>Guilherme Nunes</h5>
+                    <p>Desenvolvedor Full Stack</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Yasmin" alt="Yasmin Schultz">
+                    <h5>Yasmin Schultz</h5>
+                    <p>Designer de Interface</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Eduardo" alt="Eduardo Guimarães">
+                    <h5>Eduardo Guimarães</h5>
+                    <p>Gerente de Produto</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="container my-5 text-center reveal-cta">
+        <h2 class="section-title">Pronto para começar?</h2>
+        <p class="lead section-subtitle">Cadastre-se agora e comece a explorar as oportunidades de estágio ou a recrutar os melhores talentos.</p>
+        <a href="#" class="btn btn-primary-custom btn-lg mt-3">Entre em contato</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5 style="color: #ffffff;">EstagiUP</h5>
+                    <p style="font-size: 0.9rem;">Conectando o futuro profissional.</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <ul class="list-unstyled">
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <div class="social-icons mb-3">
+                        <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-twitter"></i> -->X</a>
+                        <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-linkedin-in"></i> -->LinkedIn</a>
+                        <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-instagram"></i> -->Instagram</a>
+                    </div>
+                    <p style="font-size: 0.8rem;">&copy; 2024 EstagiUP. Todos os direitos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS local -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Script para ScrollReveal -->
+    <script>
+        ScrollReveal().reveal('.hero-section', { delay: 200, distance: '50px', origin: 'top', easing: 'ease-in-out' });
+        ScrollReveal().reveal('.section-title', { delay: 200, distance: '30px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
+        ScrollReveal().reveal('.section-subtitle', { delay: 300, distance: '30px', origin: 'bottom', easing: 'ease-in-out' });
+        ScrollReveal().reveal('.reveal-cards .card-custom', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
+        ScrollReveal().reveal('.reveal-testimonials .testimonial-card', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
+        ScrollReveal().reveal('.reveal-team .team-member', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
+        ScrollReveal().reveal('.reveal-cta', { delay: 300, distance: '50px', origin: 'bottom', easing: 'ease-in-out' });
+    </script>
+</body>
 </html>
