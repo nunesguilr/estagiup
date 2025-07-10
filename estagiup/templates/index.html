@@ -1,25 +1,78 @@
+{% extends '_base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bem vindo Estagiup</title>
+{% block title %}Página Inicial{% endblock %}
 
-    <!-- Bootstrap CSS local -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-</head>
+{% block content %}
 
-<body>
-    <h1>Olá, Bem vindo ao Estagiup!</h1>
+    <!-- Hero Section -->
+    <div class="container my-5 pt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="hero-section text-center text-md-start position-relative p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 hero-text">
+                            <h1 class="display-4 fw-bold mb-3">Conectando talentos a oportunidades de estágio</h1>
+                            <p class="lead mb-4">EstagiUP é a plataforma ideal para estudantes encontrando estágios que impulsionam suas carreiras e para empresas que conectam os melhores talentos. Nossa missão é simplificar o processo de recrutamento e proporcionar experiências de aprendizado enriquecedoras.</p>
+                            <a href="#" class="btn btn-primary-custom btn-lg">Comece agora</a>
+                        </div>
+                        <div class="col-md-5 d-none d-md-block">
+                             <img src="{% static 'img/hero_image_placeholder.png' %}" onerror="this.onerror=null;this.src='https://placehold.co/400x300/2c1c40/e0cffc?text=EstagiUP+Hero';" alt="Pessoas trabalhando juntas em um projeto" class="hero-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="container">
+    <!-- Como o EstagiUP pode te ajudar -->
+    <div class="container my-5">
+        <h2 class="text-center section-title">Como o EstagiUP pode te ajudar</h2>
+        <p class="text-center section-subtitle">Descubra como nossa plataforma facilita a busca por estágios e a contratação de estagiários.</p>
+
+        <div class="row g-4 reveal-cards">
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Para estudantes</h5>
+                        <p class="card-text">Encontre estágios que se encaixam no seu perfil e desenvolvam suas habilidades. Explore vagas em diversas áreas, desde tecnologia a finanças, e acompanhe o status das suas aplicações em tempo real.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Para empresas</h5>
+                        <p class="card-text">Publique vagas de estágio e encontre talentos de forma rápida e eficiente. Utilize nossos filtros avançados para selecionar os melhores perfis e gerencie todo o processo seletivo, desde a triagem até a contratação, diretamente pela plataforma.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Recursos</h5>
+                        <p class="card-text">Acesso a artigos, guias e dicas exclusivas para se destacar no estágio, navegar no mercado de trabalho e impulsionar o desenvolvimento de carreira. Mantenha-se sempre atualizado com as últimas tendências do mercado e melhores práticas profissionais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extra: saudação e botão da branch main -->
+    <div class="container my-5">
+        <h1>Olá, Bem vindo ao EstagiUP!</h1>
         <button class="btn btn-success">Outro Botão de Exemplo</button>
     </div>
 
-    <!-- Bootstrap JS local -->
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-</body>
+{% endblock %}
 
-</html>
+{% block scripts %}
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- ScrollReveal -->
+    <script>
+        ScrollReveal().reveal('.hero-section', { delay: 200, distance: '50px', origin: 'top', easing: 'ease-in-out' });
+        ScrollReveal().reveal('.section-title', { delay: 200, distance: '30px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
+        ScrollReveal().reveal('.section-subtitle', { delay: 300, distance: '30px', origin: 'bottom', easing: 'ease-in-out' });
+    </script>
+{% endblock %}

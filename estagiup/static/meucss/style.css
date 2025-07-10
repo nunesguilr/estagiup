@@ -1,0 +1,294 @@
+/* Importing Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #1a1024;
+    /* Fundo principal roxo escuro */
+    color: #e0cffc;
+    /* Cor do texto padrão (lilás claro) */
+    line-height: 1.6;
+    /* Melhorar legibilidade */
+}
+
+.navbar {
+    background-color: #2c1c40 !important;
+    /* Roxo escuro para a barra de navegação */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra sutil para profundidade */
+}
+
+.navbar-brand,
+.nav-link {
+    color: #e0cffc !important;
+    /* Texto da navbar lilás claro */
+    font-weight: 500;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+    color: #8a2be2 !important;
+    /* Roxo vibrante no hover */
+}
+
+.hero-section {
+    background-color: #2c1c40;
+    /* Seção principal */
+    border-radius: 15px;
+    /* Bordas arredondadas */
+    overflow: hidden;
+    /* Garante que a imagem respeite as bordas */
+    position: relative;
+    margin-top: 2rem;
+    padding: 3rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    /* Sombra mais pronunciada */
+}
+
+.hero-text h1 {
+    color: #ffffff;
+    /* Título principal branco */
+    font-weight: 700;
+    line-height: 1.2;
+    /* Melhorar espaçamento do título */
+}
+
+.hero-text p {
+    color: #e0cffc;
+    /* Parágrafo secundário lilás claro */
+    font-size: 1.15rem;
+    /* Levemente maior */
+}
+
+.hero-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    /* Ajuste o tamanho da imagem */
+    max-width: 450px;
+    /* Limite o tamanho máximo ligeiramente maior */
+    pointer-events: none;
+    /* Garante que não interfere com cliques no texto */
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.btn-primary-custom {
+    background-color: #8a2be2;
+    /* Botão roxo vibrante */
+    border-color: #8a2be2;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+    /* Bordas arredondadas para botões */
+    padding: 0.8rem 1.8rem;
+    /* Levemente maior */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Adiciona transição de transformação */
+}
+
+.btn-primary-custom:hover {
+    background-color: #7b24cc;
+    /* Tom mais escuro no hover */
+    border-color: #7b24cc;
+    transform: translateY(-2px);
+    /* Efeito de elevação no hover */
+}
+
+.section-title {
+    color: #ffffff;
+    font-weight: 700;
+    /* Mais negrito */
+    margin-top: 4rem;
+    /* Mais espaçamento superior */
+    margin-bottom: 2.5rem;
+    /* Mais espaçamento inferior */
+    font-size: 2.5rem;
+    /* Título maior */
+}
+
+.section-subtitle {
+    color: #b0a0c4;
+    font-size: 1.1rem;
+    margin-bottom: 3.5rem;
+}
+
+.card-custom {
+    background-color: #2c1c40;
+    /* Cartões roxo escuro */
+    border: none;
+    border-radius: 12px;
+    /* Bordas mais arredondadas */
+    color: #e0cffc;
+    padding: 2rem;
+    /* Mais padding */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra para os cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+    /* Efeito de elevação no hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-custom h5 {
+    color: #ffffff;
+    font-weight: 700;
+    /* Mais negrito */
+    margin-bottom: 1rem;
+}
+
+.team-member {
+    background-color: #2c1c40;
+    border-radius: 15px;
+    padding: 2rem;
+    /* Mais padding */
+    text-align: center;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.team-member img {
+    width: 130px;
+    /* Levemente maior */
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.2rem;
+    /* Mais espaçamento */
+    border: 4px solid #8a2be2;
+    /* Borda roxa vibrante mais grossa */
+    box-shadow: 0 0 0 5px rgba(138, 43, 226, 0.3);
+    /* Efeito de brilho */
+}
+
+.team-member h5 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.team-member p {
+    color: #e0cffc;
+    font-size: 0.95rem;
+}
+
+.testimonial-card {
+    background-color: #2c1c40;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: #e0cffc;
+}
+
+.testimonial-card .author {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer {
+    background-color: #1a1024;
+    padding: 3rem 0 2rem;
+    /* Ajuste padding */
+    margin-top: 5rem;
+    /* Mais espaçamento superior */
+    border-top: 1px solid #3a2e4c;
+    color: #b0a0c4;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: #b0a0c4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #8a2be2;
+}
+
+.social-icons a {
+    color: #e0cffc;
+    font-size: 1.6rem;
+    /* Ícones ligeiramente maiores */
+    margin: 0 0.6rem;
+    /* Mais espaçamento */
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+    color: #8a2be2;
+    transform: translateY(-2px);
+}
+
+/* Ajustes responsivos para a imagem do herói */
+@media (min-width: 769px) and (max-width: 991px) {
+    .hero-image {
+        width: 40%;
+        max-width: 300px;
+        right: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-image {
+        position: static;
+        width: 70%;
+        margin: 2rem auto 0;
+    }
+
+    .hero-section {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .btn-primary-custom {
+        padding: 0.6rem 1.2rem;
+    }
+}
+
+/* Estilos para o conteúdo principal */
+.main-content {
+  position: relative;
+  /* CRUCIAL: Empurra o conteúdo para fora da sidebar encolhida */
+  margin-left: 105px; 
+  padding: 2rem;
+  transition: all 0.4s ease;
+  width: calc(100% - 105px); /* Ocupa o resto do espaço */
+}
+
+/* Faz o conteúdo acompanhar a expansão da sidebar no hover */
+.sidebar:hover ~ .main-content {
+  margin-left: 280px; 
+  width: calc(100% - 280px);
+}

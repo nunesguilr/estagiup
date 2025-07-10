@@ -1,138 +1,68 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{% block title %}EstagiUp{% endblock %}</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Optional custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}EstagiUP{% endblock %} - Conectando talentos a oportunidades de estágio</title>
+    <!-- Bootstrap CSS local -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     <!-- ScrollReveal CDN para animações ao rolar -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+     <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'meucss/style.css' %}">
 </head>
-
 <body>
+    
+    {% include '_navbar.html' %}
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">EstagiUp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'vagas:listar' %}">Vagas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'estagios:listar' %}">Estágios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cursos:listar' %}">Cursos</a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Olá, {{ user.username }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Sair</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Entrar</a>
-                    </li>
-                    {% endif %}
+    <main>
+        {% block content %}
+            {% endblock %}
+    </main>
+    
+<!-- Footer -->
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5 style="color: #ffffff;">EstagiUP</h5>
+                <p style="font-size: 0.9rem;">Conectando o futuro profissional.</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <ul class="list-unstyled">
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Contato</a></li>
                 </ul>
             </div>
-        </div>
-    </nav>
-
-    <!-- Sidebar -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 250px; height: 100vh;">
-        <a href="{% url 'index' %}"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-            </svg>
-            <span class="fs-4">EstagiUp</span>
-        </a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="{% url 'vagas:listar' %}" class="nav-link link-dark">
-                    <i class="bi bi-briefcase"></i> Vagas
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'estagios:listar' %}" class="nav-link link-dark">
-                    <i class="bi bi-journal-check"></i> Estágios
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'cursos:listar' %}" class="nav-link link-dark">
-                    <i class="bi bi-book"></i> Cursos
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'notificacoes:listar' %}" class="nav-link link-dark">
-                    <i class="bi bi-bell"></i> Notificações
-                </a>
-            </li>
-        </ul>
-        <hr>
-        <div class="dropdown">
-            {% if user.is_authenticated %}
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://via.placeholder.com/32" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>{{ user.username }}</strong>
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
-            </ul>
-            {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary w-100">Entrar</a>
-            {% endif %}
+            <div class="col-md-4">
+                <div class="social-icons mb-3">
+                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-twitter"></i> -->X</a>
+                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-linkedin-in"></i> -->LinkedIn</a>
+                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-instagram"></i> -->Instagram</a>
+                </div>
+                <p style="font-size: 0.8rem;">&copy; 2024 EstagiUP. Todos os direitos reservados</p>
+            </div>
         </div>
     </div>
+</footer>
 
-    <!-- Side Bar 2 -->
-    <div class="d-flex">
-        {% include "_sidebar.html" %}
-        <div class="flex-fill p-4">
-            {% block content %}
-            <!-- Page-specific content -->
-            {% endblock %}
-        </div>
-    </div>
+<!-- Bootstrap Bundle with Popper JS local -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- Main content -->
-    <div class="container mt-4">
-        {% block content %}
-        <!-- Page content goes here -->
-        {% endblock %}
-    </div>
+{% block scripts %}
+<!-- Script para ScrollReveal -->
+<script>
+    ScrollReveal().reveal('.reveal-cards .card-custom', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
+    ScrollReveal().reveal('.reveal-testimonials .testimonial-card', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
+    ScrollReveal().reveal('.reveal-team .team-member', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
+    ScrollReveal().reveal('.reveal-cta', { delay: 300, distance: '50px', origin: 'bottom', easing: 'ease-in-out' });
+</script>
+{% endblock %}
 
-    <!-- Footer -->
-    <footer class="bg-light text-center text-muted py-3 mt-4">
-        <small>&copy; 2025 EstagiUp - Sistema de Controle e Divulgação de Estágios do Campus</small>
-    </footer>
-
-    <!-- Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    {% block extra_scripts %}
-    {% endblock %}
 </body>
-
 </html>

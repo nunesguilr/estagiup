@@ -1,44 +1,73 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 250px; height: 100vh;">
-  <a href="{% url 'index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-    <span class="fs-4">EstagiUp</span>
-  </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="{% url 'vagas:listar' %}" class="nav-link link-dark">
-        <i class="bi bi-briefcase"></i> Vagas
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'estagios:listar' %}" class="nav-link link-dark">
-        <i class="bi bi-journal-check"></i> Estágios
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'cursos:listar' %}" class="nav-link link-dark">
-        <i class="bi bi-book"></i> Cursos
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'notificacoes:listar' %}" class="nav-link link-dark">
-        <i class="bi bi-bell"></i> Notificações
-      </a>
-    </li>
-  </ul>
-  <hr>
-  <div class="dropdown">
-    {% if user.is_authenticated %}
-      <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://via.placeholder.com/32" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>{{ user.username }}</strong>
-      </a>
-      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
-        <li><a class="dropdown-item" href="#">Perfil</a></li>
-        <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
-      </ul>
-    {% else %}
-      <a href="{% url 'login' %}" class="btn btn-primary w-100">Entrar</a>
-    {% endif %}
-  </div>
-</div>
+<nav class="sidebar">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <i class='bx bx-briefcase-alt-2' style="font-size: 40px; color: #fff;"></i>
+            </span>
+
+            <div class="text logo-text">
+                <span class="name">EstagiUP</span>
+                <span class="profession">Dashboard</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">Meu Perfil</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-briefcase-alt-2 icon'></i>
+                        <span class="text nav-text">Minhas Vagas</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon'></i>
+                        <span class="text nav-text">Notificações</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="">
+                <a href="#">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">Sair</span>
+                </a>
+            </li>
+
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+
+        </div>
+    </div>
+</nav>
