@@ -58,86 +58,21 @@
         </div>
     </div>
 
-    <!-- Seção de Depoimentos -->
+    <!-- Extra: saudação e botão da branch main -->
     <div class="container my-5">
-        <h2 class="text-center section-title">O que dizem sobre nós</h2>
-        <p class="text-center section-subtitle">Veja o impacto positivo do EstagiUP na vida de estudantes e empresas.</p>
-
-        <div class="row g-4 reveal-testimonials">
-            <div class="col-md-6">
-                <div class="testimonial-card">
-                    <p>"Graças ao EstagiUP, consegui meu primeiro estágio na área de tecnologia em uma empresa incrível. O processo foi simples e as oportunidades eram exatamente o que eu procurava!"</p>
-                    <div class="author">- Ana Clara, Estudante de Engenharia de Software</div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="testimonial-card">
-                    <p>"Encontrar talentos para nossa equipe de estágio sempre foi um desafio. Com o EstagiUP, agilizamos nosso processo e encontramos candidatos altamente qualificados. Recomendo!"</p>
-                    <div class="author">- Dr. Lucas Mendes, Gerente de RH, Tech Solutions</div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="testimonial-card">
-                    <p>"A plataforma é muito intuitiva e a variedade de vagas é impressionante. Pude aplicar para várias oportunidades em diferentes cidades sem complicação."</p>
-                    <div class="author">- Carlos Eduardo, Estudante de Marketing</div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="testimonial-card">
-                    <p>"A função de acompanhamento de relatórios de estágio otimizou muito nossa supervisão. É uma ferramenta indispensável para instituições de ensino e empresas."</p>
-                    <div class="author">- Profa. Silvia Lima, Coordenadora de Estágios, Universidade XYZ</div>
-                </div>
-            </div>
-        </div>
+        <h1>Olá, Bem vindo ao EstagiUP!</h1>
+        <button class="btn btn-success">Outro Botão de Exemplo</button>
     </div>
 
+{% endblock %}
 
-    <!-- Conheça a equipe -->
-    <div class="container my-5">
-        <h2 class="text-center section-title">Conheça a equipe</h2>
-        <div class="row justify-content-center g-4 reveal-team">
-            <div class="col-md-3 col-sm-6">
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Guilherme" alt="Guilherme Nunes">
-                    <h5>Guilherme Nunes</h5>
-                    <p>Desenvolvedor Full Stack</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Yasmin" alt="Yasmin Schultz">
-                    <h5>Yasmin Schultz</h5>
-                    <p>Designer de Interface</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/8a2be2/ffffff?text=Eduardo" alt="Eduardo Guimarães">
-                    <h5>Eduardo Guimarães</h5>
-                    <p>Gerente de Produto</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Call to Action -->
-    <div class="container my-5 text-center reveal-cta">
-        <h2 class="section-title">Pronto para começar?</h2>
-        <p class="lead section-subtitle">Cadastre-se agora e comece a explorar as oportunidades de estágio ou a recrutar os melhores talentos.</p>
-        <a href="#" class="btn btn-primary-custom btn-lg mt-3">Entre em contato</a>
-    </div>
-
-    {% endblock %}
-
-    {% block scripts %}
-    <!-- Bootstrap Bundle with Popper JS local -->
+{% block scripts %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- Script para ScrollReveal -->
+    <!-- ScrollReveal -->
     <script>
         ScrollReveal().reveal('.hero-section', { delay: 200, distance: '50px', origin: 'top', easing: 'ease-in-out' });
         ScrollReveal().reveal('.section-title', { delay: 200, distance: '30px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
         ScrollReveal().reveal('.section-subtitle', { delay: 300, distance: '30px', origin: 'bottom', easing: 'ease-in-out' });
-        // Adicione os outros reveals aqui
     </script>
-    {% endblock %}
+{% endblock %}
