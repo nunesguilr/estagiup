@@ -1,46 +1,73 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <i class="bi bi-rocket-takeoff-fill me-2" style="font-size: 2rem;"></i>
-        <span class="fs-4">EstagiUP</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="{% url 'dashboard' %}" class="nav-link active" aria-current="page">
-                <i class="bi bi-house-door-fill me-2"></i>
-                Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <i class="bi bi-person-circle me-2"></i>
-                Meu Perfil
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <i class="bi bi-briefcase-fill me-2"></i>
-                Minhas Vagas
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <i class="bi bi-bell-fill me-2"></i>
-                Notificações
-            </a>
-        </li>
-    </ul>
-    <hr>
-    <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://placehold.co/32x32/ffffff/8a2be2?text=E" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>Eduardo</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#">Configurações</a></li>
-            <li><a class="dropdown-item" href="#">Perfil</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sair</a></li>
-        </ul>
+<nav class="sidebar">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <i class='bx bx-briefcase-alt-2' style="font-size: 40px; color: #fff;"></i>
+            </span>
+
+            <div class="text logo-text">
+                <span class="name">EstagiUP</span>
+                <span class="profession">Dashboard</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-user icon'></i>
+                        <span class="text nav-text">Meu Perfil</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-briefcase-alt-2 icon'></i>
+                        <span class="text nav-text">Minhas Vagas</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon'></i>
+                        <span class="text nav-text">Notificações</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="bottom-content">
+            <li class="">
+                <a href="#">
+                    <i class='bx bx-log-out icon'></i>
+                    <span class="text nav-text">Sair</span>
+                </a>
+            </li>
+
+            <li class="mode">
+                <div class="sun-moon">
+                    <i class='bx bx-moon icon moon'></i>
+                    <i class='bx bx-sun icon sun'></i>
+                </div>
+                <span class="mode-text text">Dark Mode</span>
+
+                <div class="toggle-switch">
+                    <span class="switch"></span>
+                </div>
+            </li>
+
+        </div>
     </div>
-</div>
+</nav>

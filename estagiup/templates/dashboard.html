@@ -2,28 +2,20 @@
 {% load static %} 
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'meucss/dashboard.css' %}">
 {% endblock %}
 {% block title %}Meu Dashboard{% endblock %}
 
 {% block content %}
 
-    <style>
-        body {
-            background-color: #2c1c40;
-            color: #e0cffc;
-        }
-    </style>
-    <body>
-        
-    
+    <!-- Hero Section -->
     <div class="container my-5 pt-3">
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="hero-section dashboard-hero text-center text-md-start position-relative p-4 rounded">
                     <div class="row align-items-center">
                         <div class="col-md-7 hero-text">
-                            <h1 class="display-4 fw-bold mb-3 text-white">Bem-vindo ao seu Dashboard, Eduardo!</h1>
+                            <h1 class="display-4 fw-bold mb-3">Bem-vindo ao seu Dashboard, Eduardo!</h1>
                             <p class="lead mb-4 text-e0cffc">Aqui você poderá gerenciar suas aplicações, perfil e muito mais.</p>
                         </div>
                         <div class="col-md-5 d-none d-md-block">
@@ -38,7 +30,7 @@
             <div class="col-md-4">
                 <div class="card-custom dashboard-card text-center">
                     <div class="card-body">
-                        <h5 class="card-title mb-3 text-white">Vagas Aplicadas</h5>
+                        <h5 class="card-title mb-3">Vagas Aplicadas</h5>
                         <h3 class="card-text display-5 text-primary-custom">5</h3>
                         <p class="card-text text-e0cffc">Você aplicou para 5 vagas este mês.</p>
                     </div>
@@ -47,7 +39,7 @@
             <div class="col-md-4">
                 <div class="card-custom dashboard-card text-center">
                     <div class="card-body">
-                        <h5 class="card-title mb-3 text-white">Notificações</h5>
+                        <h5 class="card-title mb-3">Notificações</h5>
                         <h3 class="card-text display-5 text-warning">2 Novas</h3>
                         <p class="card-text text-e0cffc">Você tem 2 novas notificações não lidas.</p>
                     </div>
@@ -56,7 +48,7 @@
             <div class="col-md-4">
                 <div class="card-custom dashboard-card text-center">
                     <div class="card-body">
-                        <h5 class="card-title mb-3 text-white">Próximas Entrevistas</h5>
+                        <h5 class="card-title mb-3">Próximas Entrevistas</h5>
                         <h3 class="card-text display-5 text-success">1</h3>
                         <p class="card-text text-e0cffc">Você tem 1 entrevista agendada.</p>
                     </div>
@@ -64,5 +56,24 @@
             </div>
         </div>
     </div>
-    </body>
+
+     <div class="mt-5">
+        <h2 class="mb-4">Últimas Vagas</h2>
+        
+        <div class="row g-4">  {% for vaga in ultimas_vagas %}
+                <div class="col-lg-4 col-md-6"> <div class="card-custom h-100"> <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ vaga.titulo }}</h5>
+                            <p class="card-text flex-grow-1">{{ vaga.descricao }}</p>
+                            <a href="#" class="btn btn-primary-custom mt-auto">Ver Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p>Nenhuma vaga encontrada no momento.</p>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
 {% endblock %}
