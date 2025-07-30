@@ -1,5 +1,6 @@
 # Ignorar pastas de cache do Python
 __pycache__/
+migrations/ 
 
 # Ignorar arquivos compilados do Python
 *.pyc
