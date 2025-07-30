@@ -1,0 +1,12 @@
+# Ignorar pastas de cache do Python
+__pycache__/
+
+# Ignorar arquivos compilados do Python
+*.pyc
+
+# Outros arquivos comuns para Django/Python
+db.sqlite3
+.env
+venv/
+env/
+*.log
