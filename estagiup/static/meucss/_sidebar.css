@@ -66,7 +66,6 @@ body {
     transition: var(--tran-04);
 }
 
-/* ===== Reusable code - Here ===== */
 .sidebar li {
     height: 50px;
     list-style: none;
@@ -115,14 +114,10 @@ body {
 .sidebar.close .text {
     opacity: 0;
     pointer-events: none;
-    /* Impede que o texto invisível bloqueie o clique no ícone */
 }
 
 /* Garante que o link inteiro permaneça um alvo clicável */
 .sidebar li a {
-    list-style: none;
-    height: 100%;
-    background-color: transparent;
     display: flex;
     align-items: center;
     height: 100%;
@@ -130,6 +125,10 @@ body {
     border-radius: 6px;
     text-decoration: none;
     transition: var(--tran-03);
+}
+
+.sidebar li a ol, ul {
+  padding-left: 0rem;
 }
 
 /* =========================== */
@@ -175,7 +174,7 @@ header .image-text .profession {
 .sidebar header .toggle {
   position: absolute;
   top: 50%;
-  right: 10px; 
+  right: -30px; 
   transform: translateY(-50%) rotate(180deg);
   height: 25px;
   width: 25px;
@@ -219,26 +218,13 @@ header .image-text .profession {
     transition: var(--tran-05);
 }
 
-.sidebar li a {
-    list-style: none;
-    height: 100%;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: var(--tran-03);
-}
-
 .sidebar li a:hover {
     background-color: var(--primary-color);
 }
 
 .sidebar li a:hover .icon,
 .sidebar li a:hover .text {
-    color: var(--sidebar-color);
+     color: #fff; 
 }
 
 .sidebar .menu-bar {
@@ -290,7 +276,6 @@ header .image-text .profession {
     width: calc(100% - 88px);
 }
 
-/* Estilo PADRÃO (Light Mode) para os cards */
 .card-custom {
     background-color: #2c1c40;
     border: 1px solid #a87ddb;
@@ -329,18 +314,4 @@ h2 {
 .hero-section p {
     color: #ffffff;
     /* Texto cinza */
-}
-
-/* =============================================== */
-/* GARANTIA DE FUNCIONAMENTO DOS ÍCONES BOXICONS   */
-/* =============================================== */
-.bx {
-  font-family: "boxicons" !important;
-  font-weight: normal;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
