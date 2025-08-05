@@ -4,11 +4,8 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: #1a1024;
-    /* Fundo principal roxo escuro */
     color: #e0cffc;
-    /* Cor do texto padrão (lilás claro) */
     line-height: 1.6;
-    /* Melhorar legibilidade */
 }
 
 .navbar {

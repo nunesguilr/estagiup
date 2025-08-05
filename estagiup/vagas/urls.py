@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'vagas'  # Define um "nome de família" para essas URLs
+
 urlpatterns = [
     path('', views.vaga_list, name='vaga_list'),
     path('<int:pk>/', views.vaga_detail, name='vaga_detail'),

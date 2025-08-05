@@ -4,7 +4,6 @@
             <span class="image">
                 <i class='bx bx-briefcase-alt-2' style="font-size: 40px; color: #fff;"></i>
             </span>
-
             <div class="text logo-text">
                 <span class="name">EstagiUP</span>
                 <span class="profession">Dashboard</span>
@@ -13,12 +12,12 @@
 
         <i class='bx bx-chevron-right toggle'></i>
     </header>
-
+    
     <div class="menu-bar">
         <div class="menu">
             <ul class="menu-links">
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="{% url 'dashboard' %}">
                         <i class='bx bx-home-alt icon'></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
@@ -32,7 +31,7 @@
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="{% url 'vagas:vaga_list' %}">
                         <i class='bx bx-briefcase-alt-2 icon'></i>
                         <span class="text nav-text">Minhas Vagas</span>
                     </a>

@@ -13,5 +13,5 @@ urlpatterns = [
     path('notificacoes/', include('notificacoes.urls')),
    
     path('', views.index, name='home'),
-     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
 ]

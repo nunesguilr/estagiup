@@ -8,6 +8,9 @@ def vaga_list(request):
     vagas = Vaga.objects.all()
     return render(request, 'vagas/vaga_list.html', {'vagas': vagas})
 
+    context = {}
+    return render(request, 'vagas/vaga_list.html', context)
+
 def vaga_detail(request, pk):
     vaga = get_object_or_404(Vaga, pk=pk)
     return render(request, 'vagas/vaga_detail.html', {'vaga': vaga})
