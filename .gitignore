@@ -1,13 +1,36 @@
-# Ignorar pastas de cache do Python
+# Ignorar pycache
 __pycache__/
-migrations/ 
+**/__pycache__/
+*.py[cod]
+*.pyo
 
 # Ignorar arquivos compilados do Python
 *.pyc
+*.pyd
+*.pyo
+*.pyd
 
-# Outros arquivos comuns para Django/Python
-db.sqlite3
-.env
-venv/
+# Ignorar arquivos de migrations já compilados
+*.pyc
+
+# Pastas de cache do Python
+*.egg-info/
+.eggs/
+*.egg
+
+# Banco de dados SQLite (se usado)
+*.sqlite3
+
+# Ambiente virtual (caso use virtualenv)
 env/
-*.log
+venv/
+ENV/
+.venv/
+
+# Arquivos de IDEs (VS Code, PyCharm etc.)
+.vscode/
+.idea/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
