@@ -19,9 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cursos',
-    'vagas',
-    'estagios',
+    'curso',
+    'vaga',
+    'estagio',
     'instituicao',
     'usuario',
 ]
