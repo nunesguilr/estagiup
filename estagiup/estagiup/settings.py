@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'estagio',
     'instituicao',
     'usuario',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
