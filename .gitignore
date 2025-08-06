@@ -8,10 +8,6 @@ __pycache__/
 *.pyc
 *.pyd
 *.pyo
-*.pyd
-
-# Ignorar arquivos de migrations já compilados
-*.pyc
 
 # Pastas de cache do Python
 *.egg-info/
@@ -34,3 +30,6 @@ ENV/
 # Arquivos de sistema
 .DS_Store
 Thumbs.db
+
+# Ignorar pastas de migrations dentro dos apps
+*/migrations/
