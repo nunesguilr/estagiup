@@ -289,3 +289,91 @@ body {
   margin-left: 280px; 
   width: calc(100% - 280px);
 }
+
+/* ========================================= */
+/* NOVOS ESTILOS PARA A HOMEPAGE V2          */
+/* ========================================= */
+
+.page-wrapper {
+    background-color: #F0F2F5; /* Fundo cinza claro para a parte de cima */
+    color: #1a1024; /* Texto escuro para contraste */
+}
+
+/* Nova Seção Hero */
+.hero-v2 {
+    padding: 6rem 0;
+}
+
+.hero-v2-text h1 {
+    color: #1a1024;
+    line-height: 1em;
+    font-size: 2.8rem;
+    text-align: end;
+}
+
+.hero-v2-text p {
+    color: #1a1024;
+    text-align: justify;
+}
+
+.hero-v2-buttons .btn-outline-light {
+    border-color: #1a1024;
+    color: #1a1024;
+}
+
+.hero-v2-buttons .btn-outline-light:hover {
+    background-color: #1a1024;
+    color: #fff;
+}
+
+/* Seção de Ícones */
+.features-section {
+    background-color: #1a1024; /* Fundo roxo escuro */
+    color: #e0cffc; /* Texto lilás claro */
+    padding: 8rem 0 4rem;
+    position: relative;
+}
+
+/* Curva no topo da seção de ícones */
+.features-curve {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: translateY(-99%); /* Puxa a curva para cima */
+}
+
+/* Itens circulares com ícones */
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    transition: transform 0.3s ease;
+}
+
+.feature-icon img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.feature-item:hover .feature-icon {
+    transform: scale(1.1) translateY(-5px);
+}
+
+.feature-item p {
+    font-weight: 500;
+}
