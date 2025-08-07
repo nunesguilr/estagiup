@@ -5,6 +5,10 @@ def index(request):
     context = {}
     return render(request, 'index.html', {'message': 'Bem-vindo ao EstagiUP!'})
     
+def sobre_view(request):
+    # Esta view por enquanto só precisa mostrar a página
+    return render(request, 'sobre.html')
+
 def dashboard_view(request):
     # No futuro, estes dados virão do banco de dados de verdade.
     # Por agora, é só um exemplo para o template funcionar.
@@ -27,3 +31,4 @@ def dashboard_view(request):
         'ultimas_vagas': vagas_exemplo
     }
     return render(request, 'dashboard.html', context)
+

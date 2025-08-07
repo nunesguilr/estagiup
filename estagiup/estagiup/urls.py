@@ -11,6 +11,7 @@ urlpatterns = [
     path('estagios/', include('estagios.urls')),
     path('avaliacoes/', include('avaliacoes.urls')),
     path('notificacoes/', include('notificacoes.urls')),
+    path('sobre/', views.sobre_view, name='sobre'),
    
     path('', views.index, name='home'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
