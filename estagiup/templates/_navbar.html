@@ -1,7 +1,14 @@
+ {% load static %}
  <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
+<<<<<<< HEAD
             <a class="navbar-brand" href="{% url 'home' %}">EstagiUP</a>
+=======
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'image/logo.png' %}" alt="Logo EstagiUP" style="height: 50px;">
+            </a>
+>>>>>>> be66aef (- 07/08 Commit)
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -17,7 +24,7 @@
                         <a class="nav-link" href="#">Empresas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre nós</a>
+                        <a class="nav-link" href="{% url 'sobre' %}">Sobre nós</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Entrar</a>

@@ -1,46 +1,79 @@
-{% extends '_base_dashboard.html' %}
+{% extends '_base.html' %}
+{% block body_class %}theme-light{% endblock %}
 {% load static %}
 
-{% block title %}Gerenciar Vagas{% endblock %}
+{% block title %}Vagas de Estágio{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
+<div class="container my-5">
+    <div class="row">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-white">Gerenciamento de Vagas</h1>
-        <a href="#" class="btn btn-primary-custom">
-            <i class='bx bx-plus icon' style="min-width: auto; margin-right: 0.5rem;"></i>
-            Criar Nova Vaga
-        </a>
-    </div>
-
-    <div class="row g-4">
-        {% for vaga in vagas %}
-            <div class="col-12">
-                <div class="card-custom">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5 class="card-title mb-1">{{ vaga.titulo }}</h5>
-                            <p class="card-text text-muted mb-0">{{ vaga.empresa }} - {{ vaga.localizacao }}</p>
-                        </div>
-                        <div>
-                            <a href="#" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
-                            <a href="#" class="btn btn-outline-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-outline-danger btn-sm">Excluir</a>
-                        </div>
-                    </div>
+        <div class="col-lg-3">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">Filtrar Vagas</h5>
+                <div class="mb-3">
+                    <label for="searchInput" class="text-white form-label">Buscar por Palavras-Chave</label>
+                    <input type="text" class="text-white form-control form-control-dark" id="searchInput" placeholder="Ex: Desenvolvedor">
                 </div>
             </div>
-        {% empty %}
-            <div class="col-12">
-                <div class="card-custom text-center">
-                    <div class="card-body">
-                        <p class="mb-0">Nenhuma vaga cadastrada no sistema ainda.</p>
-                    </div>
+        </div>
+
+        <div class="col-lg-9">
+            <h1 class="text-center display-4 fw-bold mb-4">DIVULGAÇÃO DE VAGAS</h1>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="mb-0">Confira as vagas disponíveis para você:</p>
+                <div class="view-toggle">
+                    <button id="btn-list-view" class="btn btn-sm btn-outline-light">Linhas</button>
+                    <button id="btn-grid-view" class="btn btn-sm btn-primary-custom active">Colun.</button>
                 </div>
             </div>
-        {% endfor %}
-    </div>
 
+            <div id="vagas-container" class="grid-view">
+                <div class="row g-4">
+                    {% for vaga in vagas %}
+                        <div class="col-md-6 vaga-card-grid">
+                            <a href="{% url 'vagas:vaga_detail' vaga.pk %}" class="card-link">
+                                <div class="card-custom h-100">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>
+                                        <span class="status-badge">{{ vaga.status }}</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="small text-muted">{{ vaga.prazo }}</p>
+                                        <img src="https://placehold.co/300x150/2c1c40/e0cffc?text=Imagem+da+Vaga" class="img-fluid rounded my-3" alt="Imagem da vaga">
+                                        <p><strong>Instituição:</strong> {{ vaga.instituicao_relacionada }}</p>
+                                        <p><strong>Curso:</strong> {{ vaga.curso_relacionado }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-12 vaga-card-list">
+                            <a href="{% url 'vagas:vaga_detail' vaga.pk %}" class="card-link">
+                                <div class="card-custom">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="https://placehold.co/100x80/2c1c40/e0cffc?text=Img" class="img-fluid rounded me-4" alt="Imagem da vaga">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title">{{ vaga.titulo }}</h5>
+                                            <p class="small text-muted mb-1">{{ vaga.prazo }}</p>
+                                            <p class="mb-0"><strong>Instituição:</strong> {{ vaga.instituicao_relacionada }} | <strong>Curso:</strong> {{ vaga.curso_relacionado }}</p>
+                                        </div>
+                                        <span class="status-badge ms-4">{{ vaga.status }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="text-white glass-card p-5 text-center">
+                                <p>Nenhuma vaga encontrada no momento.</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -4,6 +4,7 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 
     <!-- Hero Section -->
     <div class="container my-5 pt-5">
@@ -19,11 +20,104 @@
                         <div class="col-md-5 d-none d-md-block">
                              <img src="{% static 'img/hero_image_placeholder.png' %}" onerror="this.onerror=null;this.src='https://placehold.co/400x300/2c1c40/e0cffc?text=EstagiUP+Hero';" alt="Pessoas trabalhando juntas em um projeto" class="hero-image img-fluid">
                         </div>
+=======
+<div class="page-wrapper">
+    <section class="hero-v2 container text-center text-md-start">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="hero-v2-graphic">
+                    <img src="{% static 'image/image-inicial-home.png' %}" alt="Ilustração 3D de estudantes e profissionais" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-6 hero-v2-text">
+                <h1 class="display-3 fw-bold">Divulgue e Controle ESTÁGIOS aqui e agora!!!</h1>
+                <p class="lead my-4">O <span style="font-weight: bold;">Sistema de Estágios</span> lhe proporciona criar contas, desenvolver atividades, e compartilhá-las, além de editar e excluir.</p>
+                <div class="hero-v2-buttons">
+                    <a href="#" class="btn btn-primary-custom btn-lg">Cadastrar</a>
+                    <a href="#" class="btn btn-outline-light btn-lg">Entrar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+         <h2 class="text-center section-title">Explore as possibilidades do nosso Sistema: </h2>
+        <div class="container">
+            <div class="row g-4 text-center justify-content-center">
+
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <img src="{% static 'image/icon-instituicoes.png' %}" alt="Ícone de Instituições">
+                        </div>
+                        <p>Instituições</p>
                     </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <img src="{% static 'image/icon-orientadores.png' %}" alt="Ícone de Orientadores">
+                        </div>
+                        <p>Orientadores</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <a href="{% url 'vagas:vaga_list' %}"><img src="{% static 'image/icon-vagas.png' %}" alt="Ícone de Vagas"></a>
+                        </div>
+                        <p>Vagas</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <img src="{% static 'image/icon-empresas.png' %}" alt="Ícone de Empresas">
+                        </div>
+                        <p>Empresas</p>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <img src="{% static 'image/icon-estagiarios.png' %}" alt="Ícone de Estagiários">
+                        </div>
+                        <p>Estagiários</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+    <!-- Hero Section -->
+    <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card-custom p-5">
+                <div class="row align-items-center">
+                    
+                    <div class="col-md-7 text-center text-md-start">
+                        <h1 class="display-4 fw-bold mb-3" style="font-size: 44px;">Conectando talentos a oportunidades de estágio</h1>
+                        <p class="lead mb-4">EstagiUP é a plataforma ideal para estudantes encontrando estágios que impulsionam suas carreiras e para empresas que conectam os melhores talentos.</p>
+                        <a href="#" class="btn btn-primary-custom btn-lg">Comece agora</a>
+>>>>>>> be66aef (- 07/08 Commit)
+                    </div>
+                    
+                    <div class="col-md-5 d-none d-md-block">
+                        <img src="{% static 'image/teste.jpg' %}" alt="Pessoas trabalhando juntas em um projeto" class="img-fluid rounded-3">
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Como o EstagiUP pode te ajudar -->
     <div class="container my-5">
@@ -57,13 +151,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Extra: saudação e botão da branch main -->
-    <div class="container my-5">
-        <h1>Olá, Bem vindo ao EstagiUP!</h1>
-        <button class="btn btn-success">Outro Botão de Exemplo</button>
-    </div>
-
 {% endblock %}
 
 {% block scripts %}

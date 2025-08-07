@@ -1,0 +1,132 @@
+/* Estilo para o cartão de vidro dos filtros */
+body {
+    padding-top: 70px; 
+}
+
+.glass-card {
+    background: rgba(44, 28, 64, 0.5); /* Roxo escuro com transparência */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Para Safari */
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para o campo de busca no tema escuro */
+.form-control-dark {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0cffc;
+}
+.form-control-dark::placeholder {
+    color: #b0a0c4;
+}
+.form-control-dark:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border-color: #8a2be2;
+    box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.25);
+}
+
+/* Estilo para os cards de cada vaga */
+.vaga-card {
+    background: #2c1c40; /* Mesmo roxo dos cards da home */
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.vaga-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+.vaga-card .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilos para o alternador de visualização */
+.view-toggle button {
+    border-radius: 20px;
+    padding: 0.25rem 1rem;
+}
+.view-toggle button.active {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #6133D3 !important;
+}
+
+/* Regra para esconder/mostrar as visualizações */
+.list-view .vaga-card-grid,
+.grid-view .vaga-card-list {
+    display: none;
+}
+
+/* Estilos para o card em modo GRADE */
+.vaga-card-grid .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.status-badge {
+    background-color: #f39c12; /* Cor laranja para status */
+    color: #1a1024;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ================================================= */
+/* TEMA CLARO REFORÇADO PARA A PÁGINA DE VAGAS       */
+/* ================================================= */
+
+
+.theme-light {
+    background-color: #F2EDF3 !important;
+    color: #333; /* Cor de texto padrão escura */
+}
+
+.theme-light h1, 
+.theme-light h2, 
+.theme-light h3, 
+.theme-light h4, 
+.theme-light h5 {
+    color: #18191a;
+}
+
+.theme-light .glass-card {
+    background: rgba(41, 0, 65, 0.75); /* Um pouco mais opaco */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid #E0E0E0; /* Borda visível para definir o contorno */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra sutil para dar profundidade */
+}
+
+/* Card de vaga no tema claro com mais contraste */
+.theme-light .vaga-card {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.theme-light .vaga-card .card-text {
+    color: #555; /* Texto secundário cinza escuro */
+}
+
+.theme-light .vaga-card .text-muted {
+    color: #707070 !important;
+}
+
+.theme-light .view-toggle button.btn-outline-light {
+    color: #444;
+    border-color: #AAA;
+}
+
+.theme-light .view-toggle button.btn-outline-light:hover {
+    background-color: #E0E0E0;
+}
