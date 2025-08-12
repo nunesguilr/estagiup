@@ -15,7 +15,7 @@
                 <div class="hero-section dashboard-hero text-center text-md-start position-relative p-4 rounded">
                     <div class="row align-items-center">
                         <div class="col-md-7 hero-text">
-                            <h1 class="display-4 fw-bold mb-3">Bem-vindo ao seu Dashboard, Eduardo!</h1>
+                            <h1 class="display-4 fw-bold mb-3">Bem-vindo ao seu Dashboard, {{ request.user.username }}!</h1>
                             <p class="lead mb-4 text-e0cffc">Aqui você poderá gerenciar suas aplicações, perfil e muito mais.</p>
                         </div>
                         <div class="col-md-5 d-none d-md-block">
@@ -57,15 +57,15 @@
         </div>
     </div>
 
-     <div class="mt-5">
+      <div class="mt-5">
         <h2 class="mb-4">Últimas Vagas</h2>
         
-        <div class="row g-4">  {% for vaga in ultimas_vagas %}
+        <div class="row g-4">   {% for vaga in ultimas_vagas %}
                 <div class="col-lg-4 col-md-6"> <div class="card-custom h-100"> <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ vaga.titulo }}</h5>
-                            <p class="card-text flex-grow-1">{{ vaga.descricao }}</p>
-                            <a href="#" class="btn btn-primary-custom mt-auto">Ver Detalhes</a>
-                        </div>
+                                <h5 class="card-title">{{ vaga.titulo }}</h5>
+                                <p class="card-text flex-grow-1">{{ vaga.descricao }}</p>
+                                <a href="#" class="btn btn-primary-custom mt-auto">Ver Detalhes</a>
+                            </div>
                     </div>
                 </div>
             {% empty %}

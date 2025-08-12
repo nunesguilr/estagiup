@@ -1,0 +1,35 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Utilizadores Registados</h2>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover rounded-3 overflow-hidden">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome de Utilizador</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Grupo(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_profile in todos_usuarios %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ user_profile.user.username }}</td>
+                    <td>{{ user_profile.user.email }}</td>
+                    <td>
+                        {% for group in user_profile.user.groups.all %}
+                            <span class="badge bg-secondary me-1">{{ group.name }}</span>
+                        {% empty %}
+                            <span class="badge bg-warning text-dark">Sem Grupo</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Nenhum utilizador registado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
