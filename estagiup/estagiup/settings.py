@@ -19,12 +19,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'contas',
-    'cursos',
-    'vagas',
-    'estagios',
-    'avaliacoes',
-    'notificacoes',
+    'curso',
+    'vaga',
+    'estagio',
+    'instituicao',
+    'usuario',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
