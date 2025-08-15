@@ -10,12 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'image/icon2.svg' %}">
      <!-- ScrollReveal CDN para animações ao rolar -->
     <script src="https://unpkg.com/scrollreveal"></script>
      <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'meucss/style.css' %}">
+    <link rel="stylesheet" href="{% static 'meucss/vagas.css' %}">
+    <link rel="stylesheet" href="{% static 'meucss/sobre.css' %}">
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     
     {% include '_navbar.html' %}
 
@@ -53,6 +56,7 @@
 
 <!-- Bootstrap Bundle with Popper JS local -->
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/vagas_config.js' %}"></script>
 
 {% block scripts %}
 <!-- Script para ScrollReveal -->
