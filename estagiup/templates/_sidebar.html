@@ -1,8 +1,10 @@
+{% load static %}
+
 <nav class="sidebar">
     <header>
         <div class="image-text">
             <span class="image">
-                <i class='bx bx-briefcase-alt-2' style="font-size: 40px; color: #fff;"></i>
+                 <img src="{% static 'image/icon.svg' %}" alt="Icon EstagiUP" class="img-fluid">
             </span>
             <div class="text logo-text">
                 <span class="name">EstagiUP</span>
@@ -12,7 +14,7 @@
 
         <i class='bx bx-chevron-right toggle'></i>
     </header>
-    
+
     <div class="menu-bar">
         <div class="menu">
             <ul class="menu-links">
@@ -31,9 +33,9 @@
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="{% url 'vaga:vaga_list' %}">
                         <i class='bx bx-briefcase-alt-2 icon'></i>
-                        <span class="text nav-text">Minhas Vagas</span>
+                        <span class="text nav-text">Buscar Vagas</span>
                     </a>
                 </li>
 
@@ -44,12 +46,19 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{% url 'usuario:lista_usuarios' %}">
+                        <i class='bx bx-group icon'></i>
+                        <span class="text nav-text">Usuários</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
 
         <div class="bottom-content">
             <li class="">
-                <a href="#">
+                <a href="{% url 'home' %}">
                     <i class='bx bx-log-out icon'></i>
                     <span class="text nav-text">Sair</span>
                 </a>

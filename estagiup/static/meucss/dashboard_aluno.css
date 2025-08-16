@@ -1,0 +1,100 @@
+.text-primary-custom {
+    color: #8a2be2 !important;
+}
+.bg-primary-custom {
+    background-color: #8a2be2 !important;
+}
+
+/* Card de KPI (Key Performance Indicator) com gradiente */
+.kpi-card {
+    background: linear-gradient(145deg, rgba(44, 28, 64, 0.7), rgba(36, 37, 38, 0.7));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    height: 100%;
+    color: #e0cffc;
+}
+
+.kpi-card .display-5 {
+    color: #fff;
+}
+
+.progress {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    height: 30px !important;
+}
+.progress-bar {
+    border-radius: 15px;
+}
+
+/* Linha do Tempo com mais estilo */
+.timeline {
+    list-style: none;
+    padding: 0;
+}
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    padding-bottom: 25px;
+    border-left: 2px solid #8a2be2;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -11px; /* Centraliza a bolinha na linha */
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #8a2be2;
+    border: 4px solid #18191a; /* Cor de fundo do dashboard */
+}
+.timeline-item:last-child {
+    border-left: 2px solid transparent;
+    padding-bottom: 0;
+}
+.timeline-item strong {
+    color: #fff;
+}
+
+/* Estilo para a tabela de atividades */
+.table-dark-custom {
+    color: #e0cffc;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.table-dark-custom th, .table-dark-custom td {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.table-dark-custom thead th {
+    color: #fff;
+    border-bottom-width: 2px;
+}
+
+/* Estilo para o card de notificação */
+.announcement-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(44, 28, 64, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.announcement-icon {
+    font-size: 1.5rem;
+    color: #8a2be2;
+}
+
+.announcement-content strong {
+    color: #fff;
+}
+
+.table>:not(caption)>*>* {
+    padding: .5rem .5rem;
+    color: #e0cffc;
+}

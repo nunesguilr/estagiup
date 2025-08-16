@@ -1,0 +1,59 @@
+.user-card .card-custom {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.user-card .card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.badge.bg-primary-custom {
+    background-color: #8a2be2 !important; /* Roxo do EstagiUP */
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Remove a decoração do link que envolve a linha */
+.user-list-row-link {
+    text-decoration: none;
+}
+
+/* Estilo principal para a linha do usuário */
+.user-list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #2c1c40; /* Cor de fundo do card */
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-list-row:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Esconde a localização em telas pequenas (d-none d-md-block no HTML) */
+.user-location {
+    color: #b0a0c4;
+}
+
+.text-muted {
+    --bs-text-opacity: 1;
+    color: #8a2be2!important;
+}

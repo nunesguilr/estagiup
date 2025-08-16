@@ -1,50 +1,88 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
-    <!-- Inclua aqui seus arquivos CSS, se necessário -->
-    <style>
-        .errorlist {
-            color: red;
-            font-size: 0.9em;
-        }
-    </style>
-</head>
-<body>
-    <h1>Cadastro de Novo Usuário</h1>
+{% extends '_base.html' %}
+{% load static %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <h2>Dados de Login e Perfil</h2>
-        
-        {% if form.non_field_errors %}
+{% block body_class %}theme-light{% endblock %}
+
+{% block title %}Cadastro{% endblock %}
+
+{% block content %}
+<div class="container auth-wrapper">
+
+        <div class="glass-card-auth p-5">
+            <div class="text-center">
+                <h1 class="auth-title fw-bold display-4">FAÇA SEU CADASTRO</h1>
+                <p class="mb-4 fs-3">Este é o primeiro passo para você garantir sua vaga.</p>
+            </div>
+
+            <form method="post" class="auth-form">
+            {% csrf_token %}
+
+             {% if form.non_field_errors %}
             <div class="alert alert-danger">
                 {% for error in form.non_field_errors %}
                     {{ error }}
                 {% endfor %}
             </div>
-        {% endif %}
+            {% endif %}
 
-        {% for field in form %}
-            <p>
-                {{ field.label_tag }}<br>
-                {{ field }}
-                {% if field.help_text %}
-                    <br><small style="color: gray;">{{ field.help_text }}</small>
-                {% endif %}
-                {% if field.errors %}
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </p>
-        {% endfor %}
-        
-        <button type="submit">Cadastrar</button>
-    </form>
-</body>
-</html>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    <small class="form-text text-muted">{{ form.username.help_text|safe }}</small>
+                    {{ form.username.errors }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ form.telefone.label_tag }}
+                    {{ form.telefone }}
+                    {{ form.telefone.errors }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.password1.id_for_label }}">Senha</label>
+                    {{ form.password1 }}
+                    <small class="form-text text-muted">{{ form.password1.help_text|safe }}</small>
+                    {{ form.password1.errors }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.password2.id_for_label }}">Confirmação de Senha</label>
+                    {{ form.password2 }}
+                    <small class="form-text text-muted">{{ form.password2.help_text|safe }}</small>
+                    {{ form.password2.errors }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    {{ form.endereco.label_tag }}
+                    {{ form.endereco }}
+                    {{ form.endereco.errors }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    {{ form.group.label_tag }}
+                    {{ form.group }}
+                    {{ form.group.errors }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom btn-lg w-100 mt-3">Cadastrar</button>
+        </form>
+
+            <p class="mt-4 text-center">Já tem uma conta? <a href="{% url 'usuario:login' %}" class="auth-link">Clique aqui para Entrar</a></p>
+        </div>
+
+</div>
+{% endblock %}

@@ -16,8 +16,8 @@
                 <h1 class="display-3 fw-bold">Divulgue e Controle ESTÁGIOS aqui e agora!!!</h1>
                 <p class="lead my-4">O <span style="font-weight: bold;">Sistema de Estágios</span> lhe proporciona criar contas, desenvolver atividades, e compartilhá-las, além de editar e excluir.</p>
                 <div class="hero-v2-buttons">
-                    <a href="#" class="btn btn-primary-custom btn-lg">Cadastrar</a>
-                    <a href="#" class="btn btn-outline-light btn-lg">Entrar</a>
+                    <a href="{% url 'usuario:registrar' %}" class="btn btn-primary-custom btn-lg">Cadastrar</a>
+                    <a href="{% url 'usuario:login' %}" class="btn btn-outline-light btn-lg">Entrar</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <div class="col-6 col-md-4 col-lg-2">
                     <div class="feature-item">
                         <div class="feature-icon">
-                            <a href="{% url 'vagas:vaga_list' %}"><img src="{% static 'image/icon-vagas.png' %}" alt="Ícone de Vagas"></a>
+                            <a href="{% url 'vaga:vaga_list' %}"><img src="{% static 'image/icon-vagas.png' %}" alt="Ícone de Vagas"></a>
                         </div>
                         <p>Vagas</p>
                     </div>
@@ -135,8 +135,9 @@
     </div>
 {% endblock %}
 
-{% block scripts %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+{% block scripts %}
 
     <!-- ScrollReveal -->
     <script>
