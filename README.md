@@ -95,13 +95,12 @@ A aplicação estará disponível em [http://127.0.0.1:8000](http://127.0.0.1:80
 * **Backend:** Django
 * **Banco de Dados:** SQLite (padrão)
 * **Ferramentas:** django-extensions, pygraphviz
-* **Automação:** GoLang (ferramenta externa)
 
 ## 👥 Participantes do Projeto
 
-* **Guilherme Nunes:** Desenvolvedor Full-stack
-* **Eduardo Guimarães:** Desenvolvedor Front-end
-* **Yasmin Schultz:** Contribuidora e diagramadora
+* **[Guilherme Nunes:](https://github.com/nunesguilr)** Desenvolvedor Full-stack
+* **[Eduardo Guimarães:](https://github.com/Eduardo-Guimaraes1480)** Desenvolvedor Front-end
+* **[Yasmin Schultz:](https://github.com/yasminschultz)** Contribuidora e diagramadora
 
 ## 🛡️ Permissões de CRUD
 
