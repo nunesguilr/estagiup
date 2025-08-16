@@ -9,12 +9,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
+               <ul class="navbar-nav ms-auto align-items-center">
+
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Vagas</a>
+                        <a class="nav-link" href="{% url 'vaga:vaga_list' %}">Vagas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Empresas</a>
@@ -22,12 +23,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'sobre' %}">Sobre nós</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Entrar</a>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle" style="font-size: 1.8rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'usuario:login' %}">Entrar</a></li>
+                            <li><a class="dropdown-item" href="{% url 'usuario:registrar' %}">Cadastrar</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary-custom ms-2" href="#">Cadastrar</a>
-                    </li>
+
                 </ul>
             </div>
         </div>

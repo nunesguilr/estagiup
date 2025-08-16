@@ -1,4 +1,5 @@
 from django.shortcuts import render
+# from django.contrib.auth.decorators import login_required # Usaremos no futuro
 
 def index(request):
 
@@ -9,7 +10,22 @@ def sobre_view(request):
     # Esta view por enquanto só precisa mostrar a página
     return render(request, 'sobre.html')
 
+# @login_required
 def dashboard_view(request):
+    # Por enquanto, vamos simular que o usuário é um aluno
+    # NO FUTURO:
+    # if request.user.groups.filter(name='Aluno Cursando').exists():
+    #     # Lógica e contexto para o aluno
+    #     return render(request, 'usuario/dashboard_aluno.html', context)
+    # elif request.user.groups.filter(name='Supervisor da Empresa').exists():
+    #     # Lógica e contexto para a empresa
+    #     return render(request, 'usuario/dashboard_empresa.html', context)
+    # ... e assim por diante
+
+    # POR AGORA, VAMOS APENAS RENDERIZAR O NOVO DASHBOARD DO ALUNO
+    return render(request, 'aluno/dashboard_aluno.html')
+
+def vagas_exemplo(request):
     # No futuro, estes dados virão do banco de dados de verdade.
     # Por agora, é só um exemplo para o template funcionar.
     vagas_exemplo = [

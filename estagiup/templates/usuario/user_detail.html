@@ -1,0 +1,56 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Detalhes de {{ target_user.username }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <div class="d-flex align-items-center mb-4">
+        <img src="https://placehold.co/80x80/FFFFFF/1a1024?text={{ target_user.username|first|upper }}" class="rounded-circle" alt="Avatar">
+        <div class="ms-4">
+            <h1 class="text-white mb-0">{{ target_user.username }}</h1>
+            <p class="text-muted">{{ target_user.email }}</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-4">
+        <h5 class="text-white mb-3 display-5">Informações do Perfil</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Telefone:</strong> {{ target_user.perfil_usuario.telefone }}</p>
+                <p><strong>Endereço/Cidade:</strong> {{ target_user.perfil_usuario.endereco }}</p>
+                <p><strong>CPF:</strong> {{ target_user.perfil_usuario.cpf }}</p>
+                <p><strong>Estado:</strong> {{ target_user.perfil_usuario.estado }}</p>
+                <p><strong>Instituição:</strong> {{ target_user.perfil_usuario.instituicao }}</p>
+                <p><strong>Curso:</strong> {{ target_user.perfil_usuario.curso }}</p>
+                <p><strong>Descrição:</strong> {{ target_user.perfil_usuario.descricao|default:"Nenhuma descrição fornecida." }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Grupo:</strong> 
+                    {% if target_user.groups.all %}
+                        {% for group in target_user.groups.all %}
+                            <span class="badge bg-primary-custom">{{ group.name }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="badge bg-secondary">Nenhum grupo</span>
+                    {% endif %}
+                </p>
+                <p><strong>Data de Registro:</strong> {{ target_user.date_joined|date:"d/m/Y" }}</p>
+                <p><strong>Último Login:</strong> {{ target_user.last_login|date:"d/m/Y H:i" }}</p>
+                <p><strong>Status:</strong> 
+                    {% if target_user.is_active %}
+                        <span class="badge bg-success">Ativo</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inativo</span>
+                    {% endif %}
+                </p>
+                  <p><strong>Data de Nascimento:</strong> {{ target_user.perfil_usuario.data_nascimento|date:"d/m/Y" }}</p>
+                <p><strong>Gênero:</strong> {{ target_user.perfil_usuario.genero }}</p>
+            </div>
+             <a href="{% url 'usuario:lista_usuarios' %}" class="btn btn-secondary">Voltar à Lista</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

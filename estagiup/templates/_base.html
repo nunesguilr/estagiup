@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}EstagiUP{% endblock %} - Conectando talentos a oportunidades de estágio</title>
+    <title>{% block title %}Conectando talentos a oportunidades de estágio{% endblock %} - EstagiUP</title>
     <!-- Bootstrap CSS local -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,9 +18,31 @@
     <link rel="stylesheet" href="{% static 'meucss/style.css' %}">
     <link rel="stylesheet" href="{% static 'meucss/vagas.css' %}">
     <link rel="stylesheet" href="{% static 'meucss/sobre.css' %}">
+    <link rel="stylesheet" href="{% static 'meucss/usuario.css' %}">
+
+    <style>
+        .aviso-pagina {
+            background-color: rgba(255, 196, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body class="{% block body_class %}{% endblock %}">
-    
+    {% if messages %}
+        <div class="container mt-4">
+            {% for message in messages %}
+            <div class="aviso-pagina">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Navbar -->
     {% include '_navbar.html' %}
 
     <main>
@@ -56,7 +79,6 @@
 
 <!-- Bootstrap Bundle with Popper JS local -->
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/vagas_config.js' %}"></script>
 
 {% block scripts %}
 <!-- Script para ScrollReveal -->

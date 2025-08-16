@@ -1,35 +1,77 @@
-<div class="container mt-5">
-    <h2 class="mb-4">Utilizadores Registados</h2>
-    <div class="table-responsive">
-        <table class="table table-dark table-striped table-hover rounded-3 overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome de Utilizador</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Grupo(s)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user_profile in todos_usuarios %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ user_profile.user.username }}</td>
-                    <td>{{ user_profile.user.email }}</td>
-                    <td>
-                        {% for group in user_profile.user.groups.all %}
-                            <span class="badge bg-secondary me-1">{{ group.name }}</span>
-                        {% empty %}
-                            <span class="badge bg-warning text-dark">Sem Grupo</span>
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Lista de Usuários{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">Filtrar Usuários</h5>
+
+                <div class="mb-3">
+                    <label for="cityInput" class="form-label">Buscar por Cidade</label>
+                    <input type="text" class="form-control" id="cityInput" placeholder="Ex: Guanambi">
+                </div>
+
+                <div class="mb-3">
+                    <label for="groupFilter" class="form-label">Filtrar por Grupo</label>
+                    <select class="form-select" id="groupFilter">
+                        <option value="all" selected>Todos os Grupos</option>
+                        {% for grupo in todos_grupos %}
+                        <option value="{{ grupo.name }}">{{ grupo.name }}</option>
                         {% endfor %}
-                    </td>
-                </tr>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <h1 class="text-white mb-4">Usuários do Sistema</h1>
+
+            <div class="row g-4" id="user-list-container">
+                {% for user_profile in todos_usuarios %}
+                <a href="{% url 'usuario:user_detail' user_profile.user.pk %}" class="user-list-row-link">
+                    <div class="user-list-row mb-0" data-nome="{{ user_profile.user.username|lower }}"
+                        data-cidade="{{ user_profile.endereco|lower }}" 
+                        data-grupo="{% for group in user_profile.user.groups.all %}{{ group.name }}{% endfor %}">
+
+                        <div class="user-info">
+                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ user_profile.user.username|first|upper }}"
+                                class="avatar" alt="Avatar">
+                            <div>
+                                <h5 class="mb-0 text-white fs-3">{{ user_profile.user.username }}</h5>
+                                <p class="mb-0 text-muted small fs-6">{{ user_profile.user.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="user-location d-none d-md-block">
+                            <p class="mb-0 small fs-5">{{ user_profile.endereco }}</p>
+                        </div>
+
+                        <div class="user-groups">
+                            {% for group in user_profile.user.groups.all %}
+                            <span class="badge rounded-pill bg-primary-custom">{{ group.name }}</span>
+                            {% empty %}
+                            <span class="badge rounded-pill bg-secondary">Sem Grupo</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
                 {% empty %}
-                <tr>
-                    <td colspan="4">Nenhum utilizador registado.</td>
-                </tr>
+                <div class="glass-card p-5 text-center">
+                    <p>Nenhum usuário encontrado.</p>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>
+        </div>
+
     </div>
 </div>
+
+ <script src="{% static 'meujs/usuarios_filter.js' %}"></script>
+
+{% endblock %}
+

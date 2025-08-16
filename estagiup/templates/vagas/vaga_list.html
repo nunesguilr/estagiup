@@ -77,3 +77,8 @@
     </div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'meujs/vagas_config.js' %}"></script>
+{% endblock %}

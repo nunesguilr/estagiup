@@ -377,3 +377,7 @@ body {
 .feature-item p {
     font-weight: 500;
 }
+
+.navbar.fixed-top {
+    z-index: 1050; /* Um número alto, padrão do Bootstrap para componentes flutuantes */
+}

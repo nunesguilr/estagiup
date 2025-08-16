@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('usuarios/', include('usuario.urls')),
+    path('vaga/', include('vaga.urls')),
 ]
