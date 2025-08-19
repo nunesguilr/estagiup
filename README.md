@@ -6,8 +6,6 @@ O **EstagiUp** é uma aplicação web desenvolvida com o framework **Django**, f
 
 O projeto foi concebido para gerenciar todo o ciclo de vida de estágios, com uma arquitetura de modelo de dados robusta e um sistema de permissões bem definio.
 
----
-
 ## ✨ Funcionalidades Principais
 
 - **Gestão de Perfis de Usuário:** Cada usuário possui um perfil que o identifica como Aluno, Supervisor, Orientador ou Responsável da Instituição.
@@ -16,7 +14,6 @@ O projeto foi concebido para gerenciar todo o ciclo de vida de estágios, com um
 - **Controle de Acesso:** Sistema de grupos e permissões (CRUD) garantindo que cada tipo de usuário acesse apenas as funcionalidades necessárias.
 - **Automação de Configuração:** Ferramenta em **GoLang** para automatizar a criação de grupos e permissões no banco de dados.
 
----
 
 ## ⚙️ Modelagem de Dados
 A arquitetura do projeto é baseada em um **diagrama de classes (UML)**, gerado com `django-extensions` e `pygraphviz`.
