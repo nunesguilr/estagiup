@@ -10,4 +10,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('usuarios/', include('usuario.urls')),
     path('vaga/', include('vaga.urls')),
+    path('instituicao/', include('instituicao.urls')),
 ]
