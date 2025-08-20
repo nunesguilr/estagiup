@@ -1,11 +1,13 @@
+# instituicao/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .forms import InstituicaoForm
 from .models import Instituicao
 from usuario.models import PerfilUsuario
 
 @login_required
+@permission_required('instituicao.add_instituicao', raise_exception=True)
 def cadastrar_instituicao(request):
     """
     View para o cadastro de uma nova instituição, onde o utilizador logado
@@ -37,6 +39,61 @@ def cadastrar_instituicao(request):
     }
     return render(request, 'instituicao/cadastrar_instituicao.html', context)
 
+
+@login_required
+@permission_required('instituicao.change_instituicao', raise_exception=True)
+def editar_instituicao(request, instituicao_id):
+    """
+    View para editar os dados de uma instituição.
+    Apenas o responsável ou um admin podem editar.
+    """
+    instituicao = get_object_or_404(Instituicao, id=instituicao_id)
+    
+    # Verifica a permissão de edição
+    if request.user.perfil not in instituicao.responsaveis.all() and not request.user.is_superuser:
+        messages.error(request, 'Você não tem permissão para editar esta instituição.')
+        return redirect('instituicao:minhas_instituicoes')
+    
+    if request.method == 'POST':
+        form = InstituicaoForm(request.POST, instance=instituicao)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Instituição atualizada com sucesso!')
+            return redirect('instituicao:perfil_instituicao', instituicao_id=instituicao.id)
+        else:
+            messages.error(request, 'Erro ao atualizar a instituição. Por favor, verifique os campos.')
+    else:
+        form = InstituicaoForm(instance=instituicao)
+
+    context = {
+        'form': form,
+        'instituicao': instituicao
+    }
+    return render(request, 'instituicao/editar_instituicao.html', context)
+
+@login_required
+@permission_required('instituicao.delete_instituicao', raise_exception=True)
+def apagar_instituicao(request, instituicao_id):
+    """
+    View para apagar uma instituição.
+    Apenas o responsável ou um admin podem apagar.
+    """
+    instituicao = get_object_or_404(Instituicao, id=instituicao_id)
+    
+    # Verifica a permissão de exclusão
+    if request.user.perfil not in instituicao.responsaveis.all() and not request.user.is_superuser:
+        messages.error(request, 'Você não tem permissão para apagar esta instituição.')
+        return redirect('instituicao:minhas_instituicoes')
+
+    if request.method == 'POST':
+        instituicao.delete()
+        messages.success(request, 'Instituição apagada com sucesso.')
+        return redirect('instituicao:minhas_instituicoes')
+    
+    context = {
+        'instituicao': instituicao
+    }
+    return render(request, 'instituicao/apagar_instituicao.html', context)
 
 @login_required
 def listar_membros_instituicao(request, instituicao_id):

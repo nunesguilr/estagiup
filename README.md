@@ -16,7 +16,7 @@ O projeto foi concebido para gerenciar todo o ciclo de vida de estágios, com um
 
 
 ## ⚙️ Modelagem de Dados
-A arquitetura do projeto é baseada em um **diagrama de classes (UML)**, gerado com `django-extensions` e `pygraphviz`.
+A arquitetura do projeto é baseada em um **diagrama de classes (UML)**.
 
 Principais entidades:
 
