@@ -31,7 +31,12 @@
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
                             {% if request.user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" id="logout-form-navbar" style="display: none;">
+                                        {% csrf_token %}
+                                    </form>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="document.getElementById('logout-form-navbar').submit();">Sair</a>
+                                </li>
                             {% else %}
                                 <li><a class="dropdown-item" href="{% url 'usuario:login' %}">Entrar</a></li>
                                 <li><a class="dropdown-item" href="{% url 'usuario:registrar' %}">Cadastrar</a></li>

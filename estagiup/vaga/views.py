@@ -6,13 +6,13 @@ from .models import Vaga
 
 # View para listar todas as vagas
 def vaga_list(request):
-    vagas = Vaga.objects.all()
-    return render(request, 'vagas/vaga_list.html', {'vagas': vagas})
+    vaga = Vaga.objects.all()
+    return render(request, 'vaga/vaga_list.html', {'vaga': vaga})
 
 # View para ver os detalhes de uma vaga específica
 def vaga_detail(request, pk):
     vaga = get_object_or_404(Vaga, pk=pk)
-    return render(request, 'vagas/vaga_detail.html', {'vaga': vaga})
+    return render(request, 'vaga/vaga_detail.html', {'vaga': vaga})
 
 # View para criar uma nova vaga (exemplo, pode não ter o VagaForm ainda)
 def vaga_create(request):

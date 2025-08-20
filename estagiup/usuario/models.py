@@ -23,7 +23,6 @@ class PerfilUsuario(models.Model):
     pais = models.CharField(max_length=50, verbose_name="País", blank=True, null=True)
 
     telefone = models.CharField(max_length=20, verbose_name="Telefone", blank=True, null=True)
-    foto_perfil = models.ImageField(upload_to='perfil/fotos/', blank=True, null=True, verbose_name="Foto de Perfil")
     cpf = models.CharField(max_length=14, verbose_name="CPF", blank=True, null=True)
     data_nascimento = models.DateField(verbose_name="Data de Nascimento", blank=True, null=True)
     genero = models.CharField(max_length=20, choices=GENERO_CHOICES, default='nao_informado', verbose_name="Gênero")

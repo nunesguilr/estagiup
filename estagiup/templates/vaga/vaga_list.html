@@ -33,7 +33,7 @@
                 <div class="row g-4">
                     {% for vaga in vagas %}
                         <div class="col-md-6 vaga-card-grid">
-                            <a href="{% url 'vagas:vaga_detail' vaga.pk %}" class="card-link">
+                            <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="card-link">
                                 <div class="card-custom h-100">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>

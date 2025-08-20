@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import InstituicaoForm
 from .models import Instituicao
-from usuario.models import PerfilUsuario  # Importa o modelo PerfilUsuario
+from usuario.models import PerfilUsuario
 
 @login_required
 def cadastrar_instituicao(request):
@@ -12,12 +12,10 @@ def cadastrar_instituicao(request):
     é automaticamente definido como o responsável.
     """
     try:
-        # Tenta obter o perfil do utilizador logado
         perfil_usuario = request.user.perfil
     except PerfilUsuario.DoesNotExist:
-        # Se o perfil não existir, exibe um erro e impede o cadastro
         messages.error(request, 'O seu utilizador não tem um perfil associado. Por favor, complete o seu perfil antes de cadastrar uma instituição.')
-        return redirect('dashboard') # Redireciona para um local seguro.
+        return redirect('dashboard')
 
     if request.method == 'POST':
         form = InstituicaoForm(request.POST)
@@ -25,7 +23,6 @@ def cadastrar_instituicao(request):
             instituicao = form.save(commit=False)
             instituicao.save()
 
-            # Adiciona o utilizador logado como responsável pela instituição.
             instituicao.responsaveis.add(perfil_usuario)
             
             messages.success(request, 'Instituição cadastrada com sucesso! Você foi definido como o responsável.')
@@ -49,8 +46,12 @@ def listar_membros_instituicao(request, instituicao_id):
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
     membros = instituicao.responsaveis.all().select_related('user')
     
-    if request.user.perfil not in membros and not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para aceder a esta página.')
+    try:
+        if request.user.perfil not in membros and not request.user.is_superuser:
+            messages.error(request, 'Você não tem permissão para aceder a esta página.')
+            return redirect('dashboard')
+    except PerfilUsuario.DoesNotExist:
+        messages.error(request, 'O seu utilizador não tem um perfil associado.')
         return redirect('dashboard')
     
     context = {
@@ -59,17 +60,32 @@ def listar_membros_instituicao(request, instituicao_id):
     }
     return render(request, 'instituicao/membros.html', context)
 
+
+@login_required
+def minhas_instituicoes(request):
+    """
+    View para listar todas as instituições para as quais o utilizador logado é responsável.
+    """
+    try:
+        perfil_usuario = request.user.perfil
+        minhas_instituicoes = Instituicao.objects.filter(responsaveis=perfil_usuario)
+    except PerfilUsuario.DoesNotExist:
+        minhas_instituicoes = []
+    
+    context = {
+        'minhas_instituicoes': minhas_instituicoes
+    }
+    return render(request, 'instituicao/minhas_instituicoes.html', context)
+
 def perfil_instituicao(request, instituicao_id):
     """
     View para exibir o perfil de uma instituição específica.
     """
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
-
-    # Busca os responsáveis da instituição para exibir no template
     responsaveis = instituicao.responsaveis.all().select_related('user')
-
+    
     context = {
         'instituicao': instituicao,
         'responsaveis': responsaveis
     }
-    return render(request, 'instituicao/perfil.html', context)
+    return render(request, 'instituicao/perfil_instituicao.html', context)
