@@ -1,0 +1,4 @@
+para criar usuarios pré prontos:
+python manage.py create_permissions
+python manage.py create_dev_admin
+python manage.py create_dev_users

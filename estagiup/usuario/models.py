@@ -1,7 +1,9 @@
+# usuarios/models.py
 from django.db import models
 from django.contrib.auth.models import User
-from instituicao.models import Instituicao
-from curso.models import Curso
+
+# As importações de Instituicao e Curso foram removidas para evitar circular import e duplicação de modelos.
+# Os modelos Vaga e Instituicao não devem ser definidos neste arquivo.
 
 class PerfilUsuario(models.Model):
     # Opções para o gênero
@@ -27,9 +29,9 @@ class PerfilUsuario(models.Model):
     genero = models.CharField(max_length=20, choices=GENERO_CHOICES, default='nao_informado', verbose_name="Gênero")
     descricao = models.TextField(verbose_name="Descrição", blank=True, null=True)
     
-    # Relações com outros modelos
-    instituicao = models.ForeignKey(Instituicao, on_delete=models.SET_NULL, related_name='membros', blank=True, null=True, verbose_name="Instituição")
-    curso = models.ForeignKey(Curso, on_delete=models.SET_NULL, related_name='alunos', blank=True, null=True, verbose_name="Curso")
+    # Relações com outros modelos usando string para evitar circular import
+    instituicao = models.ForeignKey('instituicao.Instituicao', on_delete=models.SET_NULL, related_name='membros', blank=True, null=True, verbose_name="Instituição")
+    curso = models.ForeignKey('curso.Curso', on_delete=models.SET_NULL, related_name='alunos', blank=True, null=True, verbose_name="Curso")
 
 
     class Meta:
