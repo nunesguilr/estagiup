@@ -15,6 +15,7 @@
                     <label for="searchInput" class="text-white form-label">Buscar por Palavras-Chave</label>
                     <input type="text" class="text-white form-control form-control-dark" id="searchInput" placeholder="Ex: Desenvolvedor">
                 </div>
+                <!-- Você pode adicionar mais filtros aqui, como por curso ou instituição -->
             </div>
         </div>
 
@@ -37,33 +38,45 @@
                                 <div class="card-custom h-100">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>
-                                        <span class="status-badge">{{ vaga.status }}</span>
+                                        <span class="status-badge">Aberta</span>
                                     </div>
                                     <div class="card-body">
                                         <p class="small text-muted">{{ vaga.prazo }}</p>
                                         <img src="https://placehold.co/300x150/2c1c40/e0cffc?text=Imagem+da+Vaga" class="img-fluid rounded my-3" alt="Imagem da vaga">
-                                        <p><strong>Instituição:</strong> {{ vaga.instituicao_relacionada }}</p>
-                                        <p><strong>Curso:</strong> {{ vaga.curso_relacionado }}</p>
+                                        <p><strong>Instituição:</strong> {{ vaga.instituicao.nome }}</p>
+                                        <p><strong>Cursos:</strong>
+                                            {% for curso in vaga.cursos.all %}
+                                                <span class="badge bg-secondary">{{ curso.nome }}</span>
+                                            {% endfor %}
+                                        </p>
                                     </div>
                                 </div>
                             </a>
                         </div>
 
+                        <!-- Layout de lista para a mesma vaga (para o botão 'Linhas') -->
                         <div class="col-12 vaga-card-list">
-                            <a href="{% url 'vagas:vaga_detail' vaga.pk %}" class="card-link">
+                            <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="card-link">
                                 <div class="card-custom">
                                     <div class="card-body d-flex align-items-center">
                                         <img src="https://placehold.co/100x80/2c1c40/e0cffc?text=Img" class="img-fluid rounded me-4" alt="Imagem da vaga">
                                         <div class="flex-grow-1">
                                             <h5 class="card-title">{{ vaga.titulo }}</h5>
                                             <p class="small text-muted mb-1">{{ vaga.prazo }}</p>
-                                            <p class="mb-0"><strong>Instituição:</strong> {{ vaga.instituicao_relacionada }} | <strong>Curso:</strong> {{ vaga.curso_relacionado }}</p>
+                                            <p class="mb-0">
+                                                <strong>Instituição:</strong> {{ vaga.instituicao.nome }} |
+                                                <strong>Cursos:</strong>
+                                                {% for curso in vaga.cursos.all %}
+                                                    <span class="badge bg-secondary">{{ curso.nome }}</span>
+                                                {% endfor %}
+                                            </p>
                                         </div>
-                                        <span class="status-badge ms-4">{{ vaga.status }}</span>
+                                        <span class="status-badge ms-4">Aberta</span>
                                     </div>
                                 </div>
                             </a>
                         </div>
+
                     {% empty %}
                         <div class="col-12">
                             <div class="text-white glass-card p-5 text-center">
