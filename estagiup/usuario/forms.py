@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group
 from .models import PerfilUsuario  # Importa apenas PerfilUsuario do seu app
 from instituicao.models import Instituicao  # Importa diretamente do app instituicao
@@ -78,3 +78,30 @@ class UserRegistrationForm(UserCreationForm):
             group = self.cleaned_data['group']
             user.groups.add(group)
         return user
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Este loop passa por todos os campos do formulário
+        for field_name, field in self.fields.items():
+            # E adiciona a classe de estilo do Bootstrap em cada um
+            field.widget.attrs['class'] = 'form-control form-control-glass'
+            # Adiciona placeholders baseados nos labels
+            if field.label:
+                field.widget.attrs['placeholder'] = field.label    
+
+        if self.errors:
+            for field_name in self.errors:
+                if field_name in self.fields:
+                    self.fields[field_name].widget.attrs['class'] += ' is-invalid'
+
+class UserAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Adiciona as classes de estilo e placeholders
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control form-control-glass', 'placeholder': 'Nome de Usuário'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control form-control-glass', 'placeholder': 'Senha'}
+        )

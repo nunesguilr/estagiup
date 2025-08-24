@@ -24,6 +24,12 @@
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
+                 <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-bell icon'></i>
+                        <span class="text nav-text">Notificações</span>
+                    </a>
+                </li>
 
                 <!-- Links para alunos -->
                 {% if request.user.is_authenticated and request.user.groups.all.0.name == 'Alunos' %}
@@ -37,6 +43,12 @@
                         <a href="{% url 'vaga:vaga_list' %}">
                             <i class='bx bx-briefcase-alt-2 icon'></i>
                             <span class="text nav-text">Buscar Vagas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'usuario:lista_usuarios' %}">
+                            <i class='bx bx-group icon'></i>
+                            <span class="text nav-text">Buscar Usuarios</span>
                         </a>
                     </li>
                 {% endif %}
@@ -56,6 +68,26 @@
                         </a>
                     </li>
                 {% endif %}
+
+                <!-- Links para Supervisores -->
+                 {% if request.user.is_authenticated and request.user.groups.all.0.name == 'Supervisores' %}
+                    <li>
+                        <a href="{% url 'usuario:lista_usuarios' %}">
+                            <i class='bx bx-group icon'></i>
+                            <span class="text nav-text">Estagiarios</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Links para Orientadores -->
+                 {% if request.user.is_authenticated and request.user.groups.all.0.name == 'Orientadores' %}
+                    <li>
+                        <a href="{% url 'usuario:lista_usuarios' %}">
+                            <i class='bx bx-group icon'></i>
+                            <span class="text nav-text">Alunos</span>
+                        </a>
+                    </li>
+                {% endif %}
                 
                 <!-- Links para administradores -->
                 {% if request.user.is_authenticated and request.user.is_superuser %}
@@ -63,6 +95,31 @@
                         <a href="{% url 'usuario:lista_usuarios' %}">
                             <i class='bx bx-group icon'></i>
                             <span class="text nav-text">Usuários</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'usuario:editar_perfil' %}">
+                            <i class='bx bx-user icon'></i>
+                            <span class="text nav-text">Meu Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'vaga:vaga_list' %}">
+                            <i class='bx bx-briefcase-alt-2 icon'></i>
+                            <span class="text nav-text">Buscar Vagas</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="{% url 'instituicao:cadastrar' %}">
+                            <i class='bx bx-building-house icon'></i>
+                            <span class="text nav-text">Cadastrar Instituição</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'instituicao:minhas_instituicoes' %}">
+                            <i class='bx bx-building icon'></i>
+                            <span class="text nav-text">Minhas Instituições</span>
                         </a>
                     </li>
                     <li>
