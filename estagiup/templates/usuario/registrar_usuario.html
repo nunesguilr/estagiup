@@ -28,6 +28,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="{{ form.username.id_for_label }}" class="form-label">Usuário</label>
                     {{ form.username }}
+                     <small class="form-text text-muted">{{ form.username.help_text|safe }}</small>
                     {{ form.username.errors }}
                 </div>
                 <div class="col-md-6 mb-3">
@@ -41,11 +42,13 @@
                 <div class="col-md-6 mb-3">
                     <label for="{{ form.password1.id_for_label }}" class="form-label">Senha</label>
                     {{ form.password1 }}
+                     <small class="form-text text-muted">{{ form.password1.help_text|safe }}</small>
                     {{ form.password1.errors }}
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmação de Senha</label>
                     {{ form.password2 }}
+                     <small class="form-text text-muted">{{ form.password2.help_text|safe }}</small>
                     {{ form.password2.errors }}
                 </div>
             </div>

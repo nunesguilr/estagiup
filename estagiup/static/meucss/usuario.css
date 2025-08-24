@@ -15,6 +15,8 @@
     color: #1a1024 !important;
     border-radius: 8px;
     padding: 0.8rem 1rem;
+     width: 100% !important; /* Força a largura a ser 100% */
+    box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura total */
 }
 
 .auth-form .form-control::placeholder {
@@ -54,4 +56,37 @@
 .text-muted {
     --bs-text-opacity: 1;
     color: var(--bs-secondary-color) !important;
+}
+
+/* Aplica a todas as inputs do tipo 'text' e 'password' dentro do formulário de login */
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #1a1024 !important;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+}
+
+#login-form-container input[type="text"],
+#login-form-container input[type="password"] {
+        width: 100%;
+}
+
+/* ========================================= */
+/* ESTILOS PARA A PÁGINA DE PERFIL           */
+/* ========================================= */
+
+.profile-photo {
+    border: 2px solid #8a2be2;
+    object-fit: cover;
+}
+
+.team-card, .kpi-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover, .kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }

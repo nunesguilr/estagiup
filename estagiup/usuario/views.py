@@ -1,23 +1,25 @@
-# usuarios/views.py
+# Em usuario/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, PerfilUpdateForm
+
+# Importando NOSSOS formulários customizados e os do Guilherme
+from .forms import UserRegistrationForm, UserAuthenticationForm, PerfilUpdateForm
 from .models import PerfilUsuario
 
 def registrar_usuario(request):
     """
     View para registar um novo utilizador, seu perfil e atribuí-lo a um grupo.
+    (Versão do Guilherme, está ótima)
     """
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             messages.success(request, f'Bem-vindo(a), {user.username}! O seu registo foi concluído com sucesso.')
-            return redirect('login')
+            return redirect('usuario:login') # Corrigido para usar o namespace
         else:
             messages.error(request, 'Houve um erro no seu registo. Por favor, verifique os campos em destaque.')
     else:
@@ -28,48 +30,57 @@ def registrar_usuario(request):
     }
     return render(request, 'usuario/registrar_usuario.html', context)
 
+
 def login_usuario(request):
     """
     View para a página de login.
+    (MANTIVEMOS A NOSSA VERSÃO para usar o formulário customizado e estiloso)
     """
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = UserAuthenticationForm(request, data=request.POST) # <-- Usando nosso form
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, f'Bem-vindo(a) de volta, {user.username}!')
-            return redirect('dashboard')
-        else:
-            form = AuthenticationForm()
+            # messages.success(request, f'Bem-vindo(a) de volta, {user.username}!')
+            return redirect('dashboard') # Redireciona para o dashboard principal
+    else:
+        form = UserAuthenticationForm() # <-- Usando nosso form
 
     context = {
         'form': form
     }
     return render(request, 'usuario/login.html', context)
 
+
 def lista_usuarios(request):
     """
     View para exibir uma lista de todos os utilizadores e seus perfis.
+    (MANTIVEMOS A NOSSA VERSÃO para enviar a lista de grupos para o filtro)
     """
     todos_usuarios = PerfilUsuario.objects.all().select_related('user').order_by('user__username')
+    todos_grupos = Group.objects.all() # <-- A linha que faz o filtro dinâmico funcionar
+
     context = {
-        'todos_usuarios': todos_usuarios
+        'todos_usuarios': todos_usuarios,
+        'todos_grupos': todos_grupos # <-- Enviando os grupos para o template
     }
     return render(request, 'usuario/lista.html', context)
 
-@login_required
-def user_detail(request, pk):
+
+@login_required # <-- Adicionado o decorador de login
+def user_detail(request, pk): # <-- Nome da view e parâmetro atualizados
     """
     View para exibir os detalhes de um utilizador específico.
+    (Usando a versão otimizada do Guilherme)
     """
-    # Usar select_related para buscar o perfil, a instituição e o curso em uma única consulta
-    target_user = get_object_or_404(User.objects.select_related('perfil__instituicao', 'perfil__curso'), pk=pk)
+    target_user = get_object_or_404(User, pk=pk)
     context = {
         'target_user': target_user
     }
     return render(request, 'usuario/user_detail.html', context)
 
 
+# MANTENDO AS NOVAS VIEWS DO GUILHERME
 @login_required
 def editar_perfil(request):
     """
@@ -78,8 +89,9 @@ def editar_perfil(request):
     try:
         perfil = request.user.perfil
     except PerfilUsuario.DoesNotExist:
-        messages.error(request, 'O seu utilizador não tem um perfil associado.')
-        return redirect('dashboard')
+        # Criar um perfil se não existir
+        perfil = PerfilUsuario.objects.create(user=request.user)
+        messages.info(request, 'Um perfil foi criado para você.')
 
     if request.method == 'POST':
         form = PerfilUpdateForm(request.POST, instance=perfil)
@@ -97,6 +109,7 @@ def editar_perfil(request):
     }
     return render(request, 'usuario/editar_perfil.html', context)
 
+
 @login_required
 def apagar_usuario(request):
     """
@@ -106,6 +119,6 @@ def apagar_usuario(request):
         # Apagamos o utilizador logado e, por consequência, o seu perfil.
         request.user.delete()
         messages.success(request, 'A sua conta foi apagada com sucesso.')
-        return redirect('logout') # Redireciona para o logout para encerrar a sessão
-    
+        return redirect('logout')
+
     return render(request, 'usuario/apagar_usuario.html')
