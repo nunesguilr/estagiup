@@ -10,6 +10,14 @@
         <h1 class="text-white">Meu Perfil</h1>
     </div>
 
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} mt-3 fs-6">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <div class="row g-4">
 
         <div class="col-lg-4">

@@ -54,12 +54,6 @@ body {
     color: #6133D3 !important;
 }
 
-/* Regra para esconder/mostrar as visualizações */
-.list-view .vaga-card-grid,
-.grid-view .vaga-card-list {
-    display: none;
-}
-
 /* Estilos para o card em modo GRADE */
 .vaga-card-grid .card-header {
     display: flex;
@@ -94,8 +88,7 @@ body {
 .theme-light h1, 
 .theme-light h2, 
 .theme-light h3, 
-.theme-light h4, 
-.theme-light h5 {
+.theme-light h4 {
     color: #18191a;
 }
 
@@ -129,4 +122,85 @@ body {
 
 .theme-light .view-toggle button.btn-outline-light:hover {
     background-color: #E0E0E0;
+}
+
+.card-header {
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+/* Quando o modo lista estiver ativo... */
+#vagas-container.list-view .vaga-item {
+    /* O item da vaga ocupa a largura total, ignorando a coluna */
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+#vagas-container.list-view .card-custom {
+    /* O card vira uma linha horizontal */
+    flex-direction: row;
+}
+
+#vagas-container.list-view .card-body {
+    /* O corpo do card se alinha com a imagem */
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#vagas-container.list-view .vaga-imagem {
+    /* Diminui a imagem no modo lista */
+    max-width: 120px;
+    margin-right: 1.5rem; /* Espaço entre a imagem e o texto */
+}
+
+/* ================================================= */
+/* ESTILOS ESPECÍFICOS PARA MODO DE LISTA           */
+/* ================================================= */
+
+#vagas-container.list-view .row {
+    flex-direction: column;
+}
+
+#vagas-container.list-view .vaga-item {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+
+#vagas-container.list-view .card-custom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    height: auto !important; /* Reseta a altura fixa do h-100 */
+}
+
+#vagas-container.list-view .card-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+    padding: 0;
+}
+
+#vagas-container.list-view .card-body .d-flex.flex-column {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
+
+#vagas-container.list-view #nome-curso, #resultado-curso {
+    margin-left: 150px;
+}
+
+#vagas-container.list-view .card-custom > .status-badge {
+    margin-left: 1rem; /* Adiciona um espaço entre o conteúdo e o badge */
+    white-space: nowrap; /* Impede que o texto "Aberta" quebre linha */
+}
+
+#vagas-container.grid-view #resultado-curso {
+    margin-left: 0px;
 }

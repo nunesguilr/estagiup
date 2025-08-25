@@ -12,7 +12,7 @@ class Instituicao(models.Model):
     endereco = models.CharField(max_length=255, verbose_name="Endereço")
     telefone = models.CharField(max_length=20, verbose_name="Telefone")
     cnpj = models.CharField(max_length=18, unique=True, verbose_name="CNPJ")
-    responsaveis = models.ManyToManyField('usuario.PerfilUsuario', related_name='instituicoes_responsavel', verbose_name="Responsáveis")
+    responsaveis = models.ManyToManyField('usuario.PerfilUsuario', related_name='instituicoes_responsavel', verbose_name="Responsáveis", blank=True)
     status = models.BooleanField(default=True, verbose_name="Status Ativo")
     tipo = models.CharField(max_length=20, choices=TIPO_INSTITUICAO_CHOICES, default='empresa', verbose_name="Tipo de Instituição")
 

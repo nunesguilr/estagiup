@@ -76,7 +76,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <form action="{% url 'usuario:apagar_usuario' target_user.pk %}" method="post">
+        <form action="{% url 'usuario:apagar_usuario' %}" method="post">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger">Apagar permanentemente</button>
         </form>
