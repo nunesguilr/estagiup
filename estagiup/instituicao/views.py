@@ -1,10 +1,33 @@
 # instituicao/views.py
+from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from .forms import InstituicaoForm
 from .models import Instituicao
 from usuario.models import PerfilUsuario
+
+class InstituicaoForm(forms.ModelForm):
+    class Meta:
+        model = Instituicao
+        fields = '__all__' # ou a lista de campos que você usa
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Adiciona a classe 'form-control-glass' a todos os campos
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'form-control form-control-glass'
+            })
+
+         # Remove a classe padrão de campos de texto do checkbox e adiciona a correta
+        self.fields['status'].widget.attrs.pop('class', None)
+        self.fields['status'].widget.attrs.update({
+            'class': 'form-check-input'
+        })
+
+        # Adiciona a descrição para o campo status
+        self.fields['status'].help_text = 'Selecione para tornar a instituição ativa no sistema (Caso contrario, não será exibida nas buscas para Estagios).'
 
 @login_required
 @permission_required('instituicao.add_instituicao', raise_exception=True)
@@ -30,6 +53,7 @@ def cadastrar_instituicao(request):
             messages.success(request, 'Instituição cadastrada com sucesso! Você foi definido como o responsável.')
             return redirect('instituicao:cadastrar')
         else:
+            print("Erros no formulário:", form.errors) 
             messages.error(request, 'Erro ao cadastrar a instituição. Por favor, verifique os campos.')
     else:
         form = InstituicaoForm()
@@ -57,7 +81,12 @@ def editar_instituicao(request, instituicao_id):
     if request.method == 'POST':
         form = InstituicaoForm(request.POST, instance=instituicao)
         if form.is_valid():
-            form.save()
+             # Alteração aqui: Salva o formulário sem o M2M e depois adiciona o responsável
+            instituicao_atualizada = form.save(commit=False)
+            instituicao_atualizada.save()
+
+            # Garante que a relação ManyToMany com o responsável seja mantida
+            instituicao_atualizada.responsaveis.add(request.user.perfil)
             messages.success(request, 'Instituição atualizada com sucesso!')
             return redirect('instituicao:perfil_instituicao', instituicao_id=instituicao.id)
         else:

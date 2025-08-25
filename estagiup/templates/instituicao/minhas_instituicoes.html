@@ -6,28 +6,40 @@
 {% block content %}
 <div class="container-fluid py-4">
     <h2 class="text-white mb-4">Minhas Instituições</h2>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} mt-3 fs-5">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <div class="row g-4">
         {% for instituicao in minhas_instituicoes %}
         <div class="col-lg-4 col-md-6">
             <div class="card-custom h-100 p-4">
-                <h5 class="card-title text-white">{{ instituicao.nome }}</h5>
-                <p class="card-text text-muted">{{ instituicao.endereco }}</p>
-                <p>Status:
+                <h5 class="card-title text-white fs-2">{{ instituicao.nome }}</h5>
+                <p class="card-text text-muted fs-4">{{ instituicao.endereco }}</p>
+                <p class="fs-3">Status:
                     {% if instituicao.status %}
-                        <span class="badge bg-success">Ativa</span>
+                    <span class="badge bg-success">Ativa</span>
                     {% else %}
-                        <span class="badge bg-danger">Inativa</span>
+                    <span class="badge bg-danger">Inativa</span>
                     {% endif %}
                 </p>
-                <a href="{% url 'instituicao:perfil_instituicao' instituicao.id %}" class="btn btn-primary-custom mt-3">Ver Perfil</a>
-                <a href="{% url 'instituicao:listar_membros' instituicao.id %}" class="btn btn-primary-custom mt-3">Ver Responsáveis</a>
+                <a href="{% url 'instituicao:perfil_instituicao' instituicao.id %}"
+                    class="btn btn-primary-custom mt-3">Ver Perfil</a>
+                <a href="{% url 'instituicao:listar_membros' instituicao.id %}" class="btn btn-primary-custom mt-3">Ver
+                    Responsáveis</a>
             </div>
         </div>
         {% empty %}
         <div class="col-12">
             <div class="glass-card p-5 text-center">
                 <p>Você não é responsável por nenhuma instituição.</p>
-                <a href="{% url 'instituicao:cadastrar' %}" class="btn btn-primary-custom mt-3">Cadastrar nova instituição</a>
+                <a href="{% url 'instituicao:cadastrar' %}" class="btn btn-primary-custom mt-3">Cadastrar nova
+                    instituição</a>
             </div>
         </div>
         {% endfor %}

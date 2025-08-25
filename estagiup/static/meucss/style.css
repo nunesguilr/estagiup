@@ -381,3 +381,44 @@ body {
 .navbar.fixed-top {
     z-index: 1050; /* Um número alto, padrão do Bootstrap para componentes flutuantes */
 }
+
+/* Estilos personalizados para os botões de ação */
+
+/* Botão de Aviso (amarelo) - Customizado para o tema */
+.btn-warning-custom {
+    background-color: #ffc107; /* Cor de aviso padrão do Bootstrap */
+    border-color: #ffc107;
+    color: #212529; /* Cor do texto escuro */
+    transition: all 0.3s ease;
+}
+
+.btn-warning-custom:hover {
+    background-color: #e0a800; /* Cor mais escura no hover */
+    border-color: #d39e00;
+}
+
+/* Botão de Perigo (vermelho) - Customizado para o tema */
+.btn-danger-custom {
+    background-color: #d41326; /* Cor de perigo padrão do Bootstrap */
+    border-color: #c51425;
+    color: #fff; /* Cor do texto branco */
+    transition: all 0.3s ease;
+}
+
+.btn-danger-custom:hover {
+    background-color: #9c0a18; /* Cor mais escura no hover */
+    border-color: #860512;
+}
+
+/* Exemplo de botões mais escuros, alinhado com o tema */
+.btn-primary-custom {
+    background-color: #6a1b9a; /* Roxo escuro */
+    border-color: #6a1b9a;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: #4a148c; /* Roxo ainda mais escuro no hover */
+    border-color: #4a148c;
+}

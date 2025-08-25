@@ -7,7 +7,7 @@ class InstituicaoForm(forms.ModelForm):
     """
     class Meta:
         model = Instituicao
-        fields = ['nome', 'endereco', 'telefone', 'cnpj', 'status', 'tipo']
+        exclude = ['responsaveis'] # Adicione esta linha
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'endereco': forms.TextInput(attrs={'class': 'form-control'}),

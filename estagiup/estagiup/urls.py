@@ -22,7 +22,7 @@ urlpatterns = [
     path('', estagiup_views.index, name='home'),
     path('sobre/', estagiup_views.sobre_view, name='sobre'),
 
-    path('instituicao/', include('instituicao.urls')),
+    path('instituicao/', include('instituicao.urls', namespace='instituicao')),
     path('vaga/', include('vaga.urls')),
     path('curso/', include('curso.urls')),
     path('estagio/', include('estagio.urls')),

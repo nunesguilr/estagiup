@@ -1,0 +1,22 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container auth-wrapper">
+    <div class="glass-card-auth p-5 text-center">
+        <h1 class="auth-title fw-bold display-4">APAGAR INSTITUIÇÃO</h1>
+        <p class="mb-4 fs-3">
+            Tem a certeza de que deseja apagar a instituição <strong>"{{ instituicao.nome }}"</strong>?
+        </p>
+        <p class="text-danger">Esta ação não pode ser desfeita.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center mt-5 gap-3">
+                <button type="submit" class="btn btn-danger-custom btn-lg">Sim, Apagar</button>
+                <a href="{% url 'instituicao:perfil_instituicao' instituicao.id %}" class="btn btn-secondary btn-lg">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

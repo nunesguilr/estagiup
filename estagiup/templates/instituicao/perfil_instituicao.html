@@ -1,44 +1,69 @@
 {% extends '_base_dashboard.html' %}
 {% load static %}
 
-{% block title %}Perfil da Instituição{% endblock %}
-
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="glass-card p-4">
-                <h2 class="text-white mb-4">{{ instituicao.nome }}</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p><strong>Tipo:</strong> {{ instituicao.get_tipo_display }}</p>
-                        <p><strong>CNPJ:</strong> {{ instituicao.cnpj }}</p>
-                        <p><strong>Telefone:</strong> {{ instituicao.telefone }}</p>
-                        <p><strong>Endereço:</strong> {{ instituicao.endereco }}</p>
-                        <p><strong>Status:</strong> 
-                            {% if instituicao.status %}
-                                <span class="badge bg-success">Ativa</span>
-                            {% else %}
-                                <span class="badge bg-danger">Inativa</span>
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <h4>Responsáveis</h4>
+<div class="container auth-wrapper">
+    <div class="glass-card-auth p-5">
+        <div class="text-center mb-4">
+            <h1 class="mb-4 fs-1">Perfil da Instituição:</h1>
+            <p class="auth-title fw-bold display-6"">{{ instituicao.nome }}</p>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mt-3 fs-5">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card bg-transparent text-white border-0">
+                    <div class="card-body glass-card-body p-4">
+                        <h5 class="card-title fw-bold text-center mb-3 fs-2">Dados da Instituição</h5>
                         <ul class="list-unstyled">
-                            {% for responsavel in responsaveis %}
-                            <li>
-                                <a href="{% url 'usuario:user_detail' responsavel.user.pk %}" class="text-white">
-                                    {{ responsavel.user.username }} ({{ responsavel.user.email }})
-                                </a>
+                            <li class="mb-2 fs-3"><strong class="me-2">Endereço:</strong> {{ instituicao.endereco }}</li>
+                            <li class="mb-2 fs-3"><strong class="me-2">Telefone:</strong> {{ instituicao.telefone }}</li>
+                            <li class="mb-2 fs-3"><strong class="me-2">CNPJ:</strong> {{ instituicao.cnpj }}</li>
+                            <li class="mb-2 fs-3"><strong class="me-2">Tipo:</strong> {{ instituicao.get_tipo_display }}</li>
+                            <li class="mb-2 fs-3"><strong class="me-2">Status:</strong>
+                                {% if instituicao.status %}
+                                <span class="badge bg-success">Ativa</span>
+                                {% else %}
+                                <span class="badge bg-danger">Inativa</span>
+                                {% endif %}
                             </li>
-                            {% empty %}
-                            <li>Nenhum responsável atribuído.</li>
-                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
+            
+            <div class="col-md-6">
+                <div class="card bg-transparent text-white border-0">
+                    <div class="card-body glass-card-body p-4">
+                        <h5 class="card-title fw-bold text-center mb-3 fs-2">Responsáveis</h5>
+                        {% if responsaveis %}
+                            <ul class="list-unstyled">
+                            {% for responsavel in responsaveis %}
+                                <li class="mb-2 fs-3">
+                                    <strong class="me-2">Nome:</strong> {{ responsavel.user.username }}
+                                    <br>
+                                    <strong class="me-2">Email:</strong> {{ responsavel.user.email }}
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-center">Nenhum responsável associado.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-5 gap-3">
+            <a href="{% url 'instituicao:editar_instituicao' instituicao_id=instituicao.id %}" class="btn btn-primary-custom btn-lg">Editar Instituição</a>
+            <a href="{% url 'instituicao:apagar_instituicao' instituicao_id=instituicao.id %}" class="btn btn-danger-custom btn-lg">Apagar Instituição</a>
         </div>
     </div>
 </div>

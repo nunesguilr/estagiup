@@ -33,3 +33,8 @@
     object-fit: cover;
     border: 4px solid #8a2be2;
 }
+
+.text-muted {
+    --bs-text-opacity: 1;
+    color: #8a2be2!important;
+}

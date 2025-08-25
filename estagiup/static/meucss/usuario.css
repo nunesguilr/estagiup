@@ -53,11 +53,6 @@
     font-weight: 500;
 }
 
-.text-muted {
-    --bs-text-opacity: 1;
-    color: var(--bs-secondary-color) !important;
-}
-
 /* Aplica a todas as inputs do tipo 'text' e 'password' dentro do formulário de login */
 .auth-form input[type="text"],
 .auth-form input[type="password"] {
@@ -89,4 +84,19 @@
 .team-card:hover, .kpi-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Remove os pontinhos pretos (bullets) da lista de erros */
+.auth-form .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+
+/* Força o texto do erro a ser vermelho */
+.auth-form .errorlist li {
+    color: #dc3545 !important; /* Vermelho padrão do Bootstrap */
+    font-size: 0.85em;
+    font-weight: 500;
+    text-align: left;
 }

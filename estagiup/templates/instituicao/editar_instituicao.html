@@ -1,17 +1,25 @@
-{% extends '_base.html' %}
+{% extends '_base_dashboard.html' %}
 {% load static %}
 
 {% block content %}
 <div class="container auth-wrapper">
     <div class="glass-card-auth p-5">
         <div class="text-center">
-            <h1 class="auth-title fw-bold display-4">CADASTRO DE INSTITUIÇÃO</h1>
-            <p class="mb-4 fs-3">Adicione uma nova instituição ao sistema.</p>
+            <h1 class="auth-title fw-bold display-4">EDITAR INSTITUIÇÃO</h1>
+            <p class="mb-4 fs-3">Atualize os dados de "{{ instituicao.nome }}".</p>
         </div>
 
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mt-3">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        
         <form method="post" class="auth-form">
             {% csrf_token %}
-
+            
             <div class="row">
                 <div class="col-12 mb-3">
                     <label for="{{ form.nome.id_for_label }}" class="form-label">Nome da Instituição</label>
@@ -47,18 +55,16 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <div class="form-check mt-5"> {{ form.status }}
-                        <label class="form-check-label" for="{{ form.status.id_for_label }}">
-                            Status Ativo
-                        </label>
-                        <small class="form-text text-muted">{{ form.status.help_text }}</small>
-                        {{ form.status.errors }}
-                    </div>
+                <div class="col-12 mb-3 form-check">
+                    {{ form.status }}
+                    <label class="form-check-label" for="{{ form.status.id_for_label }}">
+                        Status Ativo
+                    </label>
+                    {{ form.status.errors }}
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary-custom btn-lg w-100 mt-3">Cadastrar Instituição</button>
+            <button type="submit" class="btn btn-primary-custom btn-lg w-100 mt-3">Atualizar Instituição</button>
         </form>
     </div>
 </div>
