@@ -1,0 +1,102 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Lista de Cursos{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">Filtrar Cursos</h5>
+
+                <div class="mb-3">
+                    <label for="courseNameInput" class="form-label">Buscar por Nome</label>
+                    <input type="text" class="form-control" id="courseNameInput" placeholder="Ex: Engenharia">
+                </div>
+
+                <div class="mb-3">
+                    <label for="institutionFilter" class="form-label">Filtrar por Instituição</label>
+                    <select class="form-select" id="institutionFilter">
+                        <option value="all" selected>Todas as Instituições</option>
+                        {% for instituicao in todas_instituicoes %}
+                        <option value="{{ instituicao.nome|lower }}">{{ instituicao.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <h1 class="text-white mb-4">Cursos Disponíveis</h1>
+
+            <div class="row g-4" id="curso-list-container">
+                {% for curso in cursos %}
+                <a href="{% url 'curso:curso_detail' curso.pk %}" class="curso-list-row-link">
+                    <div class="curso-list-row mb-0"
+                        data-nome="{{ curso.nome|lower }}"
+                        data-instituicao="{{ curso.instituicao.nome|lower }}">
+
+                        <div class="curso-info">
+                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ curso.nome|first|upper }}"
+                                class="avatar" alt="Avatar">
+                            <div>
+                                <h5 class="mb-0 text-white fs-3">{{ curso.nome }}</h5>
+                                <p class="mb-0 text-muted small fs-6">Instituição: {{ curso.instituicao.nome }}</p>
+                            </div>
+                        </div>
+
+                        <div class="curso-details d-none d-md-block">
+                            <p class="mb-0 small fs-5">{{ curso.descricao }}</p>
+                        </div>
+
+                        <div class="curso-actions">
+                            <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-sm btn-outline-light">Editar</a>
+                            <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-sm btn-outline-danger">Apagar</a>
+                        </div>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="glass-card p-5 text-center">
+                    <p>Nenhum curso encontrado.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Lógica JavaScript para filtragem
+    document.addEventListener('DOMContentLoaded', () => {
+        const cursoList = document.getElementById('curso-list-container');
+        const courseNameInput = document.getElementById('courseNameInput');
+        const institutionFilter = document.getElementById('institutionFilter');
+
+        const filterCursos = () => {
+            const nameQuery = courseNameInput.value.toLowerCase();
+            const selectedInstitution = institutionFilter.value;
+
+            document.querySelectorAll('.curso-list-row').forEach(curso => {
+                const courseName = curso.dataset.nome;
+                const institutionName = curso.dataset.instituicao;
+                const parentLink = curso.closest('a');
+
+                const matchesName = courseName.includes(nameQuery);
+                const matchesInstitution = (selectedInstitution === 'all' || institutionName === selectedInstitution);
+
+                if (matchesName && matchesInstitution) {
+                    parentLink.style.display = 'block';
+                } else {
+                    parentLink.style.display = 'none';
+                }
+            });
+        };
+
+        courseNameInput.addEventListener('input', filterCursos);
+        institutionFilter.addEventListener('change', filterCursos);
+    });
+</script>
+{% endblock %}
