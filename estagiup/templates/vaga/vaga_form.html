@@ -1,0 +1,61 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Vaga{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">
+                    {% if form.instance.pk %}
+                        Editar Vaga: {{ form.instance.titulo }}
+                    {% else %}
+                        Cadastrar Nova Vaga
+                    {% endif %}
+                </h5>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.titulo.id_for_label }}" class="form-label text-white">Título da Vaga</label>
+                        {{ form.titulo }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.descricao.id_for_label }}" class="form-label text-white">Descrição</label>
+                        {{ form.descricao }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.instituicao.id_for_label }}" class="form-label text-white">Instituição</label>
+                        {{ form.instituicao }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.numVagas.id_for_label }}" class="form-label text-white">Número de Vagas</label>
+                        {{ form.numVagas }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.prazo.id_for_label }}" class="form-label text-white">Prazo de Inscrição</label>
+                        {{ form.prazo }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.cursos.id_for_label }}" class="form-label text-white">Cursos Requeridos</label>
+                        {{ form.cursos }}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'vaga:vaga_list' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary-custom">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

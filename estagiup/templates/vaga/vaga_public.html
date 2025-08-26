@@ -1,0 +1,94 @@
+{% extends '_base.html' %}
+{% block body_class %}theme-light{% endblock %}
+{% load static %}
+
+{% block title %}Vagas de Estágio{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">Filtrar Vagas</h5>
+                <div class="mb-3">
+                    <label for="searchInput" class="text-white form-label">Buscar por Palavras-Chave</label>
+                    <input type="text" class="text-white form-control form-control-dark" id="searchInput"
+                        placeholder="Ex: Desenvolvedor">
+                </div>
+                <!-- Você pode adicionar mais filtros aqui, como por curso ou instituição -->
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <h1 class="text-center display-4 fw-bold mb-4">DIVULGAÇÃO DE VAGAS</h1>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="mb-0">Confira as vagas disponíveis para você:</p>
+                <div class="d-flex gap-2">
+                    <button id="grid-view-btn" class="btn btn-sm btn-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-grid-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm0 6A1.5 1.5 0 0 1 2.5 8h3A1.5 1.5 0 0 1 7 9.5v3A1.5 1.5 0 0 1 5.5 14h-3A1.5 1.5 0 0 1 1 12.5v-3zm6 0A1.5 1.5 0 0 1 8.5 8h3A1.5 1.5 0 0 1 13 9.5v3A1.5 1.5 0 0 1 11.5 14h-3A1.5 1.5 0 0 1 7 12.5v-3zm6-6A1.5 1.5 0 0 1 14.5 1h3A1.5 1.5 0 0 1 16 2.5v3A1.5 1.5 0 0 1 14.5 7h-3A1.5 1.5 0 0 1 10 5.5v-3z" />
+                        </svg>
+                    </button>
+                    <button id="list-view-btn" class="btn btn-sm btn-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="vagas-container" class="grid-view">
+                <div class="row g-4">
+                    {% for vaga in vagas %}
+                    <div class="col-md-6 vaga-item" data-title="{{ vaga.titulo|lower }}">
+                        <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="card-link">
+                            <div class="card-custom h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>
+                                    <span class="status-badge" id="status-nome">Aberta</span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="small text-muted">{{ vaga.prazo }}</p>
+                                    <img src="https://placehold.co/300x150/2c1c40/e0cffc?text=Imagem+da+Vaga"
+                                        class="vaga-imagem img-fluid rounded my-3" alt="Imagem da vaga">
+                                    <p><strong id="nome-instituicao">Instituição:</strong> {{ vaga.instituicao.nome }}</p>
+                                    <p><strong id="nome-curso">Cursos:</strong>
+                                        {% for curso in vaga.cursos.all %}
+                                        <span class="badge bg-secondary" id="resultado-curso">{{ curso.nome }}</span>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                                <!-- Formulário de candidatura adicionado -->
+                                <div class="card-footer text-end">
+                                    <form method="post" action="{% url 'candidatura:candidatar_vaga' vaga.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary-custom btn-sm">Candidatar-se</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="text-white glass-card p-5 text-center">
+                            <p>Nenhuma vaga encontrada no momento.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'meujs/vagas_config.js' %}" async></script>
+{% endblock %}

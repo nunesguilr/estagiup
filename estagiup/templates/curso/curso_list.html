@@ -36,14 +36,15 @@
                 <a href="{% url 'curso:curso_detail' curso.pk %}" class="curso-list-row-link">
                     <div class="curso-list-row mb-0"
                         data-nome="{{ curso.nome|lower }}"
-                        data-instituicao="{{ curso.instituicao.nome|lower }}">
+                        data-instituicao="{{ curso.inst|lower }}">
 
                         <div class="curso-info">
                             <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ curso.nome|first|upper }}"
                                 class="avatar" alt="Avatar">
                             <div>
                                 <h5 class="mb-0 text-white fs-3">{{ curso.nome }}</h5>
-                                <p class="mb-0 text-muted small fs-6">Instituição: {{ curso.instituicao.nome }}</p>
+                                <p class="mb-0 text-muted small fs-6">Instituição: {{ curso.inst }}</p>
+                                <p class="mb-0 text-muted small fs-6">Nível: {{ curso.nivel }}</p>
                             </div>
                         </div>
 

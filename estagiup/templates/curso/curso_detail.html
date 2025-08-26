@@ -1,0 +1,32 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Detalhes do Curso{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h1 class="text-white mb-4">{{ curso.nome }}</h1>
+
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Instituição:</p>
+                    <h5 class="text-muted">{{ curso.inst }}</h5>
+                </div>
+                
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Nível:</p>
+                    <h5 class="text-muted">{{ curso.nivel }}</h5>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'curso:curso_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+                    <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-danger">Apagar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Curso{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">
+                    {% if form.instance.pk %}
+                        Editar Curso: {{ form.instance.nome }}
+                    {% else %}
+                        Cadastrar Novo Curso
+                    {% endif %}
+                </h5>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.nome.id_for_label }}" class="form-label text-white">Nome do Curso</label>
+                        {{ form.nome }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.inst.id_for_label }}" class="form-label text-white">Instituição</label>
+                        {{ form.inst }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.nivel.id_for_label }}" class="form-label text-white">Nível do Curso</label>
+                        {{ form.nivel }}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'curso:curso_list' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary-custom">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
