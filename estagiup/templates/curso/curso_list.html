@@ -30,37 +30,41 @@
 
         <div class="col-lg-9">
             <h1 class="text-white mb-4">Cursos Disponíveis</h1>
+            
+            <div class="d-flex justify-content-end mb-3">
+                {% if request.user.is_superuser %}
+                <a href="{% url 'curso:curso_create' %}" class="btn btn-primary-custom">Adicionar Curso</a>
+                {% endif %}
+            </div>
 
             <div class="row g-4" id="curso-list-container">
                 {% for curso in cursos %}
-                <a href="{% url 'curso:curso_detail' curso.pk %}" class="curso-list-row-link">
-                    <div class="curso-list-row mb-0"
-                        data-nome="{{ curso.nome|lower }}"
-                        data-instituicao="{{ curso.inst|lower }}">
-
-                        <div class="curso-info">
+                <div class="col-12">
+                    <div class="card-custom h-100 p-4 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
                             <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ curso.nome|first|upper }}"
-                                class="avatar" alt="Avatar">
+                                class="avatar me-3" alt="Avatar">
                             <div>
-                                <h5 class="mb-0 text-white fs-3">{{ curso.nome }}</h5>
+                                <h5 class="mb-0 text-white fs-4">{{ curso.nome }}</h5>
                                 <p class="mb-0 text-muted small fs-6">Instituição: {{ curso.inst }}</p>
                                 <p class="mb-0 text-muted small fs-6">Nível: {{ curso.nivel }}</p>
                             </div>
                         </div>
 
-                        <div class="curso-details d-none d-md-block">
-                            <p class="mb-0 small fs-5">{{ curso.descricao }}</p>
-                        </div>
-
-                        <div class="curso-actions">
-                            <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-sm btn-outline-light">Editar</a>
-                            <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-sm btn-outline-danger">Apagar</a>
+                        <div class="curso-actions mt-auto pt-3 border-top border-secondary text-end">
+                             <a href="{% url 'curso:curso_detail' curso.pk %}" class="btn btn-sm btn-outline-light">Ver Detalhes</a>
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                                <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-sm btn-outline-danger">Apagar</a>
+                            {% endif %}
                         </div>
                     </div>
-                </a>
+                </div>
                 {% empty %}
-                <div class="glass-card p-5 text-center">
-                    <p>Nenhum curso encontrado.</p>
+                <div class="col-12">
+                    <div class="glass-card p-5 text-center">
+                        <p class="text-white mb-0">Nenhum curso encontrado.</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -72,7 +76,6 @@
 <script>
     // Lógica JavaScript para filtragem
     document.addEventListener('DOMContentLoaded', () => {
-        const cursoList = document.getElementById('curso-list-container');
         const courseNameInput = document.getElementById('courseNameInput');
         const institutionFilter = document.getElementById('institutionFilter');
 

@@ -8,22 +8,28 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="glass-card p-4">
-                <h1 class="text-white mb-4">{{ curso.nome }}</h1>
+                <h1 class="text-white mb-4">Detalhes do Curso: {{ curso.nome }}</h1>
 
-                <div class="mb-3">
-                    <p class="text-white small mb-1">Instituição:</p>
-                    <h5 class="text-muted">{{ curso.inst }}</h5>
-                </div>
-                
-                <div class="mb-3">
-                    <p class="text-white small mb-1">Nível:</p>
-                    <h5 class="text-muted">{{ curso.nivel }}</h5>
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-building icon me-2'></i>
+                        <span class="small text-muted">Instituição:</span>
+                        <span class="ms-2 text-white">{{ curso.inst }}</span>
+                    </p>
+                    
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-certification icon me-2'></i>
+                        <span class="small text-muted">Nível:</span>
+                        <span class="ms-2 text-white">{{ curso.nivel }}</span>
+                    </p>
                 </div>
                 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{% url 'curso:curso_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
-                    <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-warning">Editar</a>
-                    <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-danger">Apagar</a>
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'curso:curso_update' curso.pk %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'curso:curso_delete' curso.pk %}" class="btn btn-danger">Apagar</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

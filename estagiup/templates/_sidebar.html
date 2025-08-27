@@ -52,6 +52,18 @@
                         </a>
                     </li>
                     <li class="nav-link">
+                        <a href="{% url 'vaga:vaga_list' %}">
+                            <i class='bx bx-briefcase-alt-2 icon'></i>
+                            <span class="text nav-text">Gerenciar Vagas</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'curso:curso_list' %}">
+                            <i class='bx bx-book icon'></i>
+                            <span class="text nav-text">Cursos</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
                         <a href="{% url 'estagio:estagio_list' %}">
                             <i class='bx bx-file-blank icon'></i>
                             <span class="text nav-text">Meus Estágios</span>
@@ -80,12 +92,6 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="{% url 'vaga:vaga_list' %}">
-                            <i class='bx bx-briefcase-alt-2 icon'></i>
-                            <span class="text nav-text">Gerenciar Vagas</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
                         <a href="{% url 'vaga:vaga_create' %}">
                             <i class='bx bx-plus-circle icon'></i>
                             <span class="text nav-text">Adicionar Vaga</span>
@@ -95,12 +101,6 @@
                         <a href="{% url 'usuario:editar_perfil' %}">
                             <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Meu Perfil</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="{% url 'curso:curso_list' %}">
-                            <i class='bx bx-book icon'></i>
-                            <span class="text nav-text">Cursos</span>
                         </a>
                     </li>
                 {% endif %}
@@ -119,12 +119,6 @@
                             <span class="text nav-text">Meu Perfil</span>
                         </a>
                     </li>
-                     <li class="nav-link">
-                        <a href="{% url 'curso:curso_list' %}">
-                            <i class='bx bx-book icon'></i>
-                            <span class="text nav-text">Cursos</span>
-                        </a>
-                    </li>
                 {% endif %}
 
                 <!-- Links para Orientadores -->
@@ -139,12 +133,6 @@
                         <a href="{% url 'usuario:editar_perfil' %}">
                             <i class='bx bx-user icon'></i>
                             <span class="text nav-text">Meu Perfil</span>
-                        </a>
-                    </li>
-                     <li class="nav-link">
-                        <a href="{% url 'curso:curso_list' %}">
-                            <i class='bx bx-book icon'></i>
-                            <span class="text nav-text">Cursos</span>
                         </a>
                     </li>
                 {% endif %}
