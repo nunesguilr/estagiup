@@ -47,29 +47,33 @@
                 <div class="row g-4">
                     {% for vaga in vagas %}
                     <div class="col-md-6 vaga-item" data-title="{{ vaga.titulo|lower }}">
-                        <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="card-link">
-                            <div class="card-custom h-100">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>
-                                    <span class="status-badge" id="status-nome">Aberta</span>
-                                </div>
-                                <div class="card-body">
-                                    <p class="small text-muted">{{ vaga.prazo }}</p>
-                                    <img src="https://placehold.co/300x150/2c1c40/e0cffc?text=Imagem+da+Vaga"
-                                        class="vaga-imagem img-fluid rounded my-3" alt="Imagem da vaga">
-                                    <p><strong id="nome-instituicao">Instituição:</strong> {{ vaga.instituicao.nome }}</p>
-                                    <p><strong id="nome-curso">Cursos:</strong>
-                                        {% for curso in vaga.cursos.all %}
-                                        <span class="badge bg-secondary" id="resultado-curso">{{ curso.nome }}</span>
-                                        {% endfor %}
-                                    </p>
-                                </div>
-                                <!-- Botão de detalhes adicionado no card-footer -->
-                                <div class="card-footer text-end">
-                                     <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
-                                </div>
+                        <div class="card-custom h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">{{ vaga.titulo }}</h5>
+                                <span class="status-badge" id="status-nome">Aberta</span>
                             </div>
-                        </a>
+                            <div class="card-body">
+                                <p class="small text-muted">{{ vaga.prazo }}</p>
+                                <img src="https://placehold.co/300x150/2c1c40/e0cffc?text=Imagem+da+Vaga"
+                                    class="vaga-imagem img-fluid rounded my-3" alt="Imagem da vaga">
+                                <p><strong id="nome-instituicao">Instituição:</strong> {{ vaga.instituicao.nome }}</p>
+                                <p><strong id="nome-curso">Cursos:</strong>
+                                    {% for curso in vaga.cursos.all %}
+                                    <span class="badge bg-secondary" id="resultado-curso">{{ curso.nome }}</span>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <!-- A verificação de grupo foi ajustada para um formato aceito pelo template -->
+                            {% if request.user.is_authenticated and 'Alunos' in request.user.groups.all.0.name %}
+                            <div class="card-footer text-end">
+                                <a href="{% url 'estagio:estagio_create' vaga.pk %}" class="btn btn-primary-custom btn-sm">Iniciar Estágio</a>
+                            </div>
+                            {% else %}
+                            <div class="card-footer text-end">
+                                <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
                     {% empty %}
                     <div class="col-12">

@@ -7,55 +7,43 @@
 <div class="container-fluid py-4">
     <div class="row">
 
-        <div class="col-lg-3">
-            <div class="glass-card p-4">
-                <h5 class="text-white mb-3">Filtrar Estágios</h5>
-
-                <div class="mb-3">
-                    <label for="companyInput" class="form-label">Buscar por Empresa</label>
-                    <input type="text" class="form-control" id="companyInput" placeholder="Ex: Tech Solutions">
-                </div>
-
-                <div class="mb-3">
-                    <label for="statusFilter" class="form-label">Filtrar por Status</label>
-                    <select class="form-select" id="statusFilter">
-                        <option value="all" selected>Todos os Status</option>
-                        <option value="ativo">Ativo</option>
-                        <option value="concluido">Concluído</option>
-                        <option value="cancelado">Cancelado</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-9">
+        <!-- Conteúdo principal -->
+        <div class="col-12">
             <h1 class="text-white mb-4">Meus Estágios</h1>
 
             <div class="row g-4" id="estagio-list-container">
-                {% for estagio in todos_estagios %}
-                <!-- Verificação adicionada para exibir apenas estágios do usuário logado -->
-                {% if estagio.usuario.pk == request.user.pk %}
+                {% for estagio in estagios %}
                 <a href="{% url 'estagio:estagio_detail' estagio.pk %}" class="estagio-list-row-link">
-                    <div class="estagio-list-row mb-0"
-                        data-nome="{{ estagio.vaga.titulo|lower }}"
-                        data-empresa="{{ estagio.vaga.empresa.nome|lower }}"
-                        data-status="{{ estagio.status|lower }}">
-
-                        <div class="estagio-info">
-                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ estagio.vaga.empresa.nome|first|upper }}"
-                                class="avatar" alt="Avatar">
+                    <div class="card-custom h-100 p-4 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ estagio.vaga.instituicao.nome|first|upper }}"
+                                class="avatar me-3" alt="Avatar">
                             <div>
-                                <h5 class="mb-0 text-white fs-3">{{ estagio.vaga.titulo }}</h5>
-                                <p class="mb-0 text-muted small fs-6">Empresa: {{ estagio.vaga.empresa.nome }}</p>
+                                <h5 class="mb-0 text-white fs-4">{{ estagio.vaga.titulo }}</h5>
+                                <p class="mb-0 text-muted small fs-6">{{ estagio.vaga.instituicao.nome }}</p>
                             </div>
                         </div>
 
-                        <div class="estagio-details d-none d-md-block">
-                            <p class="mb-0 small fs-5">Início: {{ estagio.data_inicio|date:"d/m/Y" }}</p>
-                            <p class="mb-0 small fs-5">Fim: {{ estagio.data_fim|date:"d/m/Y" }}</p>
+                        <div class="estagio-details">
+                            <p class="mb-1 small text-white">
+                                <i class='bx bx-calendar-alt me-2'></i>
+                                <span class="text-muted">Início:</span> {{ estagio.dt_ini|date:"d/m/Y" }}
+                            </p>
+                            <p class="mb-1 small text-white">
+                                <i class='bx bx-calendar-check me-2'></i>
+                                <span class="text-muted">Fim:</span> {{ estagio.dt_fim|date:"d/m/Y" }}
+                            </p>
+                            <p class="mb-1 small text-white">
+                                <i class='bx bx-buildings me-2'></i>
+                                <span class="text-muted">Supervisor:</span> {{ estagio.supervisor.user.username|default:"Não atribuído" }}
+                            </p>
+                            <p class="mb-1 small text-white">
+                                <i class='bx bx-user-voice me-2'></i>
+                                <span class="text-muted">Orientador:</span> {{ estagio.orientador.user.username|default:"Não atribuído" }}
+                            </p>
                         </div>
-
-                        <div class="estagio-status">
+                        
+                        <div class="estagio-status mt-auto pt-3 border-top border-secondary">
                             {% if estagio.status == 'ativo' %}
                             <span class="badge rounded-pill bg-success">Ativo</span>
                             {% elif estagio.status == 'concluido' %}
@@ -64,12 +52,24 @@
                             <span class="badge rounded-pill bg-danger">Cancelado</span>
                             {% endif %}
                         </div>
+
+                        <!-- Lógica para exibir a barra de progresso -->
+                        {% if estagio.status == 'ativo' %}
+                            {% with progresso=estagio.progresso %}
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{ progresso }}%" aria-valuenow="{{ progresso }}" aria-valuemin="0" aria-valuemax="100">
+                                        {{ progresso|floatformat:0 }}%
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        {% endif %}
                     </div>
                 </a>
-                {% endif %}
                 {% empty %}
-                <div class="glass-card p-5 text-center">
-                    <p>Nenhum estágio encontrado.</p>
+                <div class="col-12">
+                    <div class="glass-card p-5 text-center">
+                        <p class="text-white mb-0">Nenhum estágio encontrado.</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -77,36 +77,4 @@
 
     </div>
 </div>
-
-<script>
-    // Adicione aqui a lógica JavaScript para filtragem, se necessário.
-    document.addEventListener('DOMContentLoaded', () => {
-        const estagioList = document.getElementById('estagio-list-container');
-        const companyInput = document.getElementById('companyInput');
-        const statusFilter = document.getElementById('statusFilter');
-
-        const filterEstagios = () => {
-            const companyQuery = companyInput.value.toLowerCase();
-            const selectedStatus = statusFilter.value;
-
-            document.querySelectorAll('.estagio-list-row').forEach(estagio => {
-                const companyName = estagio.dataset.empresa;
-                const estagioStatus = estagio.dataset.status;
-                const parentLink = estagio.closest('a');
-
-                const matchesCompany = companyName.includes(companyQuery);
-                const matchesStatus = (selectedStatus === 'all' || estagioStatus === selectedStatus);
-
-                if (matchesCompany && matchesStatus) {
-                    parentLink.style.display = 'block';
-                } else {
-                    parentLink.style.display = 'none';
-                }
-            });
-        };
-
-        companyInput.addEventListener('input', filterEstagios);
-        statusFilter.addEventListener('change', filterEstagios);
-    });
-</script>
 {% endblock %}

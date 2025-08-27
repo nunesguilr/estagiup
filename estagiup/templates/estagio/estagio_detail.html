@@ -1,0 +1,87 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Detalhes do Estágio{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h1 class="text-white mb-4">Estágio de {{ estagio.vaga.titulo }}</h1>
+
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-user icon me-2'></i>
+                        <span class="small text-muted">Aluno:</span>
+                        <span class="ms-2 text-white">{{ estagio.aluno.user.username }}</span>
+                    </p>
+                    
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-briefcase-alt-2 icon me-2'></i>
+                        <span class="small text-muted">Vaga:</span>
+                        <span class="ms-2 text-white">{{ estagio.vaga.titulo }}</span>
+                    </p>
+                    
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-buildings icon me-2'></i>
+                        <span class="small text-muted">Empresa:</span>
+                        <span class="ms-2 text-white">{{ estagio.vaga.instituicao.nome }}</span>
+                    </p>
+
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-id-card icon me-2'></i>
+                        <span class="small text-muted">Supervisor:</span>
+                        <span class="ms-2 text-white">{{ estagio.supervisor.user.username|default:"Não atribuído" }}</span>
+                    </p>
+
+                    <p class="text-white mb-1 d-flex align-items-center">
+                        <i class='bx bx-user-voice icon me-2'></i>
+                        <span class="small text-muted">Orientador:</span>
+                        <span class="ms-2 text-white">{{ estagio.orientador.user.username|default:"Não atribuído" }}</span>
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3">
+                    <div class="mb-3">
+                        <p class="text-white small mb-1">Status:</p>
+                        {% if estagio.status %}
+                            <span class="badge rounded-pill bg-success">Ativo</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-secondary">Inativo</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="text-white small mb-1">Período:</p>
+                        <p class="text-muted mb-0">{{ estagio.dt_ini|date:"d/m/Y" }} a {{ estagio.dt_fim|date:"d/m/Y" }}</p>
+                    </div>
+                </div>
+
+                {% if estagio.progresso %}
+                <div class="mb-3 mt-3">
+                    <p class="text-white small mb-1">Progresso:</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ estagio.progresso }}%" aria-valuenow="{{ estagio.progresso }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ estagio.progresso|floatformat:0 }}%
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 pt-3 border-top border-secondary">
+                    <a href="{% url 'estagio:estagio_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+                    {% if can_edit %}
+                        <a href="{% url 'estagio:estagio_update' estagio.pk %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'estagio:estagio_delete' estagio.pk %}" class="btn btn-danger">Apagar</a>
+                    {% endif %}
+                    <!-- Adicionado: Botão para o aluno desistir -->
+                    {% if request.user.is_authenticated and 'Alunos' in request.user.groups.all.0.name %}
+                         <a href="{% url 'estagio:estagio_delete' estagio.pk %}" class="btn btn-danger">Desistir do Estágio</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

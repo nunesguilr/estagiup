@@ -10,8 +10,14 @@ from usuario.models import PerfilUsuario
 @login_required
 def vaga_list(request):
     """
-    Lista todas as vagas disponíveis.
+    Lista todas as vagas disponíveis para gerenciamento interno.
     """
+    # Verifica se o usuário é um responsável da instituição ou um superusuário.
+    # Alunos não têm permissão para acessar esta página.
+    if not request.user.is_superuser and not request.user.groups.filter(name='Responsaveis da Instituicao').exists():
+        messages.error(request, 'Você não tem permissão para gerenciar vagas.')
+        return redirect('dashboard')
+    
     vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
     
     # Filtro por busca
@@ -36,6 +42,11 @@ def vaga_detail(request, vaga_id):
     """
     vaga = get_object_or_404(Vaga, id=vaga_id)
     
+    # Verifica se o usuário é superusuário ou pertence ao grupo 'Alunos'
+    if not request.user.is_superuser and not request.user.groups.filter(name='Alunos').exists():
+        messages.error(request, 'Você não tem permissão para visualizar esta vaga.')
+        return redirect('vaga:vaga_list')
+        
     # Verifica se o usuário pode editar/apagar a vaga
     can_edit = False
     if hasattr(request.user, 'perfil') and vaga.instituicao:

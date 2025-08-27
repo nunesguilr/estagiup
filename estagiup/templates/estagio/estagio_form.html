@@ -1,0 +1,49 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Formulário de Estágio{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">
+                    {% if form.instance.pk %}
+                        Editar Estágio
+                    {% else %}
+                        Cadastrar Novo Estágio
+                    {% endif %}
+                </h5>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Renderiza os campos do formulário -->
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label text-white">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <ul class="text-danger small mt-1">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if field.help_text %}
+                                <p class="text-muted small">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'estagio:estagio_list' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary-custom">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
