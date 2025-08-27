@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-white">Gerenciamento de Vagas</h1>
-        <a href="#" class="btn btn-primary-custom">
+        <a href="{% url 'vaga:vaga_create' %}" class="btn btn-primary-custom">
             <i class='bx bx-plus icon' style="min-width: auto; margin-right: 0.5rem;"></i>
             Criar Nova Vaga
         </a>
@@ -24,9 +24,9 @@
                             <p class="card-text text-muted mb-0">{{ vaga.empresa }} - {{ vaga.localizacao }}</p>
                         </div>
                         <div>
-                            <a href="#" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
-                            <a href="#" class="btn btn-outline-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-outline-danger btn-sm">Excluir</a>
+                            <a href="{% url 'vaga:vaga_detail' vaga.pk %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
+                            <a href="{% url 'vaga:vaga_update' vaga.pk %}" class="btn btn-outline-warning btn-sm">Editar</a>
+                            <a href="{% url 'vaga:vaga_delete' vaga.pk %}" class="btn btn-outline-danger btn-sm">Excluir</a>
                         </div>
                     </div>
                 </div>

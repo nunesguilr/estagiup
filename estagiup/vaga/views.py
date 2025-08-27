@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from .models import Vaga
 from .forms import VagaForm
+from usuario.models import PerfilUsuario
 
 @login_required
 def vaga_list(request):
@@ -39,7 +40,7 @@ def vaga_detail(request, vaga_id):
     can_edit = False
     if hasattr(request.user, 'perfil') and vaga.instituicao:
         can_edit = (request.user.perfil in vaga.instituicao.responsaveis.all() or 
-                   request.user.is_superuser)
+                    request.user.is_superuser)
     
     context = {
         'vaga': vaga,
@@ -53,13 +54,24 @@ def vaga_create(request):
     """
     View para o cadastro de uma nova vaga.
     """
+    # A variável 'instituicoes_disponiveis' será usada para popular o campo 'instituicao' do formulário.
+    # Corrigido: Acessando instituicao_set a partir do PerfilUsuario
+    try:
+        instituicoes_disponiveis = request.user.perfil.instituicao_set.all()
+    except PerfilUsuario.DoesNotExist:
+        instituicoes_disponiveis = []
+
     if request.method == 'POST':
         form = VagaForm(request.POST, user=request.user)
         if form.is_valid():
             vaga = form.save(commit=False)
             
-            # Se o usuário tem perfil e está associado a uma instituição
-            if hasattr(request.user, 'perfil') and request.user.perfil.instituicao:
+            # Se o usuário tem perfil e está associado a uma instituição específica
+            # e não selecionou outra instituição no formulário
+            if (hasattr(request.user, 'perfil') and 
+                hasattr(request.user.perfil, 'instituicao') and 
+                request.user.perfil.instituicao and 
+                not vaga.instituicao):
                 vaga.instituicao = request.user.perfil.instituicao
             
             vaga.save()
@@ -90,7 +102,7 @@ def vaga_update(request, vaga_id):
     can_edit = False
     if hasattr(request.user, 'perfil') and vaga.instituicao:
         can_edit = (request.user.perfil in vaga.instituicao.responsaveis.all() or 
-                   request.user.is_superuser)
+                    request.user.is_superuser)
     
     if not can_edit:
         messages.error(request, 'Você não tem permissão para editar esta vaga.')
@@ -147,7 +159,8 @@ def vaga_public(request):
     """
     View pública para listar vagas (sem requerer login)
     """
-    vagas = Vaga.objects.filter(ativa=True).select_related('instituicao').order_by('-prazo')
+    # A linha que causava o erro foi removida
+    vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
     
     # Filtro por busca
     query = request.GET.get('q')

@@ -36,6 +36,12 @@
                         <span class="text nav-text">Sobre</span>
                     </a>
                 </li>
+                <li class="nav-link">
+                    <a href="{% url 'vaga:vaga_public' %}">
+                        <i class='bx bx-search-alt icon'></i>
+                        <span class="text nav-text">Vagas Públicas</span>
+                    </a>
+                </li>
 
                 <!-- Links para alunos -->
                 {% if request.user.is_authenticated and request.user.groups.all.0.name == 'Alunos' %}
@@ -48,7 +54,7 @@
                     <li class="nav-link">
                         <a href="{% url 'vaga:vaga_list' %}">
                             <i class='bx bx-briefcase-alt-2 icon'></i>
-                            <span class="text nav-text">Buscar Vagas</span>
+                            <span class="text nav-text">Gerenciar Vagas</span>
                         </a>
                     </li>
                     <li class="nav-link">
@@ -154,7 +160,7 @@
                     <li class="nav-link">
                         <a href="{% url 'vaga:vaga_list' %}">
                             <i class='bx bx-briefcase-alt-2 icon'></i>
-                            <span class="text nav-text">Buscar Vagas</span>
+                            <span class="text nav-text">Gerenciar Vagas</span>
                         </a>
                     </li>
                     <li class="nav-link">

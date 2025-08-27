@@ -1,0 +1,53 @@
+{% extends '_base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Detalhes da Vaga{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="glass-card p-4">
+                <h1 class="text-white mb-4">{{ vaga.titulo }}</h1>
+
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Instituição:</p>
+                    <h5 class="text-muted">{{ vaga.instituicao.nome }}</h5>
+                </div>
+                
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Cursos Requeridos:</p>
+                    <p class="text-muted">
+                        {% for curso in vaga.cursos.all %}
+                            <span class="badge bg-secondary me-1">{{ curso.nome }}</span>
+                        {% empty %}
+                            Nenhum curso especificado.
+                        {% endfor %}
+                    </p>
+                </div>
+                
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Número de Vagas:</p>
+                    <h5 class="text-muted">{{ vaga.numVagas }}</h5>
+                </div>
+
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Prazo de Inscrição:</p>
+                    <h5 class="text-muted">{{ vaga.prazo }}</h5>
+                </div>
+                
+                <div class="mb-3">
+                    <p class="text-white small mb-1">Descrição:</p>
+                    <p class="text-muted">{{ vaga.descricao }}</p>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'vaga:vaga_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+                    <a href="{% url 'vaga:vaga_update' vaga.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'vaga:vaga_delete' vaga.pk %}" class="btn btn-danger">Apagar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
