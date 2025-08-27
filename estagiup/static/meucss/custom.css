@@ -1,0 +1,90 @@
+/* Garante que o container principal tenha largura total e alinhamento */
+.container.my-5 .row.justify-content-center {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Garante que a coluna dos cards ocupe o espaço disponível */
+.container.my-5 .col-lg-10 {
+    width: 100%; /* Garante que ocupe a largura total */
+    max-width: 100%; /* Remove qualquer limite máximo que possa ter */
+}
+
+/* Estilo para mudar a visualização de cards para lista em linha */
+.row-cols-1.row-cols-md-2.row-cols-lg-3 {
+    display: flex; /* Transforma o container numa linha flexível */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    gap: 15px; /* Espaço entre os itens da lista */
+}
+
+/* Estilo para cada card individualmente na visualização de lista */
+.row-cols-1.row-cols-md-2.row-cols-lg-3 .col {
+    flex: 0 0 100%; /* Faz cada item ocupar 100% da largura disponível */
+    max-width: 100%; /* Impede que se divida em colunas */
+}
+
+/* Ajustes para o card em si (opcional, pode já estar certo) */
+.card.glass-card-body.h-100 {
+    display: flex;
+    flex-direction: row; /* Layout interno do card em linha (título, descrição, botão) */
+    align-items: center; /* Alinha verticalmente */
+    justify-content: space-between; /* Espaço entre os elementos */
+    padding: 20px;
+    text-align: left; /* Alinha o texto à esquerda */
+    min-height: 80px; /* Altura mínima para cada linha */
+}
+
+.card.glass-card-body .card-body {
+    flex-grow: 1; /* Permite que o corpo do card ocupe o espaço restante */
+    display: flex;
+    flex-direction: row; /* O conteúdo do corpo também em linha */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0; /* Remove padding extra do card-body */
+}
+
+.card.glass-card-body .card-title {
+    margin-bottom: 0; /* Remove margem inferior do título */
+    flex-basis: 30%; /* Opcional: Define uma base para o título */
+}
+
+.card.glass-card-body .card-text {
+    margin-bottom: 0; /* Remove margem inferior da descrição */
+    flex-basis: 50%; /* Opcional: Define uma base para a descrição */
+}
+
+.card.glass-card-body .mt-auto {
+    margin-top: 0 !important; /* Remove margin-top se estiver empurrando o botão para baixo */
+    flex-basis: 20%; /* Opcional: Define uma base para o botão */
+    text-align: right; /* Alinha o botão à direita */
+}
+
+.list-group-item.glass-card-body {
+    /* 1. Restaurando o Efeito Liquid Glass */
+    background: rgba(44, 28, 64, 0.65); /* Roxo escuro com mais opacidade */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px !important; /* !important para sobrepor o Bootstrap */
+    
+    /* 2. Forçando a Cor do Texto a ser Branca */
+    color: #f0f0f0; /* Cor principal do texto */
+    transition: all 0.3s ease;
+}
+
+/* Garante que o título também seja branco e visível */
+.list-group-item.glass-card-body .card-title {
+    color: #ffffff;
+}
+
+/* Garante que o texto secundário (endereço) seja visível */
+.list-group-item.glass-card-body .text-white-50 {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Adiciona um efeito de hover para melhorar a interatividade */
+.list-group-item.glass-card-body:hover {
+    background: rgba(69, 43, 105, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+}

@@ -204,3 +204,50 @@ body {
 #vagas-container.grid-view #resultado-curso {
     margin-left: 0px;
 }
+
+/* CORREÇÃO DE CORES PARA CARDS EM TEMA CLARO
+*/
+
+/* Força a cor do título do card para o roxo do tema */
+.theme-light .card-custom .card-title {
+    color: #6133D3; /* Roxo principal do EstagiUP */
+}
+
+/* Garante que o texto secundário (endereço, telefone) seja legível */
+.theme-light .card-custom .card-text.text-muted {
+    color: #5a6268 !important; /* Um cinza escuro, !important para garantir a prioridade */
+}
+
+/* Garante que os ícones também fiquem visíveis */
+.theme-light .card-custom .card-text i {
+    color: #6c757d; /* Um cinza um pouco mais claro para os ícones */
+}
+
+.theme-light .card-custom {
+    background-color: #2c1c40;
+    /* Cartões roxo escuro */
+    border: none;
+}
+
+/* ====================================================== */
+/* CORREÇÃO DE ESTILO PARA CARDS DE INSTITUIÇÃO EM TEMA CLARO
+*/
+/* ====================================================== */
+
+.theme-light .card-custom {
+    background: #2c1c40 !important;/* Roxo escuro do tema */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff; /* Texto padrão branco */
+}
+
+.theme-light .card-custom .card-title {
+    color: #fff; /* Força o título a ser branco */
+}
+
+.theme-light .card-custom .text-muted {
+    color: #ced4da !important; /* Cor clara para texto secundário */
+}
+
+.theme-light .card-custom i {
+    color: #ced4da !important; /* Ícones claros */
+}

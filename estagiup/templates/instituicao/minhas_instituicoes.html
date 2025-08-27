@@ -32,6 +32,7 @@
                     class="btn btn-primary-custom mt-3">Ver Perfil</a>
                 <a href="{% url 'instituicao:listar_membros' instituicao.id %}" class="btn btn-primary-custom mt-3">Ver
                     Responsáveis</a>
+                <a href="{% url 'vaga:vaga_create' instituicao_id=instituicao.id %}" class="btn btn-primary-custom mt-3">Adicionar Vaga</a>
             </div>
         </div>
         {% empty %}

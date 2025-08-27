@@ -408,6 +408,20 @@ body {
 .btn-danger-custom:hover {
     background-color: #9c0a18; /* Cor mais escura no hover */
     border-color: #860512;
+    margin-bottom: 5px;
+}
+
+.btn-success-custom {
+    background-color: #1e9f54; /* Cor de perigo padrão do Bootstrap */
+    border-color: #138542;
+    color: #fff; /* Cor do texto branco */
+    transition: all 0.3s ease;
+}
+
+.btn-success-custom:hover {
+    background-color: #0d6632; /* Cor mais escura no hover */
+    border-color: #075528;
+    margin-bottom: 5px;
 }
 
 /* Exemplo de botões mais escuros, alinhado com o tema */
@@ -422,3 +436,4 @@ body {
     background-color: #4a148c; /* Roxo ainda mais escuro no hover */
     border-color: #4a148c;
 }
+

@@ -1,0 +1,54 @@
+/* NOVO CONTEÚDO PARA: estagiup/static/meucss/public_pages.css */
+
+/* Define o layout principal da página usando CSS Grid */
+.public-grid-container {
+    display: grid;
+    grid-template-columns: 380px 1fr; /* Coluna 1 (filtro) com largura fixa, Coluna 2 (conteúdo) ocupa o resto */
+    grid-template-rows: auto;
+    gap: 2rem; /* Espaço entre as colunas */
+    padding: 0 2rem; /* Adiciona o espaçamento lateral que você pediu */
+    align-items: start;
+}
+
+/* --- A MÁGICA ACONTECE AQUI --- */
+.filter-sidebar {
+    position: -webkit-sticky; /* Para compatibilidade com Safari */
+    position: sticky;
+    top: 90px; /* Distância do topo (ajuste de acordo com a altura do seu navbar) */
+    
+    /* Ocupa a altura da tela, menos o espaço do topo e um respiro em baixo */
+    height: calc(100vh - 110px);
+}
+
+/* Garante que o card de vidro ocupe toda a altura da coluna do filtro */
+.filter-sidebar .glass-card {
+    height: 100%;
+    overflow-y: auto; /* Adiciona scroll se os filtros forem muitos */
+}
+
+
+/* ====================================================== */
+/* ESTILO CORRIGIDO PARA CARDS DE INSTITUIÇÃO
+*/
+/* ====================================================== */
+
+.theme-light .card-custom.instituicao-card {
+    background: #2c1c40; /* Roxo escuro do tema */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff; /* Texto padrão branco */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-light .card-custom.instituicao-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.theme-light .card-custom.instituicao-card .card-title {
+    color: #fff; /* Força o título a ser branco */
+}
+
+.theme-light .card-custom.instituicao-card .text-muted,
+.theme-light .card-custom.instituicao-card i {
+    color: #ced4da !important; /* Cor clara para texto secundário e ícones */
+}

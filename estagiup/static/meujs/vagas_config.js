@@ -9,6 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const gridBtn = document.getElementById('grid-view-btn');
     const listBtn = document.getElementById('list-view-btn');
 
+    // Função para ativar o botão correto
+    function activateButton(activeBtn) {
+        gridBtn.classList.remove('active');
+        listBtn.classList.remove('active');
+        activeBtn.classList.add('active');
+    }
+
      // Evento para visualização em GRADE
     gridBtn.addEventListener('click', function() {
         vagasContainer.classList.remove('list-view');
@@ -43,4 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+
+     // Inicia com a visualização em grade ativa por padrão
+    activateButton(gridBtn);
 });

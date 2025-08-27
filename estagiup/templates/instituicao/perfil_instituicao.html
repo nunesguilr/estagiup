@@ -62,6 +62,8 @@
         </div>
 
         <div class="d-flex justify-content-center mt-5 gap-3">
+            <a href="{% url 'vaga:vaga_create' instituicao_id=instituicao.id %}" class="btn btn-success-custom btn-lg">Adicionar Vaga</a>
+
             <a href="{% url 'instituicao:editar_instituicao' instituicao_id=instituicao.id %}" class="btn btn-primary-custom btn-lg">Editar Instituição</a>
             <a href="{% url 'instituicao:apagar_instituicao' instituicao_id=instituicao.id %}" class="btn btn-danger-custom btn-lg">Apagar Instituição</a>
         </div>

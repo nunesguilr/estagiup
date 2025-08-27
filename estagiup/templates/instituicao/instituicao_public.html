@@ -1,0 +1,59 @@
+{% extends '_base.html' %}
+{% block body_class %}theme-light{% endblock %}
+{% load static %}
+
+{% block title %}Instituições Parceiras{% endblock %}
+
+{% block content %}
+<div class="my-5">
+    <div class="public-grid-container">
+        <aside class="filter-sidebar">
+            <div class="glass-card p-4">
+                <h5 class="text-white mb-3">Filtrar Instituições</h5>
+                <form method="get" action="{% url 'instituicao:instituicao_public' %}">
+                    <div class="mb-3">
+                        <label for="searchInput" class="text-white form-label">Buscar por Nome ou Local</label>
+                        <input type="text" name="q" class="text-white form-control form-control-dark" id="searchInput"
+                               placeholder="Ex: IF Baiano" value="{{ search_query|default:'' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100">Buscar</button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="text-center display-4 fw-bold mb-4">INSTITUIÇÕES PARCEIRAS</h1>
+            <p class="text-center mb-4">Conheça as instituições que oferecem oportunidades de estágio.</p>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for instituicao in instituicoes %}
+                    <div class="col">
+                        <div class="card card-custom instituicao-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">{{ instituicao.nome }}</h5>
+                                <p class="card-text text-muted">
+                                    <i class='bx bx-map'></i> {{ instituicao.endereco }}
+                                </p>
+                                <p class="card-text text-muted">
+                                    <i class='bx bx-phone'></i> {{ instituicao.telefone }}
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 text-end">
+                                <a href="{% url 'instituicao:instituicao_public_detail' instituicao.id %}" class="btn btn-primary-custom btn-sm">
+                                    Ver Perfil e Vagas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            Nenhuma instituição encontrada.
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

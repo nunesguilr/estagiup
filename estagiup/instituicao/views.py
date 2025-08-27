@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from .forms import InstituicaoForm
 from .models import Instituicao
 from usuario.models import PerfilUsuario
+from django.db.models import Q
+from vaga.models import Vaga
 
 class InstituicaoForm(forms.ModelForm):
     class Meta:
@@ -28,6 +30,40 @@ class InstituicaoForm(forms.ModelForm):
 
         # Adiciona a descrição para o campo status
         self.fields['status'].help_text = 'Selecione para tornar a instituição ativa no sistema (Caso contrario, não será exibida nas buscas para Estagios).'
+
+def instituicao_public(request):
+    """
+    View pública para listar todas as instituições com status ativo.
+    """
+    # Filtra apenas as instituições que estão com o status=True
+    instituicoes = Instituicao.objects.filter(status=True).order_by('nome')
+    
+    # Lógica de busca, igual à da página de vagas
+    query = request.GET.get('q')
+    if query:
+        instituicoes = instituicoes.filter(
+            Q(nome__icontains=query) |
+            Q(endereco__icontains=query)
+        )
+
+    context = {
+        'instituicoes': instituicoes,
+        'search_query': query
+    }
+    return render(request, 'instituicao/instituicao_public.html', context)
+
+def instituicao_public_detail(request, instituicao_id):
+    instituicao = get_object_or_404(Instituicao, id=instituicao_id, status=True)
+    
+    # ACRESCENTADO: Busca todas as vagas relacionadas a esta instituição.
+    # Futuramente, podemos adicionar um filtro de "status" aqui se o modelo Vaga tiver.
+    vagas_da_instituicao = Vaga.objects.filter(instituicao=instituicao).order_by('-prazo')
+
+    context = {
+        'instituicao': instituicao,
+        'vagas_da_instituicao': vagas_da_instituicao # ACRESCENTADO: Passa a lista de vagas para o template
+    }
+    return render(request, 'instituicao/instituicao_public_detail.html', context)
 
 @login_required
 @permission_required('instituicao.add_instituicao', raise_exception=True)

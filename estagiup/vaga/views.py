@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
 from .models import Vaga
 from .forms import VagaForm
+from instituicao.models import Instituicao # Importe o modelo Instituicao
 from usuario.models import PerfilUsuario
 
 @login_required
@@ -61,44 +62,64 @@ def vaga_detail(request, vaga_id):
 
 @login_required
 @permission_required('vaga.add_vaga', raise_exception=True)
-def vaga_create(request):
+def vaga_create(request, instituicao_id):
     """
-    View para o cadastro de uma nova vaga.
+    View para o cadastro de uma nova vaga para uma instituição específica.
+    Esta é a versão corrigida que completa a lógica iniciada.
     """
-    # A variável 'instituicoes_disponiveis' será usada para popular o campo 'instituicao' do formulário.
-    # Corrigido: Acessando instituicao_set a partir do PerfilUsuario
-    try:
-        instituicoes_disponiveis = request.user.perfil.instituicao_set.all()
-    except PerfilUsuario.DoesNotExist:
-        instituicoes_disponiveis = []
+    # 1. Identifica a instituição primeiro, usando o ID da URL.
+    instituicao = get_object_or_404(Instituicao, pk=instituicao_id)
+
+    # 2. Verifica se o usuário tem permissão para adicionar vagas a ESTA instituição.
+    if not request.user.is_superuser and request.user.perfil not in instituicao.responsaveis.all():
+        messages.error(request, "Você não tem permissão para adicionar vagas nesta instituição.")
+        return redirect('instituicao:minhas_instituicoes')
 
     if request.method == 'POST':
-        form = VagaForm(request.POST, user=request.user)
+        # O formulário não precisa mais saber sobre o usuário, pois já sabemos a instituição.
+        form = VagaForm(request.POST)
         if form.is_valid():
             vaga = form.save(commit=False)
-            
-            # Se o usuário tem perfil e está associado a uma instituição específica
-            # e não selecionou outra instituição no formulário
-            if (hasattr(request.user, 'perfil') and 
-                hasattr(request.user.perfil, 'instituicao') and 
-                request.user.perfil.instituicao and 
-                not vaga.instituicao):
-                vaga.instituicao = request.user.perfil.instituicao
-            
+            # 3. Associa a instituição à vaga antes de salvar. Este é o passo crucial.
+            vaga.instituicao = instituicao
             vaga.save()
             form.save_m2m()  # Salva a relação ManyToMany com os cursos
             messages.success(request, 'Vaga cadastrada com sucesso!')
+            # Redireciona para os detalhes da vaga recém-criada
             return redirect('vaga:vaga_detail', vaga_id=vaga.id)
         else:
             messages.error(request, 'Erro ao cadastrar a vaga. Por favor, verifique os campos.')
     else:
-        form = VagaForm(user=request.user)
+        form = VagaForm()
 
     context = {
         'form': form,
-        'title': 'Cadastrar Nova Vaga'
+        'instituicao': instituicao,  # Passa a instituição para o template
+        'title': f'Cadastrar Nova Vaga para {instituicao.nome}'
     }
     return render(request, 'vaga/vaga_form.html', context)
+
+@login_required
+def selecionar_instituicao_para_vaga(request):
+    """
+    Página intermediária para o usuário selecionar a qual de suas
+    instituições ele deseja adicionar uma nova vaga.
+    """
+    try:
+        # Busca todas as instituições pelas quais o usuário é responsável
+        instituicoes_do_usuario = Instituicao.objects.filter(responsaveis=request.user.perfil)
+    except PerfilUsuario.DoesNotExist:
+        instituicoes_do_usuario = []
+
+    if not instituicoes_do_usuario.exists():
+        messages.warning(request, 'Você precisa ser responsável por pelo menos uma instituição para adicionar uma vaga.')
+        return redirect('instituicao:minhas_instituicoes')
+
+    context = {
+        'instituicoes': instituicoes_do_usuario,
+        'title': 'Selecionar Instituição'
+    }
+    return render(request, 'vaga/select_instituicao.html', context)
 
 @login_required
 @permission_required('vaga.change_vaga', raise_exception=True)
@@ -188,3 +209,11 @@ def vaga_public(request):
         'public_view': True
     }
     return render(request, 'vaga/vaga_public.html', context)
+
+def vaga_public_detail(request, vaga_id):
+    vaga = get_object_or_404(Vaga, id=vaga_id)
+    # Futuramente, adicionaremos a lógica de candidatura aqui.
+    context = {
+        'vaga': vaga
+    }
+    return render(request, 'vaga/vaga_public_detail.html', context)

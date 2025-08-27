@@ -1,8 +1,10 @@
 * { 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
     /* ===== Colors ===== */
@@ -67,7 +69,7 @@ body {
 }
 
 .sidebar li {
-    height: 50px;
+    height: auto; /* IMPORTANTE: Alterado de 50px para auto */
     list-style: none;
     display: flex;
     align-items: center;
@@ -118,9 +120,12 @@ body {
 
 /* Garante que o link inteiro permaneça um alvo clicável */
 .sidebar li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 50px; /* Altura fixa para os links clicáveis */
     width: 100%;
     border-radius: 6px;
     text-decoration: none;
@@ -314,4 +319,83 @@ h2 {
 .hero-section p {
     color: #ffffff;
     /* Texto cinza */
+}
+
+/* ====================================================== */
+/* CÓDIGO SUBMENUS
+*/
+/* ====================================================== */
+
+/* O link principal do submenu */
+.sidebar .submenu-item > a {
+    width: 100%;
+}
+
+/* O container do submenu */
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.05); /* Fundo sutil */
+    border-radius: 6px;
+    /* A mágica do collapse do Bootstrap já faz ele ocupar espaço */
+}
+
+/* Os links dentro do submenu */
+.submenu li a {
+    padding-left: 25px; /* Recuo para os sub-itens */
+    height: 45px; /* Altura menor para sub-itens */
+}
+
+/* Ajuste na seta do dropdown */
+.sidebar .arrow {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar a:not(.collapsed) .arrow {
+    transform: rotate(180deg);
+}
+
+.sidebar.close .submenu {
+    display: none; /* Esconde o submenu quando a sidebar está fechada */
+}
+
+/* --- Estilos para o Menu dos Outros Usuários --- */
+
+.menu-title {
+    padding: 12px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-color);
+    text-transform: uppercase;
+    opacity: 0.6;
+    pointer-events: none;
+    width: 100%;
+    height: auto; /* Garante que o título não tenha altura fixa */
+}
+
+.sidebar:not(.close) .menu-title:hover {
+    background-color: transparent;
+}
+
+/*
+  Correção para o submenu aparecer abaixo, e não ao lado.
+*/
+.sidebar .menu-links .submenu-item {
+    display: flex;
+    flex-direction: column; /* Força os filhos (link e submenu) a ficarem em coluna */
+    align-items: stretch; /* Faz os filhos ocuparem a largura total */
+}
+
+.sidebar .menu-links .submenu-item > a {
+    /* Ocupa a largura inteira para ser clicável */
+    width: 100%;
+}
+
+.sidebar .menu-links .submenu-item .submenu {
+    /* Ocupa a largura inteira e remove estilos de lista indesejados */
+    width: 100%;
+    padding-left: 0;
 }
