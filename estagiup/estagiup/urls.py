@@ -8,13 +8,12 @@ from usuario import views as usuario_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # URL de Login: Usa a LoginView embutida do Django e define o redirecionamento
-    path('usuarios/login/', auth_views.LoginView.as_view(
-        template_name='usuario/login.html', next_page='dashboard'), name='login'),
-
-    # URLs de Logout e Registo personalizadas
-    path('usuarios/logout/', auth_views.LogoutView.as_view(), name='logout'),
+    
+    # URLs de autenticação do Django para login e logout
+    path('usuarios/login/', auth_views.LoginView.as_view(template_name='usuario/login.html'), name='login'),
+    path('usuarios/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    
+    # URL de registro personalizada
     path('usuarios/registrar/', usuario_views.registrar_usuario, name='registrar'),
 
     # Resto das URLs dos aplicativos
