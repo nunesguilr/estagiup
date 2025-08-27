@@ -64,13 +64,15 @@
                                         {% endfor %}
                                     </p>
                                 </div>
-                                <!-- Formulário de candidatura adicionado -->
+                                <!-- Formulário de candidatura adicionado com verificação de autenticação -->
+                                {% if request.user.is_authenticated %}
                                 <div class="card-footer text-end">
-                                    <form method="post" action="{% url 'candidatura:candidatar_vaga' vaga.pk %}">
+                                    <form method="post" action="{% url 'vaga:candidatar_vaga' vaga.pk %}">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-primary-custom btn-sm">Candidatar-se</button>
                                     </form>
                                 </div>
+                                {% endif %}
                             </div>
                         </a>
                     </div>
