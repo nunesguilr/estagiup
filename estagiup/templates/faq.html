@@ -1,0 +1,75 @@
+{% extends '_base.html' %}
+{% block body_class %}theme-light{% endblock %}
+{% load static %}
+
+{% block title %}Principais Dúvidas{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+            <h1 class="display-4 fw-bold">Perguntas Frequentes (FAQ)</h1>
+            <p class="lead mb-5">Encontre respostas para as dúvidas mais comuns sobre o EstagiUP.</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center gx-lg-5">
+        
+        <div class="col-lg-8">
+            <div class="accordion" id="faqAccordion">
+                
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Como eu cadastro um estágio?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50">
+                            <strong>Resposta:</strong> Para iniciar um processo de estágio, primeiro navegue até a seção "Vagas Públicas", encontre uma vaga do seu interesse e, na página de detalhes, clique em "Iniciar Processo de Estágio". Se não estiver logado, será pedido que faça login como aluno. Depois, você será redirecionado para o formulário onde poderá preencher todos os detalhes necessários.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Como sei se meu estágio foi aprovado?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50">
+                            <strong>Resposta:</strong> Todas as atualizações sobre o seu estágio, incluindo aprovações do orientador e supervisor, aparecerão no seu Dashboard de Aluno, na seção "Atividades Recentes" e também na área de notificações.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Onde encontro os tutoriais em vídeo?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-white-50">
+                            <strong>Resposta:</strong> No seu dashboard, há um link direto para "Tutoriais em Vídeo" na seção "Ajuda e Suporte". Você também pode aceder à página de tutoriais a qualquer momento pelo menu principal do site.
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="glass-card p-4 h-100"> <h5 class="text-white mb-3">Ainda com dúvidas?</h5>
+                <p class="text-white-50">Se não encontrou sua resposta, entre em contato connosco.</p>
+                <ul class="list-unstyled text-white">
+                    <li class="mb-2"><i class='bx bx-envelope me-2'></i> contatoestagiup@gmail.com</li>
+                    <li><i class='bx bxl-whatsapp me-2'></i> (77) 9 8136-3440</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'image/icon2.svg' %}">
-     <!-- ScrollReveal CDN para animações ao rolar -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'image/icon.svg' %}">
+    <!-- ScrollReveal CDN para animações ao rolar -->
     <script src="https://unpkg.com/scrollreveal"></script>
-     <!-- Custom CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'meucss/style.css' %}">
     <link rel="stylesheet" href="{% static 'meucss/vagas.css' %}">
     <link rel="stylesheet" href="{% static 'meucss/sobre.css' %}">
@@ -29,67 +31,125 @@
         }
     </style>
 </head>
+
 <body class="{% block body_class %}{% endblock %}">
     {% if messages %}
-        <div class="container mt-4">
-            {% for message in messages %}
-            <div class="aviso-pagina">
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+    <div class="container mt-4">
+        {% for message in messages %}
+        <div class="aviso-pagina">
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
     <!-- Navbar -->
     {% include '_navbar.html' %}
 
     <main>
-        {% block content %}
-            {% endblock %}
+        {% block content %} {% endblock %}
     </main>
-    
-<!-- Footer -->
-<footer class="footer text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3 mb-md-0">
-                <h5 style="color: #ffffff;">EstagiUP</h5>
-                <p style="font-size: 0.9rem;">Conectando o futuro profissional.</p>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-                <ul class="list-unstyled">
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos de Uso</a></li>
-                    <li><a href="#">Contato</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <div class="social-icons mb-3">
-                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-twitter"></i> -->X</a>
-                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-linkedin-in"></i> -->LinkedIn</a>
-                    <a href="#"><!-- Font Awesome icon placeholder: <i class="fab fa-instagram"></i> -->Instagram</a>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'image/logo.png' %}" alt="Logo EstagiUP" style="height: 40px;">
+                    </a>
+                    <p class="mt-3">Conectando estudantes a vagas de estágio e facilitando a gestão para empresas e
+                        instituições de ensino.</p>
                 </div>
-                <p style="font-size: 0.8rem;">&copy; 2024 EstagiUP. Todos os direitos reservados</p>
+    
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-heading">Links Úteis</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'home' %}">Início</a></li>
+                        <li><a href="{% url 'vaga:vaga_public' %}">Vagas</a></li>
+                        <li><a href="{% url 'instituicao:instituicao_public' %}">Instituições</a></li>
+                        <li><a href="{% url 'sobre' %}">Sobre</a></li>
+                        <li><a href="{% url 'faq' %}">Duvidas</a></li>
+                        <li><a href="{% url 'tutoriais' %}">Tutoriais</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-heading">Orientadores</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Igor Campos</a></li>
+                        <li><a href="#">Eder Perereira</a></li>
+                        <li><a href="#">Wellison de Brito</a></li>
+                        <li><a href="#">Weebber Fantini</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-heading">Legal</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Termos de Serviço</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <hr class="footer-divider">
+    
+            <div class="row footer-bottom align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; {% now "Y" %} EstagiUP. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="social-icons">
+                        <a href="#"><i class='bx bxl-facebook-circle'></i></a>
+                        <a href="#"><i class='bx bxl-instagram-alt'></i></a>
+                        <a href="#"><i class='bx bxl-linkedin-square'></i></a>
+                        <a href="#"><i class='bx bxl-twitter'></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Bootstrap Bundle with Popper JS local -->
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Bootstrap Bundle with Popper JS local -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-{% block scripts %}
-<!-- Script para ScrollReveal -->
-<script>
-    ScrollReveal().reveal('.reveal-cards .card-custom', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
-    ScrollReveal().reveal('.reveal-testimonials .testimonial-card', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 150 });
-    ScrollReveal().reveal('.reveal-team .team-member', { delay: 400, distance: '50px', origin: 'bottom', easing: 'ease-in-out', interval: 100 });
-    ScrollReveal().reveal('.reveal-cta', { delay: 300, distance: '50px', origin: 'bottom', easing: 'ease-in-out' });
-</script>
-{% endblock %}
+    {% block scripts %}
+    <!-- Script para ScrollReveal -->
+    <script>
+        ScrollReveal().reveal('.reveal-cards .card-custom', {
+            delay: 400,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 150
+        });
+        ScrollReveal().reveal('.reveal-testimonials .testimonial-card', {
+            delay: 400,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 150
+        });
+        ScrollReveal().reveal('.reveal-team .team-member', {
+            delay: 400,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out',
+            interval: 100
+        });
+        ScrollReveal().reveal('.reveal-cta', {
+            delay: 300,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease-in-out'
+        });
+    </script>
+    {% endblock %}
 
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import render
 # from django.contrib.auth.decorators import login_required # Usaremos no futuro
 
@@ -9,6 +10,14 @@ def index(request):
 def sobre_view(request):
     # Esta view por enquanto só precisa mostrar a página
     return render(request, 'sobre.html')
+
+def faq_view(request):
+    """ Renderiza a página de Perguntas Frequentes (FAQ). """
+    return render(request, 'faq.html')
+
+def tutoriais_view(request):
+    """ Renderiza a página de Tutoriais em Vídeo. """
+    return render(request, 'tutoriais.html')
 
 # @login_required
 def dashboard_view(request):

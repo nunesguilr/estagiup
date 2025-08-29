@@ -5,6 +5,15 @@
 
 {% block content %}
 <div class="container-fluid py-4">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="glass-card p-4">

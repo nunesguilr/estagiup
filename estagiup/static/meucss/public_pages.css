@@ -52,3 +52,89 @@
 .theme-light .card-custom.instituicao-card i {
     color: #ced4da !important; /* Cor clara para texto secundário e ícones */
 }
+
+Com certeza! Excelente observação. A animação "dura" do accordion do Bootstrap é um detalhe que, quando corrigido, eleva muito a percepção de qualidade do site. Uma animação fluida e suave deixa a interação muito mais agradável.
+
+Vamos refinar isso. A solução está totalmente no CSS. Precisamos sobrescrever a animação padrão do Bootstrap com uma transição mais suave.
+
+Ação: Melhorar a Animação do FAQ (CSS)
+Vamos adicionar algumas regras de transição ao nosso arquivo public_pages.css.
+
+Abra o arquivo estagiup-main2.0/estagiup-main/estagiup/static/meucss/public_pages.css.
+
+Encontre o bloco de código que começa com /* ESTILO CUSTOMIZADO PARA O ACCORDION (FAQ) */.
+
+Substitua todo aquele bloco pela nova versão abaixo. Ela inclui as novas regras de animação.
+
+CSS
+
+/* ====================================================== */
+/* ESTILO CUSTOMIZADO PARA O ACCORDION (FAQ) - COM ANIMAÇÃO SUAVE
+*/
+/* ====================================================== */
+
+.accordion-item.glass-card {
+    background-color: rgba(44, 28, 64, 0.75); /* Fundo roxo com transparência */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px !important; /* Arredonda as bordas */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden; /* IMPORTANTE: Esconde o conteúdo que transborda durante a animação */
+}
+
+/* Estilo para o botão/título da pergunta */
+.accordion-button.text-white {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: none !important; /* Remove a sombra azul do Bootstrap ao clicar */
+    transition: background-color 0.3s ease; /* Adiciona uma transição suave no hover */
+}
+
+.accordion-button.text-white:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Cor e ANIMAÇÃO da seta do accordion */
+.accordion-button::after {
+    filter: brightness(0) invert(1); /* Deixa a seta branca */
+    transition: transform 0.3s ease-in-out; /* Adiciona animação de rotação na seta */
+}
+
+/* Estilo para a resposta quando o accordion está aberto */
+.accordion-body.text-white-50 {
+    color: rgba(255, 255, 255, 0.7) !important;
+    padding-top: 0; /* Remove o padding extra para um visual mais limpo */
+}
+
+/* --- A MÁGICA DA ANIMAÇÃO SUAVE ACONTECE AQUI --- */
+
+.accordion-collapse {
+    transition: height 0.35s ease-in-out;
+    /* Define a transição para a altura do container */
+}
+
+.accordion-body {
+    opacity: 0;
+    /* Começa invisível */
+    transform: translateY(-10px);
+    /* Começa um pouco para cima */
+    transition: opacity 0.3s ease-in-out 0.15s, transform 0.3s ease-in-out 0.15s;
+    /* Animação de fade e movimento */
+}
+
+/* CORREÇÃO: Esta regra agora deteta a classe .show que o Bootstrap adiciona 
+  quando o accordion está aberto, garantindo que a resposta apareça.
+*/
+.accordion-collapse.show .accordion-body {
+    opacity: 1;
+    /* Torna-se visível */
+    transform: translateY(0);
+    /* Volta para a posição original */
+}
+
+
+/* Remove a linha separadora padrão do Bootstrap */
+.accordion-item.glass-card + .accordion-item.glass-card {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

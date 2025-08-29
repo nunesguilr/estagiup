@@ -34,6 +34,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'estagiup.middleware.xframe_middleware.XFrameOptionsExemptMiddleware',
 ]
 
 ROOT_URLCONF = 'estagiup.urls'

@@ -10,12 +10,15 @@
             <div class="card p-4 mb-4">
                 <h1 class="display-5 fw-bold">{{ vaga.titulo }}</h1>
                 <p class="text-muted">{{ vaga.instituicao.nome }}</p>
+                <li><strong>Prazo:</strong> {{ vaga.prazo }}</li>
                 <hr>
                 <h4 class="mt-4">Descrição da Vaga</h4>
                 <p>{{ vaga.descricao|linebreaksbr }}</p>
-
-                <h4 class="mt-4">Requisitos</h4>
-                <p>{{ vaga.requisitos|linebreaksbr }}</p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
         </div>
 
@@ -23,13 +26,16 @@
             <div class="card p-3">
                 <h5 class="card-title">Resumo da Vaga</h5>
                 <ul class="list-unstyled mb-4">
-                    <li><strong>Remuneração:</strong> R$ {{ vaga.remuneracao|default:"A combinar" }}</li>
-                    <li><strong>Prazo:</strong> {{ vaga.prazo }}</li>
                     <li><strong>Cursos:</strong>
                         {% for curso in vaga.cursos.all %}
                         <span class="badge bg-secondary">{{ curso.nome }}</span>
                         {% endfor %}
                     </li>
+                    <br>
+                    <li><strong>Numero de Vagas:</strong> {{ vaga.numVagas }}</li>
+                    <br>
+
+                    <li><strong>Remuneração:</strong> R$ {{ vaga.remuneracao|default:"A combinar" }}</li>
                 </ul>
 
                 {% if request.user.is_authenticated %}

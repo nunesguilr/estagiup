@@ -1,10 +1,20 @@
-{% extends '_base.html' %}
+{% extends '_base.html' %} 
+
 {% block body_class %}theme-light{% endblock %}
 
-{% block title %}{{ instituicao.nome }}{% endblock %}
+{% block title %}{{ instituicao.nome }}{% endblock %} 
 
 {% block content %}
 <div class="container my-5">
+
+    {% if messages %} 
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %} 
+    {% endif %}
+
     <div class="row">
         <div class="col-lg-8">
             <div class="card p-4 mb-4">
@@ -21,8 +31,7 @@
                 <h4 class="mt-4 mb-3">Vagas Abertas</h4>
                 <div class="list-group">
                     {% for vaga in vagas_da_instituicao %}
-                    <a href="{% url 'vaga:vaga_public_detail' vaga.id %}"
-                        class="list-group-item list-group-item-action">
+                    <a href="{% url 'vaga:vaga_public_detail' vaga.id %}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ vaga.titulo }}</h5>
                             <small class="text-muted">{{ vaga.prazo }}</small>
@@ -36,7 +45,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </div> <div class="col-lg-4">
+        </div>
+        <div class="col-lg-4">
             <div class="card p-3">
                 <h5 class="card-title">Informações de Contato</h5>
                 <ul class="list-unstyled">
@@ -47,5 +57,6 @@
             </div>
         </div>
 
-    </div> </div>
+    </div>
+</div>
 {% endblock %}

@@ -21,6 +21,10 @@ urlpatterns = [
     path('', estagiup_views.index, name='home'),
     path('sobre/', estagiup_views.sobre_view, name='sobre'),
 
+    # Paginas de Duvidas do Sistema
+    path('faq/', estagiup_views.faq_view, name='faq'),
+    path('tutoriais/', estagiup_views.tutoriais_view, name='tutoriais'),
+
     path('instituicao/', include('instituicao.urls', namespace='instituicao')),
     path('vaga/', include('vaga.urls')),
     path('curso/', include('curso.urls')),

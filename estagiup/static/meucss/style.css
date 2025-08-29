@@ -437,3 +437,74 @@ body {
     border-color: #4a148c;
 }
 
+/* ====================================================== */
+/* ESTILO DO NOVO FOOTER PERSONALIZADO
+*/
+/* ====================================================== */
+
+.custom-footer {
+    background-color: #0c0613; /* Roxo bem escuro */
+    color: #adb5bd; /* Cinza claro para o texto */
+    font-size: 0.9rem;
+}
+
+.custom-footer .navbar-brand span {
+    color: #fff;
+}
+
+.custom-footer .footer-heading {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.custom-footer .footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.custom-footer .footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.custom-footer .footer-links a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.custom-footer .footer-contact li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.custom-footer .footer-contact i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: #6133D3; /* Roxo mais claro para destaque nos ícones */
+}
+
+.custom-footer .footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-footer .footer-bottom {
+    font-size: 0.85rem;
+}
+
+.custom-footer .social-icons a {
+    color: #adb5bd;
+    font-size: 1.5rem;
+    margin-left: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.custom-footer .social-icons a:hover {
+    color: #fff;
+    transform: translateY(-2px);
+}
