@@ -30,7 +30,6 @@ Principais entidades:
 ### Pré-requisitos
 - Python 3.8+
 - pip (gerenciador de pacotes do Python)
-- Graphviz (para gerar diagramas de modelos)
 
 ### Instalação
 
@@ -40,45 +39,32 @@ Principais entidades:
    cd estagiup
     ```
 
-2. Crie e ative um ambiente virtual:
+2. Instale as dependências do Python:
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   pip install Django 
    ```
 
-3. Instale as dependências do Python:
-
-   ```bash
-   pip install Django django-extensions pygraphviz Pillow
-   ```
-
-4. Instale o Graphviz no seu sistema:
-
-   ```bash
-   sudo apt-get update && sudo apt-get install -y graphviz libgraphviz-dev
-   ```
-
-5. Aplique as migrações no banco de dados:
+3. Aplique as migrações no banco de dados:
 
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-6. Crie um superusuário para acessar o admin:
+4. Crie um superusuário para acessar o admin:
 
    ```bash
    python manage.py createsuperuser
    ```
 
-7. Automatize a criação de grupos e permissões (opcional):
+5. Automatize a criação de grupos e permissões (opcional):
 
    ```bash
    python manage.py create_permissions
    ```
 
-8. Execute o projeto:
+6. Execute o projeto:
 
    ```bash
    python manage.py runserver
