@@ -56,6 +56,7 @@ Principais entidades:
 
    ```bash
    python manage.py createsuperuser
+   python manage.py initial_setup
    ```
 
 5. Automatize a criação de grupos e permissões (opcional):
