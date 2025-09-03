@@ -1,9 +1,6 @@
-# usuarios/models.py
 from django.db import models
 from django.contrib.auth.models import User
 
-# As importações de Instituicao e Curso foram removidas para evitar circular import e duplicação de modelos.
-# Os modelos Vaga e Instituicao não devem ser definidos neste arquivo.
 
 class PerfilUsuario(models.Model):
     # Opções para o gênero
