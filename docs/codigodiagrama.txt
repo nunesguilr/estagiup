@@ -1,0 +1,134 @@
+@startuml
+left to right direction
+skinparam classAttributeIconSize 0
+
+' ========================
+' Pacote do Django (auth)
+' ========================
+package "django.contrib.auth" {
+  class User {
+    + id : AutoField
+    + username : CharField
+    + email : CharField
+    + password : CharField
+    + is_staff : bool
+    + is_active : bool
+    + is_superuser : bool
+    + last_login : DateTimeField
+    + date_joined : DateTimeField
+  }
+
+  class Group {
+    + id : AutoField
+    + name : CharField
+  }
+
+  class Permission {
+    + id : AutoField
+    + name : CharField
+    + codename : CharField
+  }
+}
+
+' ========================
+' Usuário (Perfil)
+' ========================
+class Usuario {
+  + id : BigAutoField
+  + curso : Curso
+  + instituicao : Instituicao
+  + rua : CharField
+  + bairro : CharField
+  + cidade : CharField
+  + estado : CharField
+  + pais : CharField
+  + telefone : CharField
+  + cpf : CharField
+  + data_nascimento : DateField
+  + genero : CharField
+  + descricao : TextField
+}
+
+' ========================
+' Instituição
+' ========================
+class Instituicao {
+  + id : BigAutoField
+  + nome : CharField
+  + rua : CharField
+  + bairro : CharField
+  + cidade : CharField
+  + estado : CharField
+  + pais : CharField
+  + telefone : CharField
+  + cnpj : CharField
+  + status : BooleanField
+  + tipo : CharField
+}
+
+' ========================
+' Curso
+' ========================
+class Curso {
+  + id : BigAutoField
+  + nome : CharField
+  + instituicao : Instituicao
+  + nivel : CharField
+}
+
+' ========================
+' Vaga
+' ========================
+class Vaga {
+  + id : BigAutoField
+  + titulo : CharField
+  + descricao : TextField
+  + instituicao : Instituicao
+  + numVagas : int
+  + prazo : DateField
+  + curso : Curso
+}
+
+' ========================
+' Estágio
+' ========================
+class Estagio {
+  + id : BigAutoField
+  + aluno : Usuario
+  + vaga : Vaga
+  + supervisor : Usuario
+  + orientador : Usuario
+  + dt_ini : DateField
+  + dt_fim : DateField
+  + status : BooleanField
+  + nota : FloatField
+}
+
+' ========================
+' Relações
+' ========================
+' --- Herança e Relações Auth ---
+Usuario --|> User
+User "0.." *-- "0.." Group : groups
+User "0.." *-- "0.." Permission : user_permissions
+Group "0.." *-- "0.." Permission : permissions
+
+' --- Relações do Usuário ---
+Usuario "0..*" --> "1" Curso
+Usuario "0..*" -- "0..1" Instituicao
+Usuario "1.." *-- "0.." Instituicao : instituicoes_responsaveis
+
+' --- Relações do Curso ---
+Curso "0..*" --> "1" Instituicao
+
+' --- Relações da Vaga ---
+Vaga "0..*" --> "1" Instituicao
+Vaga "1" -- "0.." Curso : cursos
+
+' --- Relações do Estágio ---
+Estagio "1" -- "1" Usuario : aluno
+Estagio "0..*" --> "1" Usuario : supervisor
+Estagio "0..*" --> "1" Usuario : orientador
+Estagio "0..*" --> "1" Vaga
+
+@enduml

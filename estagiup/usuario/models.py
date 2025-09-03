@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class PerfilUsuario(models.Model):
+class PerfilUsuario(User):
     # Opções para o gênero
     GENERO_CHOICES = (
         ('masculino', 'Masculino'),
@@ -10,8 +10,9 @@ class PerfilUsuario(models.Model):
         ('nao_informado', 'Não Informado'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     
+    curso = models.ForeignKey('curso.Curso', on_delete=models.SET_NULL, related_name='alunos', blank=True, null=True, verbose_name="Curso")
     # Endereço composto
     rua = models.CharField(max_length=255, verbose_name="Rua", blank=True, null=True)
     bairro = models.CharField(max_length=100, verbose_name="Bairro", blank=True, null=True)
@@ -26,8 +27,7 @@ class PerfilUsuario(models.Model):
     descricao = models.TextField(verbose_name="Descrição", blank=True, null=True)
     
     # Relações com outros modelos usando string para evitar circular import
-    instituicao = models.ForeignKey('instituicao.Instituicao', on_delete=models.SET_NULL, related_name='membros', blank=True, null=True, verbose_name="Instituição")
-    curso = models.ForeignKey('curso.Curso', on_delete=models.SET_NULL, related_name='alunos', blank=True, null=True, verbose_name="Curso")
+    # instituicao = models.ForeignKey('instituicao.Instituicao', on_delete=models.SET_NULL, related_name='membros', blank=True, null=True, verbose_name="Instituição")
 
 
     class Meta:

@@ -2,7 +2,7 @@ from django.db import models
 
 class Curso(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do Curso")
-    inst = models.CharField(max_length=255, verbose_name="Instituição Ofertante")
+    instituicao = models.ForeignKey('instituicao.Instituicao', on_delete=models.SET_NULL, related_name='cursos', blank=True, null=True, verbose_name="Instituição Ofertante")
     nivel = models.CharField(max_length=50, verbose_name="Nível do Curso")
 
     class Meta:
