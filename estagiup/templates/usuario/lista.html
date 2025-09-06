@@ -33,26 +33,26 @@
 
             <div class="row g-4" id="user-list-container">
                 {% for user_profile in todos_usuarios %}
-                <a href="{% url 'usuario:user_detail' user_profile.user.pk %}" class="user-list-row-link">
-                    <div class="user-list-row mb-0" data-nome="{{ user_profile.user.username|lower }}"
-                        data-cidade="{{ user_profile.endereco|lower }}" 
-                        data-grupo="{% for group in user_profile.user.groups.all %}{{ group.name }}{% endfor %}">
+                <a href="{% url 'usuario:user_detail' user_profile.pk %}" class="user-list-row-link">
+                    <div class="user-list-row mb-0" data-nome="{{ user_profile.username|lower }}"
+                        data-cidade="{{ user_profile.cidade|lower }}"
+                        data-grupo="{% for group in user_profile.groups.all %}{{ group.name }}{% endfor %}">
 
                         <div class="user-info">
-                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ user_profile.user.username|first|upper }}"
+                            <img src="https://placehold.co/50x50/FFFFFF/1a1024?text={{ user_profile.username|first|upper }}"
                                 class="avatar" alt="Avatar">
                             <div>
-                                <h5 class="mb-0 text-white fs-3">{{ user_profile.user.username }}</h5>
-                                <p class="mb-0 text-muted small fs-6">{{ user_profile.user.email }}</p>
+                                <h5 class="mb-0 text-white fs-3">{{ user_profile.username }}</h5>
+                                <p class="mb-0 text-muted small fs-6">{{ user_profile.email }}</p>
                             </div>
                         </div>
 
                         <div class="user-location d-none d-md-block">
-                            <p class="mb-0 small fs-5">{{ user_profile.endereco }}</p>
+                            <p class="mb-0 small fs-5">{{ user_profile.cidade }}</p>
                         </div>
 
                         <div class="user-groups">
-                            {% for group in user_profile.user.groups.all %}
+                            {% for group in user_profile.groups.all %}
                             <span class="badge rounded-pill bg-primary-custom">{{ group.name }}</span>
                             {% empty %}
                             <span class="badge rounded-pill bg-secondary">Sem Grupo</span>

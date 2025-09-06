@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group
-from .models import PerfilUsuario  # Importa apenas PerfilUsuario do seu app
+from .models import Usuario  # Importas Usuario do seu app
 from instituicao.models import Instituicao  # Importa diretamente do app instituicao
 from curso.models import Curso  # Importa diretamente do app curso
 
@@ -10,8 +10,12 @@ class PerfilUpdateForm(forms.ModelForm):
     Formulário para atualizar os dados do PerfilUsuario.
     """
     class Meta:
-        model = PerfilUsuario
-        exclude = ('user',)
+        model = Usuario
+        # Especifica os campos que o utilizador pode editar no perfil
+        fields = (
+            'curso', 'rua', 'bairro', 'cidade', 'estado', 'pais',
+            'telefone', 'cpf', 'data_nascimento', 'genero', 'descricao'
+        )
         widgets = {
             'rua': forms.TextInput(attrs={'class': 'form-control'}),
             'bairro': forms.TextInput(attrs={'class': 'form-control'}),
@@ -47,7 +51,7 @@ class UserRegistrationForm(UserCreationForm):
     telefone = forms.CharField(max_length=20, label="Telefone", widget=forms.TextInput(attrs={'class': 'form-control'}))
     cpf = forms.CharField(max_length=14, label="CPF", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     data_nascimento = forms.DateField(label="Data de Nascimento", required=False, widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
-    genero = forms.ChoiceField(choices=PerfilUsuario.GENERO_CHOICES, label="Gênero", required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+    genero = forms.ChoiceField(choices=Usuario.GENERO_CHOICES, label="Gênero", required=False, widget=forms.Select(attrs={'class': 'form-control'}))
     descricao = forms.CharField(label="Descrição", required=False, widget=forms.Textarea(attrs={'class': 'form-control'}))
     instituicao = forms.ModelChoiceField(queryset=Instituicao.objects.all(), label="Instituição", required=False, widget=forms.Select(attrs={'class': 'form-control'}))
     curso = forms.ModelChoiceField(queryset=Curso.objects.all(), label="Curso", required=False, widget=forms.Select(attrs={'class': 'form-control'}))
@@ -60,8 +64,9 @@ class UserRegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
-            PerfilUsuario.objects.create(
-                user=user,
+            # Correção: Agora criamos a instância do perfil usando user_ptr_id
+            Usuario.objects.create(
+                user_ptr_id=user.pk,
                 rua=self.cleaned_data['rua'],
                 bairro=self.cleaned_data['bairro'],
                 cidade=self.cleaned_data['cidade'],
@@ -87,7 +92,7 @@ class UserRegistrationForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control form-control-glass'
             # Adiciona placeholders baseados nos labels
             if field.label:
-                field.widget.attrs['placeholder'] = field.label    
+                field.widget.attrs['placeholder'] = field.label     
 
         if self.errors:
             for field_name in self.errors:

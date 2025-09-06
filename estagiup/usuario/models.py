@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class PerfilUsuario(User):
+class Usuario(User):
     # Opções para o gênero
     GENERO_CHOICES = (
         ('masculino', 'Masculino'),

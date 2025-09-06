@@ -1,11 +1,10 @@
-# instituicao/views.py
 from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from .forms import InstituicaoForm
 from .models import Instituicao
-from usuario.models import PerfilUsuario
+from usuario.models import Usuario
 from django.db.models import Q
 from vaga.models import Vaga
 
@@ -22,7 +21,9 @@ def instituicao_public(request):
     if query:
         instituicoes = instituicoes.filter(
             Q(nome__icontains=query) |
-            Q(endereco__icontains=query)
+            Q(rua__icontains=query) |
+            Q(bairro__icontains=query) |
+            Q(cidade__icontains=query)
         )
 
     context = {
@@ -52,9 +53,9 @@ def cadastrar_instituicao(request):
     é automaticamente definido como o responsável.
     """
     try:
-        perfil_usuario = request.user.perfil
-    except PerfilUsuario.DoesNotExist:
-        messages.error(request, 'O seu utilizador não tem um perfil associado. Por favor, complete o seu perfil antes de cadastrar uma instituição.')
+        # Acessa a instância de Usuario diretamente
+        usuario = Usuario.objects.get(pk=request.user.pk)
+    except Usuario.DoesNotExist:
         return redirect('dashboard')
 
     if request.method == 'POST':
@@ -63,13 +64,11 @@ def cadastrar_instituicao(request):
             instituicao = form.save(commit=False)
             instituicao.save()
 
-            instituicao.responsaveis.add(perfil_usuario)
+            instituicao.responsaveis.add(usuario)
             
-            messages.success(request, 'Instituição cadastrada com sucesso! Você foi definido como o responsável.')
-            return redirect('instituicao:cadastrar')
+            return redirect('instituicao:minhas_instituicoes')
         else:
-            print("Erros no formulário:", form.errors) 
-            messages.error(request, 'Erro ao cadastrar a instituição. Por favor, verifique os campos.')
+            print("Erros no formulário:", form.errors)
     else:
         form = InstituicaoForm()
 
@@ -88,24 +87,24 @@ def editar_instituicao(request, instituicao_id):
     """
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
     
+    # Acessa a instância de Usuario diretamente
+    usuario = Usuario.objects.get(pk=request.user.pk)
+    
     # Verifica a permissão de edição
-    if request.user.perfil not in instituicao.responsaveis.all() and not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para editar esta instituição.')
+    if usuario not in instituicao.responsaveis.all() and not request.user.is_superuser:
         return redirect('instituicao:minhas_instituicoes')
     
     if request.method == 'POST':
         form = InstituicaoForm(request.POST, instance=instituicao)
         if form.is_valid():
-             # Alteração aqui: Salva o formulário sem o M2M e depois adiciona o responsável
             instituicao_atualizada = form.save(commit=False)
             instituicao_atualizada.save()
 
             # Garante que a relação ManyToMany com o responsável seja mantida
-            instituicao_atualizada.responsaveis.add(request.user.perfil)
-            messages.success(request, 'Instituição atualizada com sucesso!')
+            instituicao_atualizada.responsaveis.add(usuario)
             return redirect('instituicao:perfil_instituicao', instituicao_id=instituicao.id)
         else:
-            messages.error(request, 'Erro ao atualizar a instituição. Por favor, verifique os campos.')
+            print("Erros no formulário:", form.errors)
     else:
         form = InstituicaoForm(instance=instituicao)
 
@@ -124,14 +123,15 @@ def apagar_instituicao(request, instituicao_id):
     """
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
     
+    # Acessa a instância de Usuario diretamente
+    usuario = Usuario.objects.get(pk=request.user.pk)
+    
     # Verifica a permissão de exclusão
-    if request.user.perfil not in instituicao.responsaveis.all() and not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para apagar esta instituição.')
+    if usuario not in instituicao.responsaveis.all() and not request.user.is_superuser:
         return redirect('instituicao:minhas_instituicoes')
 
     if request.method == 'POST':
         instituicao.delete()
-        messages.success(request, 'Instituição apagada com sucesso.')
         return redirect('instituicao:minhas_instituicoes')
     
     context = {
@@ -145,14 +145,14 @@ def listar_membros_instituicao(request, instituicao_id):
     View para listar os membros (responsáveis) de uma instituição específica.
     """
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
-    membros = instituicao.responsaveis.all().select_related('user')
+    membros = instituicao.responsaveis.all().select_related('user_ptr')
     
     try:
-        if request.user.perfil not in membros and not request.user.is_superuser:
-            messages.error(request, 'Você não tem permissão para aceder a esta página.')
+        # Acessa a instância de Usuario diretamente
+        usuario = Usuario.objects.get(pk=request.user.pk)
+        if usuario not in membros and not request.user.is_superuser:
             return redirect('dashboard')
-    except PerfilUsuario.DoesNotExist:
-        messages.error(request, 'O seu utilizador não tem um perfil associado.')
+    except Usuario.DoesNotExist:
         return redirect('dashboard')
     
     context = {
@@ -168,10 +168,11 @@ def minhas_instituicoes(request):
     View para listar todas as instituições para as quais o utilizador logado é responsável.
     """
     try:
-        perfil_usuario = request.user.perfil
-        minhas_instituicoes = Instituicao.objects.filter(responsaveis=perfil_usuario)
-    except PerfilUsuario.DoesNotExist:
-        minhas_instituicoes = []
+        # Acessa a instância de Usuario diretamente
+        usuario = Usuario.objects.get(pk=request.user.pk)
+        minhas_instituicoes = Instituicao.objects.filter(responsaveis=usuario)
+    except Usuario.DoesNotExist:
+        minhas_instituicoes = Instituicao.objects.none()
     
     context = {
         'minhas_instituicoes': minhas_instituicoes
@@ -183,7 +184,7 @@ def perfil_instituicao(request, instituicao_id):
     View para exibir o perfil de uma instituição específica.
     """
     instituicao = get_object_or_404(Instituicao, id=instituicao_id)
-    responsaveis = instituicao.responsaveis.all().select_related('user')
+    responsaveis = instituicao.responsaveis.all().select_related('user_ptr')
     
     context = {
         'instituicao': instituicao,

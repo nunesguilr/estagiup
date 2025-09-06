@@ -28,15 +28,7 @@ class VagaForm(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-        if user and hasattr(user, 'perfil'):
-            # Verifica se o perfil tem uma instituição diretamente associada
-            if hasattr(user.perfil, 'instituicao') and user.perfil.instituicao:
-                # Se o perfil tem uma instituição específica, mostra apenas essa
-                self.fields['instituicao'].queryset = Instituicao.objects.filter(id=user.perfil.instituicao.id)
-            else:
-                # Se não tem instituição específica, verifica se é responsável por alguma
-                # Assumindo que Instituicao tem um campo 'responsaveis' ManyToMany com PerfilUsuario
-                self.fields['instituicao'].queryset = Instituicao.objects.filter(responsaveis=user.perfil)
-        else:
-            # Se não há usuário ou perfil, não mostra nenhuma instituição
-            self.fields['instituicao'].queryset = Instituicao.objects.none()
+        if user:
+            # Filtra as instituições com base no utilizador logado
+            # Acede aos campos de utilizador diretamente, sem o .perfil
+            self.fields['instituicao'].queryset = Instituicao.objects.filter(responsaveis=user)

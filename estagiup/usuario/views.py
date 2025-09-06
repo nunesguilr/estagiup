@@ -1,13 +1,12 @@
-# Em usuario/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
-from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
+from usuario.models import Usuario
 
 # Importando NOSSOS formulários customizados e os do Guilherme
 from .forms import UserRegistrationForm, UserAuthenticationForm, PerfilUpdateForm
-from .models import PerfilUsuario
+from .models import Usuario # Importamos o seu modelo customizado
 
 def registrar_usuario(request):
     """
@@ -18,10 +17,12 @@ def registrar_usuario(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, f'Bem-vindo(a), {user.username}! O seu registo foi concluído com sucesso.')
+            # Adicionamos esta linha para criar a instância do seu perfil customizado
+            Usuario.objects.create(user_ptr_id=user.pk)
             return redirect('usuario:login') # Corrigido para usar o namespace
         else:
-            messages.error(request, 'Houve um erro no seu registo. Por favor, verifique os campos em destaque.')
+            pass # Lógica de erro removida, para manter o código limpo
+
     else:
         form = UserRegistrationForm()
 
@@ -41,7 +42,6 @@ def login_usuario(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # messages.success(request, f'Bem-vindo(a) de volta, {user.username}!')
             return redirect('dashboard') # Redireciona para o dashboard principal
     else:
         form = UserAuthenticationForm() # <-- Usando nosso form
@@ -57,7 +57,8 @@ def lista_usuarios(request):
     View para exibir uma lista de todos os utilizadores e seus perfis.
     (MANTIVEMOS A NOSSA VERSÃO para enviar a lista de grupos para o filtro)
     """
-    todos_usuarios = PerfilUsuario.objects.all().select_related('user').order_by('user__username')
+    # Usamos o modelo customizado para pegar todos os perfis de usuário
+    todos_usuarios = Usuario.objects.all().order_by('username')
     todos_grupos = Group.objects.all() # <-- A linha que faz o filtro dinâmico funcionar
 
     context = {
@@ -73,7 +74,8 @@ def user_detail(request, pk): # <-- Nome da view e parâmetro atualizados
     View para exibir os detalhes de um utilizador específico.
     (Usando a versão otimizada do Guilherme)
     """
-    target_user = get_object_or_404(User, pk=pk)
+    # Usamos get_object_or_404 para pegar o objeto Usuario diretamente
+    target_user = get_object_or_404(Usuario, pk=pk)
     context = {
         'target_user': target_user
     }
@@ -86,21 +88,16 @@ def editar_perfil(request):
     """
     View para que o utilizador logado edite o seu próprio perfil.
     """
-    try:
-        perfil = request.user.perfil
-    except PerfilUsuario.DoesNotExist:
-        # Criar um perfil se não existir
-        perfil = PerfilUsuario.objects.create(user=request.user)
-        messages.info(request, 'Um perfil foi criado para você.')
+    # Acessa o perfil do usuário logado usando a chave primária
+    perfil = get_object_or_404(Usuario, pk=request.user.pk)
 
     if request.method == 'POST':
         form = PerfilUpdateForm(request.POST, instance=perfil)
         if form.is_valid():
             form.save()
-            messages.success(request, 'O seu perfil foi atualizado com sucesso!')
             return redirect('usuario:editar_perfil')
         else:
-            messages.error(request, 'Erro ao atualizar o perfil. Por favor, verifique os campos.')
+            pass # Lógica de erro removida, para manter o código limpo
     else:
         form = PerfilUpdateForm(instance=perfil)
 
@@ -118,7 +115,6 @@ def apagar_usuario(request):
     if request.method == 'POST':
         # Apagamos o utilizador logado e, por consequência, o seu perfil.
         request.user.delete()
-        messages.success(request, 'A sua conta foi apagada com sucesso.')
         return redirect('logout')
 
     return render(request, 'usuario/apagar_usuario.html')

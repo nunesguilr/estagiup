@@ -1,12 +1,10 @@
-# estagio/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Estagio, Vaga
 from .forms import EstagioForm
-from usuario.models import PerfilUsuario
+from usuario.models import Usuario
 from django.contrib.auth.models import Group
-from datetime import date, timedelta
+from datetime import date
 
 @login_required
 def estagio_list(request):
@@ -16,26 +14,23 @@ def estagio_list(request):
     estagios = Estagio.objects.all().select_related('aluno', 'vaga', 'supervisor', 'orientador')
     
     # Lógica de filtro para cada tipo de usuário
-    try:
-        if not request.user.is_superuser:
-            perfil_usuario = request.user.perfil
-            grupos = [grupo.name for grupo in request.user.groups.all()]
-            
-            if 'Alunos' in grupos:
-                estagios = estagios.filter(aluno=perfil_usuario)
-            elif 'Supervisores' in grupos:
-                estagios = estagios.filter(supervisor=perfil_usuario)
-            elif 'Orientadores' in grupos:
-                estagios = estagios.filter(orientador=perfil_usuario)
-            else:
-                estagios = Estagio.objects.none() # Não exibe nada para outros grupos
-    except PerfilUsuario.DoesNotExist:
-        estagios = Estagio.objects.none()
+    if not request.user.is_superuser:
+        grupos = [grupo.name for grupo in request.user.groups.all()]
+        
+        if 'Alunos' in grupos:
+            estagios = estagios.filter(aluno=request.user)
+        elif 'Supervisores' in grupos:
+            estagios = estagios.filter(supervisor=request.user)
+        elif 'Orientadores' in grupos:
+            estagios = estagios.filter(orientador=request.user)
+        else:
+            estagios = Estagio.objects.none() # Não exibe nada para outros grupos
 
     # Lógica para calcular a porcentagem de progresso
     hoje = date.today()
     for estagio in estagios:
-        if estagio.status == 'ativo' and estagio.dt_ini and estagio.dt_fim:
+        # Verifica se o status é True (ativo)
+        if estagio.status and estagio.dt_ini and estagio.dt_fim:
             total_dias = (estagio.dt_fim - estagio.dt_ini).days
             dias_passados = (hoje - estagio.dt_ini).days
             if total_dias > 0:
@@ -64,15 +59,14 @@ def estagio_detail(request, estagio_id):
     # Verifica se o usuário tem permissão para visualizar o estágio
     grupos = [grupo.name for grupo in request.user.groups.all()]
     if (not request.user.is_superuser and
-        'Alunos' in grupos and estagio.aluno != request.user.perfil or
-        'Supervisores' in grupos and estagio.supervisor != request.user.perfil or
-        'Orientadores' in grupos and estagio.orientador != request.user.perfil):
-        messages.error(request, 'Você não tem permissão para visualizar este estágio.')
+        'Alunos' in grupos and estagio.aluno != request.user or
+        'Supervisores' in grupos and estagio.supervisor != request.user or
+        'Orientadores' in grupos and estagio.orientador != request.user):
         return redirect('estagio:estagio_list')
 
     # Adicionando o campo `can_edit` ao contexto
     can_edit = False
-    if hasattr(request.user, 'perfil') and (request.user.perfil == estagio.supervisor or request.user.perfil == estagio.orientador or request.user.is_superuser):
+    if (request.user == estagio.supervisor or request.user == estagio.orientador or request.user.is_superuser):
         can_edit = True
 
     context = {
@@ -90,14 +84,9 @@ def estagio_create(request, vaga_id):
     """
     vaga = get_object_or_404(Vaga, id=vaga_id)
     
-    try:
-        perfil_aluno = request.user.perfil
-    except PerfilUsuario.DoesNotExist:
-        messages.error(request, 'O seu utilizador não tem um perfil de aluno válido.')
-        return redirect('vaga:vaga_list')
-
+    perfil_aluno = request.user
+    
     if Estagio.objects.filter(aluno=perfil_aluno).exists():
-        messages.error(request, 'Você já está cadastrado em um estágio.')
         return redirect('estagio:estagio_list')
     
     # Lógica para filtrar as opções de supervisor e orientador
@@ -112,18 +101,17 @@ def estagio_create(request, vaga_id):
             estagio.vaga = vaga
             estagio.nota = 0  # Define a nota inicial como 0
             estagio.save()
-            messages.success(request, f'Candidatura para a vaga "{vaga.titulo}" enviada com sucesso!')
             return redirect('estagio:estagio_list')
         else:
-            messages.error(request, 'Erro ao enviar a candidatura. Por favor, verifique os campos.')
+            pass
     else:
         form = EstagioForm()
 
     # Remove o campo 'nota' do formulário de criação
     del form.fields['nota']
     # Restringe o queryset dos campos `supervisor` e `orientador`
-    form.fields['supervisor'].queryset = PerfilUsuario.objects.filter(user__groups=supervisores_group)
-    form.fields['orientador'].queryset = PerfilUsuario.objects.filter(user__groups=orientadores_group)
+    form.fields['supervisor'].queryset = Usuario.objects.filter(groups=supervisores_group)
+    form.fields['orientador'].queryset = Usuario.objects.filter(groups=orientadores_group)
 
     context = {
         'form': form,
@@ -140,8 +128,7 @@ def estagio_update(request, estagio_id):
     """
     estagio = get_object_or_404(Estagio, id=estagio_id)
     
-    if request.user.perfil not in [estagio.supervisor, estagio.orientador] and not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para editar este estágio.')
+    if request.user not in [estagio.supervisor, estagio.orientador] and not request.user.is_superuser:
         return redirect('estagio:estagio_detail', estagio_id=estagio.id)
 
     # Lógica para filtrar as opções de supervisor e orientador
@@ -152,16 +139,15 @@ def estagio_update(request, estagio_id):
         form = EstagioForm(request.POST, instance=estagio)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Estágio de "{estagio.aluno.user.username}" atualizado com sucesso!')
             return redirect('estagio:estagio_detail', estagio_id=estagio.id)
         else:
-            messages.error(request, 'Erro ao atualizar o estágio. Por favor, verifique os campos.')
+            pass
     else:
         form = EstagioForm(instance=estagio)
 
     # Restringe o queryset dos campos `supervisor` e `orientador`
-    form.fields['supervisor'].queryset = PerfilUsuario.objects.filter(user__groups=supervisores_group)
-    form.fields['orientador'].queryset = PerfilUsuario.objects.filter(user__groups=orientadores_group)
+    form.fields['supervisor'].queryset = Usuario.objects.filter(groups=supervisores_group)
+    form.fields['orientador'].queryset = Usuario.objects.filter(groups=orientadores_group)
 
     # Verifica se o usuário é supervisor ou superusuário
     is_supervisor_or_superuser = 'Supervisores' in [group.name for group in request.user.groups.all()] or request.user.is_superuser
@@ -185,15 +171,13 @@ def estagio_delete(request, estagio_id):
     estagio = get_object_or_404(Estagio, id=estagio_id)
     
     # Adicionando a verificação de permissão para o aluno que é dono do estágio
-    if (request.user.perfil != estagio.supervisor and 
-        request.user.perfil != estagio.aluno and 
+    if (request.user != estagio.supervisor and 
+        request.user != estagio.aluno and 
         not request.user.is_superuser):
-        messages.error(request, 'Você não tem permissão para apagar este estágio.')
         return redirect('estagio:estagio_detail', estagio_id=estagio.id)
 
     if request.method == 'POST':
         estagio.delete()
-        messages.success(request, f'Estágio de "{estagio.aluno.user.username}" apagado com sucesso.')
         return redirect('estagio:estagio_list')
         
     context = {

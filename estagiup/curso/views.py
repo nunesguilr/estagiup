@@ -1,10 +1,8 @@
-# curso/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Curso
 from .forms import CursoForm
-from instituicao.models import Instituicao  # Importa o modelo Instituicao
+from instituicao.models import Instituicao
 
 @login_required
 def curso_list(request):
@@ -40,24 +38,18 @@ def curso_create(request):
     # A variável 'instituicoes_disponiveis' será usada para popular o campo 'inst' do formulário.
     instituicoes_disponiveis = Instituicao.objects.all()
     
-    # Verifica se o usuário é um supervisor para restringir as instituições
+    # Verifica se o usuário é um responsável de instituição
     if request.user.groups.filter(name='Responsaveis da Instituicao').exists():
-        # Supondo que o usuário 'Responsaveis da Instituicao' tenha um perfil ou campo que o liga à Instituicao
-        # Exemplo de busca:
-        try:
-            instituicoes_disponiveis = request.user.perfil_responsavel.instituicoes.all()
-        except AttributeError:
-            # Caso a relação não exista, ele continua com a lista completa, mas é importante corrigir
-            pass
+        # Filtra as instituições pelas quais o utilizador é responsável
+        instituicoes_disponiveis = Instituicao.objects.filter(responsaveis=request.user)
 
     if request.method == 'POST':
         form = CursoForm(request.POST, instituicoes=instituicoes_disponiveis)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Curso cadastrado com sucesso!')
             return redirect('curso:curso_list')
         else:
-            messages.error(request, 'Erro ao cadastrar o curso. Por favor, verifique os campos.')
+            pass
     else:
         form = CursoForm(instituicoes=instituicoes_disponiveis)
 
@@ -77,19 +69,15 @@ def curso_update(request, curso_id):
     instituicoes_disponiveis = Instituicao.objects.all()
 
     if request.user.groups.filter(name='Responsaveis da Instituicao').exists():
-        try:
-            instituicoes_disponiveis = request.user.perfil_responsavel.instituicoes.all()
-        except AttributeError:
-            pass
+        instituicoes_disponiveis = Instituicao.objects.filter(responsaveis=request.user)
 
     if request.method == 'POST':
         form = CursoForm(request.POST, instance=curso, instituicoes=instituicoes_disponiveis)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Curso "{curso.nome}" atualizado com sucesso!')
             return redirect('curso:curso_detail', curso_id=curso.id)
         else:
-            messages.error(request, 'Erro ao atualizar o curso. Por favor, verifique os campos.')
+            pass
     else:
         form = CursoForm(instance=curso, instituicoes=instituicoes_disponiveis)
 
@@ -110,7 +98,6 @@ def curso_delete(request, curso_id):
 
     if request.method == 'POST':
         curso.delete()
-        messages.success(request, f'Curso "{curso.nome}" apagado com sucesso.')
         return redirect('curso:curso_list')
         
     context = {
