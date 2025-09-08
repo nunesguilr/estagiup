@@ -9,7 +9,7 @@
         <div class="col-lg-6 mx-auto">
             <div class="glass-card p-5 text-center">
                 <h3 class="text-white mb-4">Confirmação de Exclusão</h3>
-                <p class="text-muted mb-4">Tem certeza de que deseja apagar o estágio de **{{ estagio.aluno.user.username }}** na vaga **{{ estagio.vaga.titulo }}**? Esta ação não pode ser desfeita.</p>
+                <p class="text-muted mb-4">Tem certeza de que deseja apagar o estágio de <strong>{{ estagio.aluno.user.username }}</strong> na vaga <strong>{{ estagio.vaga.titulo }}</strong>? Esta ação não pode ser desfeita.</p>
 
                 <form method="post">
                     {% csrf_token %}

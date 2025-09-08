@@ -17,4 +17,4 @@ class Estagio(models.Model):
         verbose_name_plural = "Estágios"
 
     def __str__(self):
-        return f"Estágio de {self.aluno.user.username} na vaga {self.vaga.titulo}"
+        return f"Estágio de {self.aluno.username} na vaga {self.vaga.titulo}"

@@ -72,6 +72,7 @@ class Command(BaseCommand):
                 ('view_estagio', Estagio),
                 ('view_instituicao', Instituicao),
                 ('add_estagio', Estagio),
+                ('delete_estagio', Estagio),
             ],
             'Responsaveis da Instituicao': [
                 ('view_instituicao', Instituicao),

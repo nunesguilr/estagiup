@@ -1,17 +1,20 @@
 {% extends '_base_dashboard.html' %}
 {% load static %}
 
-{% block title %}Formulário de Estágio{% endblock %}
+{% block title %}Cadastro de Estágio{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4">
 
     {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-        {{ message }}
+    <div class="col-lg-8 mx-auto">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
     {% endif %}
 
     <div class="row">
@@ -28,24 +31,55 @@
                 <form method="post">
                     {% csrf_token %}
 
-                    <!-- Renderiza os campos do formulário -->
-                    {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label text-white">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                                <ul class="text-danger small mt-1">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                            {% if field.help_text %}
-                                <p class="text-muted small">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+                    <!-- Renderiza os campos do formulário manualmente para maior controle -->
+                    <div class="mb-3">
+                        <label for="{{ form.dt_ini.id_for_label }}" class="form-label text-white">Data de Início</label>
+                        {{ form.dt_ini }}
+                        {% if form.dt_ini.errors %}
+                            <ul class="text-danger small mt-1">
+                                {% for error in form.dt_ini.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.dt_fim.id_for_label }}" class="form-label text-white">Data de Fim</label>
+                        {{ form.dt_fim }}
+                        {% if form.dt_fim.errors %}
+                            <ul class="text-danger small mt-1">
+                                {% for error in form.dt_fim.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.status.id_for_label }}" class="form-label text-white">Status</label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <ul class="text-danger small mt-1">
+                                {% for error in form.status.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
                     
+                    <div class="mb-3">
+                        <label for="{{ form.nota.id_for_label }}" class="form-label text-white">Nota</label>
+                        {{ form.nota }}
+                        {% if form.nota.errors %}
+                            <ul class="text-danger small mt-1">
+                                {% for error in form.nota.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="{% url 'estagio:estagio_list' %}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-primary-custom">Salvar</button>

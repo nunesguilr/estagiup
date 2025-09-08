@@ -35,34 +35,22 @@
                             </p>
                             <p class="mb-1 small text-white">
                                 <i class='bx bx-buildings me-2'></i>
-                                <span class="text-muted">Supervisor:</span> {{ estagio.supervisor.user.username|default:"Não atribuído" }}
+                                <span class="text-muted">Supervisor:</span> {{ estagio.supervisor.username|default:"Não atribuído" }}
                             </p>
                             <p class="mb-1 small text-white">
                                 <i class='bx bx-user-voice me-2'></i>
-                                <span class="text-muted">Orientador:</span> {{ estagio.orientador.user.username|default:"Não atribuído" }}
+                                <span class="text-muted">Orientador:</span> {{ estagio.orientador.username|default:"Não atribuído" }}
                             </p>
                         </div>
                         
                         <div class="estagio-status mt-auto pt-3 border-top border-secondary">
-                            {% if estagio.status == 'ativo' %}
+                            {% if estagio.status %}
                             <span class="badge rounded-pill bg-success">Ativo</span>
-                            {% elif estagio.status == 'concluido' %}
+                            {% else %}
                             <span class="badge rounded-pill bg-secondary">Concluído</span>
-                            {% elif estagio.status == 'cancelado' %}
-                            <span class="badge rounded-pill bg-danger">Cancelado</span>
                             {% endif %}
                         </div>
 
-                        <!-- Lógica para exibir a barra de progresso -->
-                        {% if estagio.status == 'ativo' %}
-                            {% with progresso=estagio.progresso %}
-                                <div class="progress mt-3">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{ progresso }}%" aria-valuenow="{{ progresso }}" aria-valuemin="0" aria-valuemax="100">
-                                        {{ progresso|floatformat:0 }}%
-                                    </div>
-                                </div>
-                            {% endwith %}
-                        {% endif %}
                     </div>
                 </a>
                 {% empty %}

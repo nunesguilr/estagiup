@@ -50,20 +50,13 @@ def estagio_list(request):
 
 
 @login_required
+@permission_required('estagio.view_estagio', raise_exception=True)
 def estagio_detail(request, estagio_id):
     """
     Exibe os detalhes de um estágio específico.
     """
     estagio = get_object_or_404(Estagio, id=estagio_id)
     
-    # Verifica se o usuário tem permissão para visualizar o estágio
-    grupos = [grupo.name for grupo in request.user.groups.all()]
-    if (not request.user.is_superuser and
-        'Alunos' in grupos and estagio.aluno != request.user or
-        'Supervisores' in grupos and estagio.supervisor != request.user or
-        'Orientadores' in grupos and estagio.orientador != request.user):
-        return redirect('estagio:estagio_list')
-
     # Adicionando o campo `can_edit` ao contexto
     can_edit = False
     if (request.user == estagio.supervisor or request.user == estagio.orientador or request.user.is_superuser):
@@ -84,14 +77,14 @@ def estagio_create(request, vaga_id):
     """
     vaga = get_object_or_404(Vaga, id=vaga_id)
     
-    perfil_aluno = request.user
+    perfil_aluno = get_object_or_404(Usuario, pk=request.user.pk)
     
     if Estagio.objects.filter(aluno=perfil_aluno).exists():
         return redirect('estagio:estagio_list')
     
     # Lógica para filtrar as opções de supervisor e orientador
-    supervisores_group = Group.objects.get(name='Supervisores')
-    orientadores_group = Group.objects.get(name='Orientadores')
+    supervisores_group = get_object_or_404(Group, name='Supervisores')
+    orientadores_group = get_object_or_404(Group, name='Orientadores')
 
     if request.method == 'POST':
         form = EstagioForm(request.POST)
@@ -132,8 +125,8 @@ def estagio_update(request, estagio_id):
         return redirect('estagio:estagio_detail', estagio_id=estagio.id)
 
     # Lógica para filtrar as opções de supervisor e orientador
-    supervisores_group = Group.objects.get(name='Supervisores')
-    orientadores_group = Group.objects.get(name='Orientadores')
+    supervisores_group = get_object_or_404(Group, name='Supervisores')
+    orientadores_group = get_object_or_404(Group, name='Orientadores')
 
     if request.method == 'POST':
         form = EstagioForm(request.POST, instance=estagio)
@@ -171,10 +164,10 @@ def estagio_delete(request, estagio_id):
     estagio = get_object_or_404(Estagio, id=estagio_id)
     
     # Adicionando a verificação de permissão para o aluno que é dono do estágio
-    if (request.user != estagio.supervisor and 
-        request.user != estagio.aluno and 
-        not request.user.is_superuser):
-        return redirect('estagio:estagio_detail', estagio_id=estagio.id)
+    # if (request.user != estagio.supervisor and 
+    #     request.user != estagio.aluno and 
+    #     not request.user.is_superuser):
+    #     return redirect('estagio:estagio_detail', estagio_id=estagio.id)
 
     if request.method == 'POST':
         estagio.delete()
