@@ -11,7 +11,13 @@ urlpatterns = [
     # URLs de gerenciamento (requerem login)
     path('gerenciar/', views.vaga_list, name='vaga_list'),
     path('gerenciar/<int:vaga_id>/', views.vaga_detail, name='vaga_detail'),
-    path('gerenciar/cadastrar/<int:instituicao_id>/', views.vaga_create, name='vaga_create'),
+    
+    # Rota ÚNICA para iniciar o processo de adicionar vaga
+    path('adicionar/', views.selecionar_instituicao_para_vaga, name='vaga_selecionar_instituicao'),
+    
+    # Rota que recebe o ID da instituição DEPOIS que o usuário a seleciona
+    path('adicionar/<int:instituicao_id>/', views.vaga_create, name='vaga_create'),
+    
     path('gerenciar/editar/<int:vaga_id>/', views.vaga_update, name='vaga_update'),
     path('gerenciar/apagar/<int:vaga_id>/', views.vaga_delete, name='vaga_delete'),
 ]

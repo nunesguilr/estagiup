@@ -10,24 +10,39 @@ from usuario.models import Usuario
 @login_required
 def vaga_list(request):
     """
-    Lista todas as vagas disponíveis para gerenciamento interno.
+    Lista as vagas relevantes para o usuário logado no dashboard.
+    - Superusuários e Responsáveis veem todas as vagas que podem gerenciar.
+    - Alunos veem todas as vagas para as quais podem se candidatar.
+    - Outros perfis (Orientador, Supervisor) não têm uma lista de "gerenciamento de vagas".
     """
-    if not request.user.is_superuser and not request.user.groups.filter(name='Responsaveis da Instituicao').exists():
+    user = request.user
+    
+    # Se o usuário não tem um grupo, redireciona para o dashboard.
+    if not user.groups.exists() and not user.is_superuser:
+        messages.warning(request, "Seu usuário não está associado a um perfil.")
         return redirect('dashboard')
-    
-    vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
-    
-    query = request.GET.get('q')
-    if query:
-        vagas = vagas.filter(
-            Q(titulo__icontains=query) |
-            Q(descricao__icontains=query) |
-            Q(instituicao__nome__icontains=query)
-        )
-    
+
+    user_group = user.groups.first().name if user.groups.exists() else None
+
+    if user.is_superuser or user_group == 'Responsaveis da Instituicao':
+        # Para Admins e Responsáveis, mostra todas as vagas para gerenciamento
+        vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
+        
+        # Um responsável vê apenas as vagas das suas instituições
+        if user_group == 'Responsaveis da Instituicao':
+            vagas = vagas.filter(instituicao__responsaveis=user)
+
+    elif user_group == 'Alunos':
+        # Alunos veem todas as vagas, similar à visão pública, mas no dashboard
+        vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
+
+    else:
+        # Orientadores e Supervisores não têm acesso a esta página de gerenciamento
+        messages.error(request, 'Você não tem permissão para acessar esta página.')
+        return redirect('dashboard')
+
     context = {
         'vagas': vagas,
-        'search_query': query
     }
     return render(request, 'vaga/vaga_list.html', context)
 
@@ -51,6 +66,28 @@ def vaga_detail(request, vaga_id):
         'can_edit': can_edit
     }
     return render(request, 'vaga/vaga_detail.html', context)
+
+@login_required
+def selecionar_instituicao_para_vaga(request):
+    """
+    Página intermediária para o usuário selecionar a qual de suas
+    instituições ele deseja adicionar uma nova vaga.
+    """
+    try:
+        # Busca todas as instituições pelas quais o usuário é responsável
+        instituicoes_do_usuario = Instituicao.objects.filter(responsaveis=request.user)
+    except Usuario.DoesNotExist: # Ajuste para PerfilUsuario.DoesNotExist se necessário
+        instituicoes_do_usuario = []
+
+    if not instituicoes_do_usuario.exists():
+        messages.warning(request, 'Você precisa ser responsável por pelo menos uma instituição para adicionar uma vaga.')
+        return redirect('instituicao:minhas_instituicoes')
+
+    context = {
+        'instituicoes': instituicoes_do_usuario,
+        'title': 'Selecionar Instituição'
+    }
+    return render(request, 'vaga/select_instituicao.html', context)
 
 @login_required
 @permission_required('vaga.add_vaga', raise_exception=True)

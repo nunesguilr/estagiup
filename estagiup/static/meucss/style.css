@@ -508,3 +508,48 @@ body {
     color: #fff;
     transform: translateY(-2px);
 }
+
+/* ====================================================== */
+/* ESTILO REFINADO PARA TABELAS DENTRO DE GLASS-CARDS
+*/
+/* ====================================================== */
+
+/* Tabela principal dentro de um glass-card */
+.glass-card .table {
+    background-color: rgba(0, 0, 0, 0.2) !important; /* Fundo sutil para a tabela */
+    color: #e0cffc; /* Cor do texto padrão */
+    border: none; /* Remove a borda padrão */
+    font-size: 0.85rem; /* <<< PONTO CHAVE: Fonte menor e mais compacta */
+}
+
+/* Células do cabeçalho (th) e do corpo (td) */
+.glass-card .table th,
+.glass-card .table td {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    border-top: none; /* Remove a borda superior padrão */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória sutil */
+    padding: 0.75rem 1rem; /* <<< PONTO CHAVE: Padding reduzido para compactar */
+    vertical-align: middle; /* Alinha o texto no meio verticalmente */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+}
+
+/* Estilo específico para o cabeçalho */
+.glass-card .table thead th {
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo do cabeçalho ligeiramente destacado */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Remove a borda da última linha do corpo */
+.glass-card .table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Efeito de hover nas linhas */
+.glass-card .table.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+}
