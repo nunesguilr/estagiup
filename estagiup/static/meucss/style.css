@@ -424,6 +424,21 @@ body {
     margin-bottom: 5px;
 }
 
+.btn-white-custom {
+    background-color: #ebebeb; 
+    border-color: #dbdbdb;
+    color: #000000; 
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-white-custom:hover {
+    background-color: rgba(233, 233, 233, 0.2);  /* Cor mais escura no hover */
+    border-color: #ececec;
+    color: #ffffff; 
+    margin-bottom: 5px;
+}
+
 /* Exemplo de botões mais escuros, alinhado com o tema */
 .btn-primary-custom {
     background-color: #6a1b9a; /* Roxo escuro */

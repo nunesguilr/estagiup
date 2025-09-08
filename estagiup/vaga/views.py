@@ -6,6 +6,8 @@ from .models import Vaga
 from .forms import VagaForm
 from instituicao.models import Instituicao
 from usuario.models import Usuario
+from estagio.models import Estagio
+from curso.models import Curso 
 
 @login_required
 def vaga_list(request):
@@ -187,28 +189,63 @@ def vaga_delete(request, vaga_id):
 
 def vaga_public(request):
     """
-    View pública para listar vagas (sem requerer login)
+    View pública para listar e filtrar vagas.
     """
-    vagas = Vaga.objects.all().select_related('instituicao').order_by('-prazo')
+    vagas = Vaga.objects.select_related('instituicao').order_by('-prazo')
     
-    query = request.GET.get('q')
+    # Busca todas as instituições e cursos para popular os filtros
+    instituicoes = Instituicao.objects.filter(status=True).order_by('nome')
+    cursos = Curso.objects.all().order_by('nome')
+
+    # Pega os valores dos filtros da URL (query GET)
+    query = request.GET.get('q', '')
+    instituicao_id = request.GET.get('instituicao', '')
+    curso_id = request.GET.get('curso', '')
+
+    # Aplica o filtro de busca por texto, se houver
     if query:
         vagas = vagas.filter(
             Q(titulo__icontains=query) |
-            Q(descricao__icontains=query) |
-            Q(instituicao__nome__icontains=query)
+            Q(descricao__icontains=query)
         )
+    
+    # Aplica o filtro por instituição, se houver
+    if instituicao_id:
+        vagas = vagas.filter(instituicao_id=instituicao_id)
+
+    # Aplica o filtro por curso, se houver
+    if curso_id:
+        vagas = vagas.filter(cursos__id=curso_id)
     
     context = {
         'vagas': vagas,
+        'instituicoes': instituicoes,
+        'cursos': cursos,
         'search_query': query,
-        'public_view': True
+        'selected_instituicao': int(instituicao_id) if instituicao_id else None,
+        'selected_curso': int(curso_id) if curso_id else None,
     }
     return render(request, 'vaga/vaga_public.html', context)
 
 def vaga_public_detail(request, vaga_id):
+    """
+    Exibe os detalhes públicos de uma vaga específica.
+    """
     vaga = get_object_or_404(Vaga, id=vaga_id)
+    
+    # Lógica para o botão de candidatura
+    ja_se_candidatou = False
+    is_aluno = False
+    
+    if request.user.is_authenticated and hasattr(request.user, 'perfil'):
+        if request.user.groups.filter(name='Alunos').exists():
+            is_aluno = True
+            # Verifica se já existe um estágio para este aluno e esta vaga
+            ja_se_candidatou = Estagio.objects.filter(vaga=vaga, aluno=request.user).exists()
+
     context = {
-        'vaga': vaga
+        'vaga': vaga,
+        'ja_se_candidatou': ja_se_candidatou,
+        'is_aluno': is_aluno,
     }
     return render(request, 'vaga/vaga_public_detail.html', context)

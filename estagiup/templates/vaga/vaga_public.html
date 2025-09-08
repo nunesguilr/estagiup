@@ -8,14 +8,46 @@
 <div class="my-5">
     <div class="public-grid-container">
         <aside class="filter-sidebar">
-            <div class="glass-card p-4">
+            <div class="glass-card p-4 h-100">
                 <h5 class="text-white mb-3">Filtrar Vagas</h5>
-                <div class="mb-3">
-                    <label for="searchInput" class="text-white form-label">Buscar por Palavras-Chave</label>
-                    <input type="text" class="text-white form-control form-control-dark" id="searchInput"
-                        placeholder="Ex: Desenvolvedor">
-                </div>
-                <!-- Você pode adicionar mais filtros aqui, como por curso ou instituição -->
+
+                <form method="get" action="{% url 'vaga:vaga_public' %}">
+                    <div class="mb-3">
+                        <label for="searchInput" class="text-white form-label">Buscar por Palavras-Chave</label>
+                        <input type="text" name="q" class="text-white form-control form-control-dark" id="searchInput"
+                            placeholder="Ex: Desenvolvedor" value="{{ search_query }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="instituicaoSelect" class="text-white form-label">Instituição</label>
+                        <select name="instituicao" class="form-select form-control-dark" id="instituicaoSelect">
+                            <option value="">Todas</option>
+                            {% for inst in instituicoes %}
+                            <option value="{{ inst.id }}" {% if selected_instituicao == inst.id %}selected{% endif %}>
+                                {{ inst.nome }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cursoSelect" class="text-white form-label">Curso</label>
+                        <select name="curso" class="form-select form-control-dark" id="cursoSelect">
+                            <option value="">Todos</option>
+                            {% for curso in cursos %}
+                            <option value="{{ curso.id }}" {% if selected_curso == curso.id %}selected{% endif %}>
+                                {{ curso.nome }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <br>
+                        <button type="submit" class="btn btn-white-custom">Filtrar</button>
+                        <a href="{% url 'vaga:vaga_public' %}" class="btn btn-outline-light btn-sm">Limpar Filtros</a>
+                    </div>
+                </form>
             </div>
         </aside>
 
@@ -70,7 +102,8 @@
                             </div>
                             {% else %}
                             <div class="card-footer text-end">
-                                <a href="{% url 'vaga:vaga_public_detail' vaga.pk %}" class="btn btn-outline-light btn-sm">Ver
+                                <a href="{% url 'vaga:vaga_public_detail' vaga.pk %}"
+                                    class="btn btn-outline-light btn-sm">Ver
                                     Detalhes</a>
                             </div>
                             {% endif %}
@@ -85,13 +118,13 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+    </div>
     </main>
 </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-    {{ block.super }}
-    <script src="{% static 'meujs/vagas_config.js' %}"></script>
+{{ block.super }}
+<script src="{% static 'meujs/vagas_config.js' %}"></script>
 {% endblock %}

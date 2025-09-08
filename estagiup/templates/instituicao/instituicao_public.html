@@ -8,7 +8,7 @@
 <div class="my-5">
     <div class="public-grid-container">
         <aside class="filter-sidebar">
-            <div class="glass-card p-4">
+            <div class="glass-card p-4 h-100">
                 <h5 class="text-white mb-3">Filtrar Instituições</h5>
                 <form method="get" action="{% url 'instituicao:instituicao_public' %}">
                     <div class="mb-3">
@@ -16,7 +16,13 @@
                         <input type="text" name="q" class="text-white form-control form-control-dark" id="searchInput"
                             placeholder="Ex: IF Baiano" value="{{ search_query|default:'' }}">
                     </div>
-                    <button type="submit" class="btn btn-primary-custom w-100">Buscar</button>
+
+                    <div class="d-grid gap-2">
+                        <br>
+                        <button type="submit" class="btn btn-white-custom">Buscar</button>
+                        <a href="{% url 'instituicao:instituicao_public' %}" class="btn btn-outline-light btn-sm">Limpar
+                            Filtros</a>
+                    </div>
                 </form>
             </div>
         </aside>
@@ -33,13 +39,11 @@
                             <h5 class="card-title fw-bold">{{ instituicao.nome }}</h5>
                             <p class="card-text text-muted">
                                 <i class='bx bx-map'></i>
-                                {% if instituicao.rua %}
-                                {{ instituicao.rua }}, {% if instituicao.cidade or instituicao.estado %} {% endif %}
-                                {{ instituicao.cidade }} {% if instituicao.estado %} - {{ instituicao.estado }}{% endif %}
-                                {% elif instituicao.cidade and instituicao.estado %}
+                                {# Formata o endereço de forma limpa, mostrando apenas as partes que existem. #}
+                                {% if instituicao.cidade and instituicao.estado %}
                                 {{ instituicao.cidade }} - {{ instituicao.estado }}
                                 {% else %}
-                                Endereço não informado
+                                Localização não informada
                                 {% endif %}
                             </p>
                             <p class="card-text text-muted">

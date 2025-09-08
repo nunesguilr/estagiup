@@ -11,19 +11,23 @@ from vaga.models import Vaga
 
 def instituicao_public(request):
     """
-    View pública para listar todas as instituições com status ativo.
+    View pública para listar e filtrar todas as instituições com status ativo.
     """
-    # Filtra apenas as instituições que estão com o status=True
     instituicoes = Instituicao.objects.filter(status=True).order_by('nome')
     
-    # Lógica de busca, igual à da página de vagas
-    query = request.GET.get('q')
+    # Pega o termo de busca da URL (query GET)
+    query = request.GET.get('q', '') # Usamos '' como padrão para evitar 'None'
+
+    # Se o usuário digitou algo na busca, aplica o filtro
     if query:
+        # A mágica do Q object: permite buscas complexas com 'OU' (|)
         instituicoes = instituicoes.filter(
             Q(nome__icontains=query) |
             Q(rua__icontains=query) |
             Q(bairro__icontains=query) |
-            Q(cidade__icontains=query)
+            Q(cidade__icontains=query) |
+            Q(estado__icontains=query) |
+            Q(pais__icontains=query)
         )
 
     context = {

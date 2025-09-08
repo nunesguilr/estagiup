@@ -131,15 +131,14 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS("\n--- Criando Instituições de Desenvolvimento ---"))
         
         institutions_data = [
-            {'nome': 'Tech Solutions', 'cnpj': '12.345.678/0001-00', 'rua': 'Avenida Tecnologia, 100', 'telefone': '21987654321', 'tipo': 'empresa'},
-            {'nome': 'Inovação Digital', 'cnpj': '23.456.789/0001-11', 'rua': 'Rua da Inovação, 200', 'telefone': '1133445566', 'tipo': 'empresa'},
-            {'nome': 'Universidade Federal', 'cnpj': '34.567.890/0001-22', 'rua': 'Campus Universitário, s/n', 'telefone': '1155667788', 'tipo': 'instituicao_ensino'},
-            {'nome': 'Faculdade Tecnológica', 'cnpj': '45.678.901/0001-33', 'rua': 'Avenida do Conhecimento, 300', 'telefone': '1199887766', 'tipo': 'instituicao_ensino'},
-            {'nome': 'Instituto Tecnológico', 'cnpj': '45.678.901/0001-34', 'rua': 'Rua dos Tecnólogos, 500', 'telefone': '1199887755', 'tipo': 'instituicao_ensino'},
-            {'nome': 'Banco Central', 'cnpj': '56.789.012/0001-44', 'rua': 'Praça da Economia, 50', 'telefone': '1122334455', 'tipo': 'empresa'},
-            {'nome': 'Hospital Geral', 'cnpj': '67.890.123/0001-55', 'rua': 'Rua da Saúde, 400', 'telefone': '1144556677', 'tipo': 'empresa'},
-            # Adicionado a instituição que faltava
-            {'nome': 'Faculdade de Direito', 'cnpj': '78.901.234/0001-66', 'rua': 'Rua da Justiça, 123', 'telefone': '1188776655', 'tipo': 'instituicao_ensino'},
+            {'nome': 'Tech Solutions', 'cnpj': '12.345.678/0001-00', 'rua': 'Avenida Paulista, 1842', 'bairro': 'Bela Vista', 'cidade': 'São Paulo', 'estado': 'SP', 'pais': 'Brasil', 'telefone': '11987654321', 'tipo': 'empresa', 'status': True},
+            {'nome': 'Inovação Digital', 'cnpj': '23.456.789/0001-11', 'rua': 'Rua da Inovação, 200', 'bairro': 'Porto Digital', 'cidade': 'Recife', 'estado': 'PE', 'pais': 'Brasil', 'telefone': '8133445566', 'tipo': 'empresa', 'status': True},
+            {'nome': 'Universidade Federal', 'cnpj': '34.567.890/0001-22', 'rua': 'Avenida Reitor Miguel Calmon, s/n', 'bairro': 'Canela', 'cidade': 'Salvador', 'estado': 'BA', 'pais': 'Brasil', 'telefone': '7155667788', 'tipo': 'instituicao_ensino', 'status': True},
+            {'nome': 'Faculdade Tecnológica', 'cnpj': '45.678.901/0001-33', 'rua': 'Avenida do Conhecimento, 300', 'bairro': 'Centro', 'cidade': 'Campinas', 'estado': 'SP', 'pais': 'Brasil', 'telefone': '1999887766', 'tipo': 'instituicao_ensino', 'status': True},
+            {'nome': 'Instituto Tecnológico', 'cnpj': '45.678.901/0001-34', 'rua': 'Rua dos Tecnólogos, 500', 'bairro': 'Cidade Industrial', 'cidade': 'Curitiba', 'estado': 'PR', 'pais': 'Brasil', 'telefone': '4199887755', 'tipo': 'instituicao_ensino', 'status': True},
+            {'nome': 'Banco Central', 'cnpj': '56.789.012/0001-44', 'rua': 'Setor Bancário Sul, Quadra 3', 'bairro': 'Asa Sul', 'cidade': 'Brasília', 'estado': 'DF', 'pais': 'Brasil', 'telefone': '6122334455', 'tipo': 'empresa', 'status': True},
+            {'nome': 'Hospital Geral', 'cnpj': '67.890.123/0001-55', 'rua': 'Avenida Dr. Enéas de Carvalho Aguiar, 255', 'bairro': 'Cerqueira César', 'cidade': 'São Paulo', 'estado': 'SP', 'pais': 'Brasil', 'telefone': '1144556677', 'tipo': 'empresa', 'status': True},
+            {'nome': 'Faculdade de Direito', 'cnpj': '78.901.234/0001-66', 'rua': 'Largo de São Francisco, 95', 'bairro': 'Centro Histórico', 'cidade': 'São Paulo', 'estado': 'SP', 'pais': 'Brasil', 'telefone': '1188776655', 'tipo': 'instituicao_ensino', 'status': True},
         ]
         
         for inst_data in institutions_data:
