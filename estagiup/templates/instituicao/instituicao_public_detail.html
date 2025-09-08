@@ -1,25 +1,27 @@
-{% extends '_base.html' %} 
+{% extends '_base.html' %}
 
 {% block body_class %}theme-light{% endblock %}
 
-{% block title %}{{ instituicao.nome }}{% endblock %} 
+{% block title %}{{ instituicao.nome }}{% endblock %}
 
 {% block content %}
 <div class="container my-5">
 
-    {% if messages %} 
+    {% if messages %}
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }}">
         {{ message }}
     </div>
-    {% endfor %} 
+    {% endfor %}
     {% endif %}
 
     <div class="row">
         <div class="col-lg-8">
             <div class="card p-4 mb-4">
                 <h1 class="display-5 fw-bold">{{ instituicao.nome }}</h1>
-                <p class="text-muted"><i class='bx bx-map'></i> {{ instituicao.endereco }}</p>
+                <p class="text-muted"><i class='bx bx-map'></i>
+                    {{ instituicao.cidade }}, {{ instituicao.estado }}
+                </p>
                 <hr>
 
                 <h4 class="mt-4">Sobre a Instituição</h4>
@@ -31,7 +33,8 @@
                 <h4 class="mt-4 mb-3">Vagas Abertas</h4>
                 <div class="list-group">
                     {% for vaga in vagas_da_instituicao %}
-                    <a href="{% url 'vaga:vaga_public_detail' vaga.id %}" class="list-group-item list-group-item-action">
+                    <a href="{% url 'vaga:vaga_public_detail' vaga.id %}"
+                        class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ vaga.titulo }}</h5>
                             <small class="text-muted">{{ vaga.prazo }}</small>
@@ -48,11 +51,19 @@
         </div>
         <div class="col-lg-4">
             <div class="card p-3">
-                <h5 class="card-title">Informações de Contato</h5>
+                <h5 class="card-title">Informações de Contato:</h5>
                 <ul class="list-unstyled">
                     <li><strong>Telefone:</strong> {{ instituicao.telefone }}</li>
                     <li><strong>CNPJ:</strong> {{ instituicao.cnpj }}</li>
                     <li><strong>Tipo:</strong> {{ instituicao.get_tipo_display }}</li>
+                    <br>
+                    <hr>
+                    <h5 class="card-title">Endereço Completo:</h5>
+                    <li><strong>Rua:</strong> {{ instituicao.rua }}</li>
+                    <li><strong>Bairro:</strong> {{ instituicao.bairro }}</li>
+                    <li><strong>Cidade/Estado:</strong> {{ instituicao.cidade }} - {{ instituicao.estado }}</li>
+                    <li><strong>Pais:</strong> {{ instituicao.pais }}</li>
+                    <br>
                 </ul>
             </div>
         </div>

@@ -53,18 +53,12 @@
                 <!-- Links para alunos -->
                 {% if request.user.is_authenticated and request.user.groups.all.0.name == 'Alunos' %}
                 <li class="menu-title"><span class="text nav-text">Consultas</span></li>
-                     <li class="nav-link">
-                         <a href="{% url 'vaga:vaga_list' %}">
-                             <i class='bx bx-briefcase-alt-2 icon'></i>
-                             <span class="text nav-text">Gerenciar Vagas</span>
-                         </a>
-                     </li>
-                     <li class="nav-link">
+                    <li class="nav-link">
                          <a href="{% url 'curso:curso_list' %}">
                              <i class='bx bx-book icon'></i>
                              <span class="text nav-text">Cursos</span>
                          </a>
-                     </li>
+                    </li>
                      <li class="nav-link">
                          <a href="{% url 'estagio:estagio_list' %}">
                              <i class='bx bx-file-blank icon'></i>
@@ -149,7 +143,7 @@
                          </a>
                      </li>
                      <li class="nav-link">
-                         <a href="{% url 'vaga:vaga_create' 0 %}">
+                         <a href="{% url 'vaga:vaga_selecionar_instituicao' %}">
                              <i class='bx bx-plus-circle icon'></i>
                              <span class="text nav-text">Adicionar Vaga</span>
                          </a>

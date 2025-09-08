@@ -5,40 +5,50 @@
 
 {% block content %}
 <div class="container-fluid py-4">
-    <h2 class="text-white mb-4">Membros da Instituição: {{ instituicao.nome }}</h2>
-    <div class="table-responsive">
-        <table class="table table-dark table-striped table-hover rounded-3 overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">Nome de Utilizador</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Rua</th>
-                    <th scope="col">Bairro</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">País</th>
-                    <th scope="col">Telefone</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for membro in membros %}
-                <tr>
-                    <td>{{ membro.username }}</td>
-                    <td>{{ membro.email }}</td>
-                    <td>{{ membro.rua }}</td>
-                    <td>{{ membro.bairro }}</td>
-                    <td>{{ membro.cidade }}</td>
-                    <td>{{ membro.estado }}</td>
-                    <td>{{ membro.pais }}</td>
-                    <td>{{ membro.telefone }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="8">Nenhum membro encontrado para esta instituição.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <h2 class="text-white mb-4">Membros da Instituição: {{ instituicao.nome }}</h2>
+                
+                <!-- O container da tabela agora tem cantos arredondados -->
+                <div class="table-responsive rounded-3"> 
+                    <!-- A classe 'table-custom' foi removida para evitar conflitos -->
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome de Utilizador</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Rua</th>
+                                <th scope="col">Bairro</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">País</th>
+                                <th scope="col">Telefone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for membro in membros %}
+                            <tr>
+                                <td>{{ membro.username }}</td>
+                                <td>{{ membro.email }}</td>
+                                <td>{{ membro.rua|default:"-" }}</td>
+                                <td>{{ membro.bairro|default:"-" }}</td>
+                                <td>{{ membro.cidade|default:"-" }}</td>
+                                <td>{{ membro.estado|default:"-" }}</td>
+                                <td>{{ membro.pais|default:"-" }}</td>
+                                <td>{{ membro.telefone|default:"-" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <!-- CORREÇÃO: Colspan deve ser 8 para corresponder ao número de colunas -->
+                                <td colspan="8" class="text-center py-4">Nenhum membro encontrado para esta instituição.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
